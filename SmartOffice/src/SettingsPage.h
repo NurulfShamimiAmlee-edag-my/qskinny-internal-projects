@@ -1,0 +1,7 @@
+#ifndef SETTINGSPAGE_H
+#define SETTINGSPAGE_H
+
+
+
+
+#endif //SETTINGSPAGE_H

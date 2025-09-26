@@ -15,7 +15,9 @@ find_package(Qt6 REQUIRED COMPONENTS Quick)
 find_package(QSkinny REQUIRED)
  
 add_executable(smartoffice
-    src/main.cpp)
+    src/main.cpp
+    src/TopBar.cpp
+    src/MainPage.cpp)
  
 target_link_libraries(smartoffice PRIVATE
     Qt6::Quick
