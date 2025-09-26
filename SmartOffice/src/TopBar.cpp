@@ -19,7 +19,7 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     this->setColor(QskLinearBox::Panel,  QColor("#af7178"));
     this->setFixedHeight(50);
     this->setPaddingHint(QskLinearBox::Panel, 5);
-    this->addItem(setCompanyLogo("assets/edag-logo.png"));  
+    this->addItem(setCompanyLogo("assets/capybara.png"));  
     this->addItem(setStatusLabels("Temperature"));
     this->addItem(setStatusLabels("Humiditiy"));
     this->addItem(setStatusLabels("Energy"));
