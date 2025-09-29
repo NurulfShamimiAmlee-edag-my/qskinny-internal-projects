@@ -22,7 +22,8 @@ add_executable(smartoffice
     src/RoomPage.cpp
     src/SummaryPage.cpp
     src/PageViewer.cpp
-    src/NavigationBox.cpp)
+    src/NavigationBox.cpp
+    src/BottomSection.cpp)
 
  
 target_link_libraries(smartoffice PRIVATE

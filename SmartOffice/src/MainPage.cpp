@@ -11,11 +11,6 @@
 #include <QskFontRole.h>
 #include <qnamespace.h>
 
-#include "SettingsPage.h"
-#include "RoomPage.h"
-#include "SummaryPage.h"
-
-
 class LightBannerFactory :  public BannerFactory
 {
     public:
@@ -127,10 +122,3 @@ QskLinearBox* MainPage::buildBanner(BannerFactory& factory)
     return banner;
 }
 
-BottomSection::BottomSection() : QskStackBox()
-{
-    this->addItem(new MainPage());
-    this->addItem(new RoomPage());
-    this->addItem(new SummaryPage());
-    this->addItem(new SettingsPage());
-}

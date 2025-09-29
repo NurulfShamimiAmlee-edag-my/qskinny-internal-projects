@@ -15,12 +15,6 @@ class BannerFactory
         virtual QskGraphicLabel* createIconLabel() = 0;
 };
 
-class BottomSection : public QskStackBox
-{
-    public:
-        BottomSection();
-
-};
 
 class MainPage : public QskLinearBox
 {

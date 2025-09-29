@@ -1,6 +1,6 @@
 #include "PageViewer.h"
-#include "MainPage.h"
 #include "TopBar.h"
+#include "BottomSection.h"
 #include "NavigationBox.h"
 
 #include <QskLinearBox.h>
