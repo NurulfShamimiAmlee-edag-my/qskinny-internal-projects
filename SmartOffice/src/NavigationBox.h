@@ -6,8 +6,8 @@
 class  NavigationBox : public QskLinearBox
 {
     public:
-        QskPushButton* m_nextButton = new QskPushButton("Next");
-        QskPushButton* m_previousButton = new QskPushButton("Previous");
+        QskPushButton* m_nextButton = new QskPushButton(">");
+        QskPushButton* m_previousButton = new QskPushButton("<");
     
     public:
         NavigationBox();
