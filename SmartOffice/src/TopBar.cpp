@@ -56,6 +56,7 @@ QskPushButton* TopBar::setMenuButton(QString text)
     QskGraphic buttonGraphic = QskGraphic::fromImage(buttonImage);
     m_menuButton->setIcon(buttonGraphic);
     m_menuButton->setIconStrutSize(QSizeF(25,25));
+    m_menuButton->setColor(QskPushButton::Panel, QColor("#d6d4ad"));
     // QObject::connect(menuButton, &QskPushButton::clicked, [bottomSection](){
     //     bottomSection->setCurrentIndex(3);
     // });
