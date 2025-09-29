@@ -16,17 +16,21 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     // this->setSpacing(200);
     this->setPanel(true);
     this->setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
-    this->setColor(QskLinearBox::Panel,  QColor("#af7178"));
+    this->setColor(QskLinearBox::Panel,  QColor("#8e8b63"));
     this->setFixedHeight(50);
     this->setPaddingHint(QskLinearBox::Panel, 5);
-    this->addItem(setCompanyLogo("assets/capybara.png"));  
-    this->addItem(setStatusLabels("Temperature"));
-    this->addItem(setStatusLabels("Humiditiy"));
-    this->addItem(setStatusLabels("Energy"));
+    this->addItem(setLogo("assets/capybara.png"));  
+    //TODO: Create a class that can use both logo and label -> label is used to display latest information
+    this->addItem(setLogo("assets/thermometer.png"));
+    this->addItem(setLogo("assets/water.png"));
+    this->addItem(setLogo("assets/electricity.png"));
+    // this->addItem(setStatusLabels("Temperature"));
+    // this->addItem(setStatusLabels("Humiditiy"));
+    // this->addItem(setStatusLabels("Energy"));
     this->addItem(setMenuButton("assets/app.png"));
 };
 
-QskGraphicLabel* TopBar::setCompanyLogo(QString text)
+QskGraphicLabel* TopBar::setLogo(QString text)
 {
     QImage companyLogo(text);
     QskGraphic companyGraphic = QskGraphic::fromImage(companyLogo);
@@ -47,10 +51,13 @@ QskTextLabel* TopBar::setStatusLabels(QString text)
 
 QskPushButton* TopBar::setMenuButton(QString text)
 {
-    auto* menuButton = new QskPushButton();
+    // auto* menuButton = new QskPushButton();
     QImage buttonImage(text);
     QskGraphic buttonGraphic = QskGraphic::fromImage(buttonImage);
-    menuButton->setIcon(buttonGraphic);
-    menuButton->setIconStrutSize(QSizeF(25,25));
-    return menuButton;
+    m_menuButton->setIcon(buttonGraphic);
+    m_menuButton->setIconStrutSize(QSizeF(25,25));
+    // QObject::connect(menuButton, &QskPushButton::clicked, [bottomSection](){
+    //     bottomSection->setCurrentIndex(3);
+    // });
+    return m_menuButton;
 }

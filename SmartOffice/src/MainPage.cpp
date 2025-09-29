@@ -1,11 +1,19 @@
 #include "MainPage.h"
 #include <QskBoxShapeMetrics.h>
+#include <QskGraphic.h>
 #include <QskGraphicLabel.h>
 #include <QskLinearBox.h>
 #include <QskPushButton.h>
+#include <QskSkinnable.h>
+#include <QskStackBox.h>
 #include <QskTextLabel.h>
 #include <QskBoxBorderMetrics.h>
+#include <QskFontRole.h>
 #include <qnamespace.h>
+
+#include "SettingsPage.h"
+#include "RoomPage.h"
+#include "SummaryPage.h"
 
 
 class LightBannerFactory :  public BannerFactory
@@ -15,6 +23,7 @@ class LightBannerFactory :  public BannerFactory
         {
             auto* lightTileTitle = new QskTextLabel("Active Lights: 10");
             lightTileTitle->setAlignment(Qt::AlignCenter);
+            lightTileTitle->setFontRole({QskFontRole::Display, QskFontRole::High});
             return lightTileTitle;
         }
 
@@ -26,7 +35,10 @@ class LightBannerFactory :  public BannerFactory
 
         QskGraphicLabel* createIconLabel() override
         {
-            auto* lightIconLabel = new QskGraphicLabel();
+            QImage lightIconImage("assets/lamp.png");
+            QskGraphic lightIconGraphic = QskGraphic::fromImage(lightIconImage);
+            auto* lightIconLabel = new QskGraphicLabel(lightIconGraphic);
+            // lightIconLabel->setSize(25, 25);
             return lightIconLabel;
         }
 
@@ -40,6 +52,7 @@ class WifiBannerFactory :  public BannerFactory
         {
             auto* wifiTileTitle = new QskTextLabel("Active Wifi: 3");
             wifiTileTitle->setAlignment(Qt::AlignCenter);
+            wifiTileTitle->setFontRole({QskFontRole::Display, QskFontRole::High});
             return wifiTileTitle;
         }
 
@@ -51,7 +64,9 @@ class WifiBannerFactory :  public BannerFactory
 
         QskGraphicLabel* createIconLabel() override
         {
-            auto* wifiIconLabel = new QskGraphicLabel();
+            QImage wifiIconImage("assets/wifi-router.png");
+            QskGraphic wifiIconGraphic = QskGraphic::fromImage(wifiIconImage);
+            auto* wifiIconLabel = new QskGraphicLabel(wifiIconGraphic);
             return wifiIconLabel;
         }
 
@@ -65,6 +80,7 @@ class AcBannerFactory :  public BannerFactory
         {
             auto* acTileTitle = new QskTextLabel("Active AC: 3");
             acTileTitle->setAlignment(Qt::AlignCenter);
+            acTileTitle->setFontRole({QskFontRole::Display, QskFontRole::High});
             return acTileTitle;
         }
 
@@ -76,7 +92,9 @@ class AcBannerFactory :  public BannerFactory
 
         QskGraphicLabel* createIconLabel() override
         {
-            auto* acIconLabel = new QskGraphicLabel();
+            QImage acIconImage("assets/air-conditioner.png");
+            QskGraphic acIconGraphic = QskGraphic::fromImage(acIconImage);
+            auto* acIconLabel = new QskGraphicLabel(acIconGraphic);
             return acIconLabel;
         }
 
@@ -102,9 +120,17 @@ QskLinearBox* MainPage::buildBanner(BannerFactory& factory)
     banner->setPanel(true);
     // banner->setMargins(10);
     banner->setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
-    banner->setColor(QskLinearBox::Panel, QColor("#d3abac"));
+    banner->setColor(QskLinearBox::Panel, QColor("#cb8587"));
+    banner->addItem(factory.createIconLabel());
     banner->addItem(factory.createTileTitle());
     banner->addItem(factory.createMasterSwitch());
-    // banner->addItem(factory.createIconLabel());
     return banner;
+}
+
+BottomSection::BottomSection() : QskStackBox()
+{
+    this->addItem(new MainPage());
+    this->addItem(new RoomPage());
+    this->addItem(new SummaryPage());
+    this->addItem(new SettingsPage());
 }

@@ -12,9 +12,11 @@
 class TopBar : public QskLinearBox
 {
     public:
+        QskPushButton* m_menuButton = new QskPushButton;
+    public:
         TopBar(QQuickItem* parent = nullptr);
         // ~TopBar();
-        QskGraphicLabel* setCompanyLogo(QString text);
+        QskGraphicLabel* setLogo(QString text);
         QskTextLabel* setStatusLabels(QString text);
         QskPushButton* setMenuButton(QString text);
 };

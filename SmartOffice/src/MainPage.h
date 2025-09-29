@@ -2,6 +2,7 @@
 #define MAINPAGE_H
 
 #include <QskLinearBox.h>
+#include <QskStackBox.h>
 #include <QskTextLabel.h>
 #include <QskPushButton.h>
 #include <QskGraphicLabel.h>
@@ -12,6 +13,13 @@ class BannerFactory
         virtual QskTextLabel* createTileTitle() = 0;
         virtual QskPushButton* createMasterSwitch() = 0;
         virtual QskGraphicLabel* createIconLabel() = 0;
+};
+
+class BottomSection : public QskStackBox
+{
+    public:
+        BottomSection();
+
 };
 
 class MainPage : public QskLinearBox

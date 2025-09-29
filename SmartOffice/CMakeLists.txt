@@ -17,7 +17,13 @@ find_package(QSkinny REQUIRED)
 add_executable(smartoffice
     src/main.cpp
     src/TopBar.cpp
-    src/MainPage.cpp)
+    src/MainPage.cpp
+    src/SettingsPage.cpp
+    src/RoomPage.cpp
+    src/SummaryPage.cpp
+    src/PageViewer.cpp
+    src/NavigationBox.cpp)
+
  
 target_link_libraries(smartoffice PRIVATE
     Qt6::Quick
