@@ -16,7 +16,7 @@ PageViewer::PageViewer() : QskLinearBox()
     auto* bottomSection = new BottomSection();
     auto* navigationBox = new NavigationBox();
 
-    QObject::connect(topBar->m_menuButton, &QskPushButton::clicked, [bottomSection]()
+    QObject::connect(topBar->getMenuButton(), &QskPushButton::clicked, [bottomSection]()
     {
         int currentPageNumber = bottomSection->currentIndex();
         if (currentPageNumber != 3)
@@ -26,7 +26,7 @@ PageViewer::PageViewer() : QskLinearBox()
 
     });
 
-    QObject::connect(navigationBox->m_nextButton, &QskPushButton::clicked, [bottomSection]()
+    QObject::connect(navigationBox->getNextButton(), &QskPushButton::clicked, [bottomSection]()
     {
         int currentPageNumber = bottomSection->currentIndex();
         if (currentPageNumber >= 0 && currentPageNumber < 3)
@@ -36,7 +36,7 @@ PageViewer::PageViewer() : QskLinearBox()
 
     });
 
-    QObject::connect(navigationBox->m_previousButton, &QskPushButton::clicked, [bottomSection]()
+    QObject::connect(navigationBox->getPreviousButton(), &QskPushButton::clicked, [bottomSection]()
     {
         int currentPageNumber = bottomSection->currentIndex();
         if (currentPageNumber >= 1 && currentPageNumber < 4)

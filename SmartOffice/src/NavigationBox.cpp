@@ -12,3 +12,13 @@ NavigationBox::NavigationBox() : QskLinearBox()
     this->addItem(m_previousButton);
     this->addItem(m_nextButton);
 }
+
+QskPushButton* NavigationBox::getNextButton()
+{
+    return m_nextButton;
+}
+
+QskPushButton* NavigationBox::getPreviousButton()
+{
+    return m_previousButton;
+}

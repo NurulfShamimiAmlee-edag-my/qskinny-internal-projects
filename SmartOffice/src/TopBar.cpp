@@ -62,3 +62,8 @@ QskPushButton* TopBar::setMenuButton(QString text)
     // });
     return m_menuButton;
 }
+
+QskPushButton* TopBar::getMenuButton()
+{
+    return m_menuButton;
+}
