@@ -16,7 +16,7 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     // this->setSpacing(200);
     this->setPanel(true);
     this->setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
-    this->setColor(QskLinearBox::Panel,  QColor("#8e8b63"));
+    this->setColor(QskLinearBox::Panel,  QColor("#f5bd82"));
     this->setFixedHeight(50);
     this->setPaddingHint(QskLinearBox::Panel, 5);
     this->addItem(setLogo("assets/capybara.png"));  

@@ -15,6 +15,7 @@ PageViewer::PageViewer() : QskLinearBox()
     auto* topBar = new TopBar();
     auto* bottomSection = new BottomSection();
     auto* navigationBox = new NavigationBox();
+    m_totalPage = bottomSection->itemCount(); //calculate the number of items placed in a QskStackBox
 
     QObject::connect(topBar->getMenuButton(), &QskPushButton::clicked, [bottomSection]()
     {
@@ -26,20 +27,20 @@ PageViewer::PageViewer() : QskLinearBox()
 
     });
 
-    QObject::connect(navigationBox->getNextButton(), &QskPushButton::clicked, [bottomSection]()
+    QObject::connect(navigationBox->getNextButton(), &QskPushButton::clicked, [bottomSection, this]()
     {
         int currentPageNumber = bottomSection->currentIndex();
-        if (currentPageNumber >= 0 && currentPageNumber < 3)
+        if (currentPageNumber >= 0 && currentPageNumber < m_totalPage - 1)
         {
             bottomSection->setCurrentIndex(currentPageNumber + 1);
         }
 
     });
 
-    QObject::connect(navigationBox->getPreviousButton(), &QskPushButton::clicked, [bottomSection]()
+    QObject::connect(navigationBox->getPreviousButton(), &QskPushButton::clicked, [bottomSection, this]()
     {
         int currentPageNumber = bottomSection->currentIndex();
-        if (currentPageNumber >= 1 && currentPageNumber < 4)
+        if (currentPageNumber >= 1 && currentPageNumber < m_totalPage)
         {
             bottomSection->setCurrentIndex(currentPageNumber - 1);
         }
