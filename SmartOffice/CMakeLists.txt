@@ -23,7 +23,8 @@ add_executable(smartoffice
     src/SummaryPage.cpp
     src/PageViewer.cpp
     src/NavigationBox.cpp
-    src/BottomSection.cpp)
+    src/BottomSection.cpp
+    src/MySkinFactory.cpp)
 
  
 target_link_libraries(smartoffice PRIVATE

@@ -11,7 +11,8 @@ PageViewer::PageViewer() : QskLinearBox()
 {
     this->setOrientation(Qt::Vertical);
     this->setPanel(true);
-    this->setColor(QskLinearBox::Panel, QColor("#d6d4ad"));
+    
+    this->setColor(QskLinearBox::Panel, QColor("#5a756e"));
     auto* topBar = new TopBar();
     auto* bottomSection = new BottomSection();
     auto* navigationBox = new NavigationBox();

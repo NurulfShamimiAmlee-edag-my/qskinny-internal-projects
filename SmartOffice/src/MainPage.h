@@ -1,6 +1,7 @@
 #ifndef MAINPAGE_H
 #define MAINPAGE_H
 
+#include <QskAspect.h>
 #include <QskLinearBox.h>
 #include <QskStackBox.h>
 #include <QskTextLabel.h>
@@ -20,6 +21,7 @@ class MainPage : public QskLinearBox
 {
     //I need 3 utility boxes
     //in each utility box, i want an icon, a tile title and a switch button
+
     public:
         MainPage();
         QskLinearBox* buildBanner(BannerFactory& factory);

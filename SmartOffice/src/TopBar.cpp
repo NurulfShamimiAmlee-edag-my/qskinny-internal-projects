@@ -16,7 +16,7 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     // this->setSpacing(200);
     this->setPanel(true);
     this->setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
-    this->setColor(QskLinearBox::Panel,  QColor("#f5bd82"));
+    this->setGradientHint(QskLinearBox::Panel,  QColor("#8a9ba1"));
     this->setFixedHeight(50);
     this->setPaddingHint(QskLinearBox::Panel, 5);
     this->addItem(setLogo("assets/capybara.png"));  
@@ -44,7 +44,7 @@ QskTextLabel* TopBar::setStatusLabels(QString text)
     statusLabel->setPanel(true);
     statusLabel->setBoxShapeHint(QskTextLabel::Panel, QskBoxShapeMetrics(8));
     statusLabel->setPaddingHint(QskTextLabel::Panel, QskMargins(10));
-    statusLabel->setColor(QskTextLabel::Panel,  QColor("#70503fff"));
+    statusLabel->setGradientHint(QskTextLabel::Panel,  QColor("#70503fff"));
     statusLabel->setAlignment(Qt::AlignCenter);
     return statusLabel;
 }

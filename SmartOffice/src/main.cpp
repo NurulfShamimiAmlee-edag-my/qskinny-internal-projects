@@ -13,17 +13,23 @@
 #include <QskStackBox.h>
 #include <QskBoundedValueInput.h>
 #include <QskFontRole.h>
+#include <QskSkinManager.h>
 #include <QGuiApplication>
 #include <qevent.h>
 #include <qnamespace.h>
 
+/* My Classes */
 #include "PageViewer.h"
+#include "MySkinFactory.h"
 
 
 int main( int argc, char* argv[] )
 {
     QGuiApplication app( argc, argv );
- 
+
+    qskSkinManager->registerFactory("MySkinFactory", new MySkinFactory());
+    qskSkinManager->setSkin("DefaultSkin");
+    
     QskWindow window;
     window.addItem(new PageViewer());
     // window.addItem( verticalContainerBox );

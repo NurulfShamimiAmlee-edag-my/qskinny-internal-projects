@@ -1,31 +1,57 @@
 #include "RoomPage.h"
 #include <QskGraphic.h>
 #include <QskGraphicLabel.h>
+#include <QskGridBox.h>
 #include <QskLinearBox.h>
 #include <QskPushButton.h>
 #include <QskSizePolicy.h>
+#include <QskStackBox.h>
 #include <QskTextLabel.h>
 #include <QskFontRole.h>
 #include <QskBoxShapeMetrics.h>
+#include <qmargins.h>
+#include <iostream>
 #include <qnamespace.h>
+#include <qpoint.h>
 
 RoomPage::RoomPage() : QskLinearBox()
 {
     this->setOrientation(Qt::Vertical);
     // auto* testBox = new QskLinearBox(this);
     auto* roomName = new QskTextLabel("Meeting Room A", this);
-    // roomName->setPanel(true);
-    // roomName->setColor(QskTextLabel::Panel, QColor("#82d6f5"));
     roomName->setFontRole({QskFontRole::Display, QskFontRole::High});
     roomName->setAlignment(Qt::AlignCenter);  
+
     auto* horizontalBoxContainer = new QskLinearBox(Qt::Horizontal, this);
-    auto* roomBackground = new QskGraphicLabel(createGraphic("assets/meeting-room.jpg"), horizontalBoxContainer);
-    roomBackground->setFixedWidth(1080);
-    roomBackground->setPanel(true);
-    auto* testButton = new QskPushButton("test", roomBackground);
+
+
+    /* Image and Buttons Placement */
+    auto* roomImageBox = new QskStackBox();
+    horizontalBoxContainer->addItem(roomImageBox);
+
+    auto* roomBackgroundBox = new QskGraphicLabel(createGraphic("assets/meeting-room.jpg"));
+    roomBackgroundBox->setFixedWidth(1080);
+
+    // auto* buttonBox = new QskBox();
+    // buttonBox->setSizePolicy(QskSizePolicy::Expanding, QskSizePolicy::Expanding);
+    // buttonBox->setParentItem(roomImageBox);
+    auto* testButton = new QskPushButton("test");
+    testButton->setSizePolicy(QskSizePolicy::Fixed, QskSizePolicy::Fixed);
+    testButton->setMargins(QMarginsF(0,-20,0,0)); //why is this not working?
     testButton->setColor(QskPushButton::Panel, QColor("#82f5d4"));
-    testButton->setX(500);
-    testButton->setY(500);
+    testButton->setPosition(QPointF(500,500));
+
+    //TODO: get test button to appear on the image without sacrificing the buttons properties.
+    roomImageBox->addItem(roomBackgroundBox);
+    roomImageBox->addItem(testButton);
+
+
+    /* Image and Buttons Placement */
+
+    /* Debug */
+    // std::cout<< roomImageBox->itemCount() << std::endl;
+    /* Debug */
+    
     
     auto* verticalContainer = new QskLinearBox(Qt::Vertical, horizontalBoxContainer);
     auto* sliderBox = new QskLinearBox(Qt::Vertical, verticalContainer);
