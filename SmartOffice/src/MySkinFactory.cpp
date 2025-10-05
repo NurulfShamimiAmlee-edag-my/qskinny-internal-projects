@@ -17,6 +17,7 @@
 #include <qnamespace.h>
 
 #include "TopBar.h"
+#include "NavigationBox.h"
 #include "MainPage.h"
 MySkinFactory::MySkinFactory(QObject* parent) : QskSkinFactory(parent)
 {
@@ -51,6 +52,13 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setGradient(TopBarMenuButton::Panel, QColor("#82f5d4"), QColor("#82d6f5"));
                             e.setGradient(TopBarMenuButton::Panel | TopBarMenuButton::Hovered, QColor("#82f5d4"));
                             e.setAnimation(TopBarMenuButton::Panel | QskAspect::Color, 100);
+
+                            //NavigationButton
+                            e.setBoxShape(NavigationButton::Panel, QskBoxShapeMetrics(8));
+                            e.setGradient(NavigationButton::Panel, QColor("#82f5d4"), QColor("#82d6f5"));
+                            e.setGradient(NavigationButton::Panel | NavigationButton::Hovered, QColor("#82f5d4"));
+                            e.setAnimation(NavigationButton::Panel | QskAspect::Color, 100);
+
                         }
                         
                         {   //For MainPageTextLabel
@@ -58,6 +66,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setMetric(MainPageTextLabel::Panel | QskAspect::Border, 2);
                             e.setFontRole(MainPageTextLabel::Text, QskFontRole::Title);
                             e.setBoxShape(MainPageTextLabel::Panel, 8);
+                            e.setColor(MainPageTextLabel::Text, QColor("#5a756e"));
                             e.setGradient(MainPageTextLabel::Panel, QColor("#f5d682"));
                             e.setGradient(MainPageTextLabel::Panel | QskAspect::Border, QColor("#5a756e"));
                             e.setAlignment(MainPageTextLabel::Text, Qt::AlignCenter);
@@ -67,7 +76,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setBoxShape(MainPagePushButton::Panel, 8);
                             e.setMetric(MainPagePushButton::Panel | QskAspect::Border, 2);
                             e.setGradient(MainPagePushButton::Panel | QskAspect::Border, QColor("#82f5d4"));
-                            e.setGradient(MainPagePushButton::Panel, QColor("#82d6f5"));
+                            e.setGradient(MainPagePushButton::Panel, QColor("#8a9ba1"),QColor("#82d6f5"));
                             e.setGradient(MainPagePushButton::Panel | MainPagePushButton::Hovered, QColor("#82f5d4"));
                             e.setAnimation(MainPagePushButton::Panel | QskAspect::Color, 100);
 

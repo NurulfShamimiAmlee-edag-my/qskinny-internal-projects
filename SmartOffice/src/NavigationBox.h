@@ -1,18 +1,28 @@
 #ifndef NAVIGATIONBOX_H
 #define NAVIGATIONBOX_H
 
+#include <QskAspect.h>
 #include <QskLinearBox.h>
 #include <QskPushButton.h>
+
+class NavigationButton : public QskPushButton
+{
+    public:
+        QSK_SUBCONTROLS(Panel, Text);
+        NavigationButton(QString text);
+};
+
 class  NavigationBox : public QskLinearBox
 {
     private:
-        QskPushButton* m_nextButton = new QskPushButton(">");
-        QskPushButton* m_previousButton = new QskPushButton("<");
+        //TODO: Replace text with icon?
+        NavigationButton* m_nextButton = new NavigationButton(">");
+        NavigationButton* m_previousButton = new NavigationButton("<");
     
     public:
         NavigationBox();
-        QskPushButton* getNextButton();
-        QskPushButton* getPreviousButton();
+        NavigationButton* getNextButton();
+        NavigationButton* getPreviousButton();
 };
 
 
