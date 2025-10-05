@@ -13,17 +13,21 @@
 
 QSK_SUBCONTROL(TopBar, Panel)
 
+QSK_SUBCONTROL(TopBarMenuButton, Panel)
+QSK_SUBCONTROL(TopBarMenuButton, Text)
+
+TopBarMenuButton::TopBarMenuButton(): QskPushButton()
+{
+    setSubcontrolProxy(QskPushButton::Panel, Panel);
+};
+
 TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
 {
     setSubcontrolProxy(QskLinearBox::Panel, Panel);
     
     this->setOrientation(Qt::Horizontal);
-    // this->setSpacing(200);
     this->setPanel(true);
-    this->setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
-    this->setGradientHint(QskLinearBox::Panel,  QColor("#8a9ba1"));
     this->setFixedHeight(50);
-    this->setPaddingHint(QskLinearBox::Panel, 5);
     this->addItem(setLogo("assets/capybara.png"));  
     //TODO: Create a class that can use both logo and label -> label is used to display latest information
     this->addItem(setLogo("assets/thermometer.png"));
@@ -54,19 +58,19 @@ QskTextLabel* TopBar::setStatusLabels(QString text)
     return statusLabel;
 }
 
-QskPushButton* TopBar::setMenuButton(QString text)
+TopBarMenuButton* TopBar::setMenuButton(QString text)
 {
-    // auto* menuButton = new QskPushButton();
+    // auto* menuButton = new TopBarMenuButton();
     QImage buttonImage(text);
     QskGraphic buttonGraphic = QskGraphic::fromImage(buttonImage);
     m_menuButton->setIcon(buttonGraphic);
     m_menuButton->setIconStrutSize(QSizeF(25,25));
-    m_menuButton->setColor(QskPushButton::Panel, QColor("#d6d4ad"));
+    // m_menuButton->setColor(TopBarMenuButton::Panel, QColor("#d6d4ad"));
     m_menuButton->setFixedSize(30,30);
     return m_menuButton;
 }
 
-QskPushButton* TopBar::getMenuButton()
+TopBarMenuButton* TopBar::getMenuButton()
 {
     return m_menuButton;
 }

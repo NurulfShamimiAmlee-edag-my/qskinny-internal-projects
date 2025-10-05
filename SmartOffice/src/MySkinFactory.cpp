@@ -1,5 +1,6 @@
 #include "MySkinFactory.h"
 #include <QskAspect.h>
+#include <QskBox.h>
 #include <QskBoxBorderMetrics.h>
 #include <QskBoxShapeMetrics.h>
 #include <QskFontRole.h>
@@ -15,6 +16,7 @@
 #include <qfont.h>
 #include <qnamespace.h>
 
+#include "TopBar.h"
 #include "MainPage.h"
 MySkinFactory::MySkinFactory(QObject* parent) : QskSkinFactory(parent)
 {
@@ -37,10 +39,21 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                 {
                     QskSkinHintTableEditor e(&hintTable());
                     {
-                        
+                        setupFontTable("System", false);
+
+                        {
+                            //TopBar
+                            e.setBoxShape(TopBar::Panel, QskBoxShapeMetrics(8));
+                            e.setGradient(TopBar::Panel, QColor("#5a756e"), QColor("#8a9ba1"));
+                            e.setPadding(TopBar::Panel, 5);
+                            //TopBarMenuButton
+                            e.setBoxShape(TopBarMenuButton::Panel, QskBoxShapeMetrics(8));
+                            e.setGradient(TopBarMenuButton::Panel, QColor("#82f5d4"), QColor("#82d6f5"));
+                            e.setGradient(TopBarMenuButton::Panel | TopBarMenuButton::Hovered, QColor("#82f5d4"));
+                            e.setAnimation(TopBarMenuButton::Panel | QskAspect::Color, 100);
+                        }
                         
                         {   //For MainPageTextLabel
-                            setupFontTable("System", false);
                             e.setShadowColor(MainPageTextLabel::Panel, QColor("#82f5d4"));
                             e.setMetric(MainPageTextLabel::Panel | QskAspect::Border, 2);
                             e.setFontRole(MainPageTextLabel::Text, QskFontRole::Title);
@@ -67,7 +80,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             // // e.setColor(MainPageGraphicLabel::Graphic, QColor("#f5bd82")); //Does not work                    
 
                             //For MainPageBannerBox -- banner
-                            e.setGradient(MainPageBannerBox::Panel, QColor("#f5d682"));
+                            e.setGradient(MainPageBannerBox::Panel, QColor("#f5bd82"), QColor("#f5d682"));
                             e.setMargin(MainPageBannerBox::Panel, QskMargins(25));
                             e.setBoxBorderMetrics(MainPageBannerBox::Panel, QskBoxBorderMetrics(5));
                             e.setBoxShape(MainPageBannerBox::Panel, QskBoxShapeMetrics(8));
