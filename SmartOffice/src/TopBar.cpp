@@ -1,4 +1,5 @@
 #include "TopBar.h"
+#include <QskAspect.h>
 #include <QskBoxShapeMetrics.h>
 #include <QskGraphicLabel.h>
 #include <QskGridBox.h>
@@ -10,8 +11,12 @@
 #include <QskGraphic.h>
 #include <qnamespace.h>
 
+QSK_SUBCONTROL(TopBar, Panel)
+
 TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
 {
+    setSubcontrolProxy(QskLinearBox::Panel, Panel);
+    
     this->setOrientation(Qt::Horizontal);
     // this->setSpacing(200);
     this->setPanel(true);
@@ -27,7 +32,7 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     // this->addItem(setStatusLabels("Temperature"));
     // this->addItem(setStatusLabels("Humiditiy"));
     // this->addItem(setStatusLabels("Energy"));
-    this->addItem(setMenuButton("assets/app.png"));
+    this->addItem(setMenuButton("assets/list.png"));
 };
 
 QskGraphicLabel* TopBar::setLogo(QString text)
@@ -57,9 +62,7 @@ QskPushButton* TopBar::setMenuButton(QString text)
     m_menuButton->setIcon(buttonGraphic);
     m_menuButton->setIconStrutSize(QSizeF(25,25));
     m_menuButton->setColor(QskPushButton::Panel, QColor("#d6d4ad"));
-    // QObject::connect(menuButton, &QskPushButton::clicked, [bottomSection](){
-    //     bottomSection->setCurrentIndex(3);
-    // });
+    m_menuButton->setFixedSize(30,30);
     return m_menuButton;
 }
 

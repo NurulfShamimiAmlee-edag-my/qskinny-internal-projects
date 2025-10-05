@@ -1,5 +1,7 @@
 #include "MySkinFactory.h"
 #include <QskAspect.h>
+#include <QskBoxBorderMetrics.h>
+#include <QskBoxShapeMetrics.h>
 #include <QskFontRole.h>
 #include <QskLinearBox.h>
 #include <QskPushButton.h>
@@ -13,6 +15,7 @@
 #include <qfont.h>
 #include <qnamespace.h>
 
+#include "MainPage.h"
 MySkinFactory::MySkinFactory(QObject* parent) : QskSkinFactory(parent)
 {
 
@@ -34,37 +37,42 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                 {
                     QskSkinHintTableEditor e(&hintTable());
                     {
-                        //For QskTextLabel
-                        setupFontTable("System", false);
-                        e.setShadowColor(QskTextLabel::Panel, QColor("#82f5d4"));
-                        e.setMetric(QskTextLabel::Panel | QskAspect::Border, 2);
-                        e.setFontRole(QskTextLabel::Text, QskFontRole::Title);
-                        e.setBoxShape(QskTextLabel::Panel, 8);
-                        e.setGradient(QskTextLabel::Panel, QColor("#f5d682"));
-                        e.setGradient(QskTextLabel::Panel | QskAspect::Border, QColor("#5a756e"));
-                        e.setAlignment(QskTextLabel::Text, Qt::AlignCenter);
-                        e.setPadding(QskTextLabel::Panel, QskMargins(25));
+                        
+                        
+                        {   //For MainPageTextLabel
+                            setupFontTable("System", false);
+                            e.setShadowColor(MainPageTextLabel::Panel, QColor("#82f5d4"));
+                            e.setMetric(MainPageTextLabel::Panel | QskAspect::Border, 2);
+                            e.setFontRole(MainPageTextLabel::Text, QskFontRole::Title);
+                            e.setBoxShape(MainPageTextLabel::Panel, 8);
+                            e.setGradient(MainPageTextLabel::Panel, QColor("#f5d682"));
+                            e.setGradient(MainPageTextLabel::Panel | QskAspect::Border, QColor("#5a756e"));
+                            e.setAlignment(MainPageTextLabel::Text, Qt::AlignCenter);
+                            e.setPadding(MainPageTextLabel::Panel, QskMargins(25));
 
-                        //For QskPushButton
-                        e.setBoxShape(QskPushButton::Panel, 8);
-                        e.setMetric(QskPushButton::Panel | QskAspect::Border, 2);
-                        e.setGradient(QskPushButton::Panel | QskAspect::Border, QColor("#82f5d4"));
-                        e.setGradient(QskPushButton::Panel, QColor("#82d6f5"));
-                        e.setGradient(QskPushButton::Panel | QskLinearBox::Hovered, QColor("#82f5d4"));
-                        e.setAnimation(QskLinearBox::Panel | QskAspect::Color, 100);
+                            //For MainPagePushButton
+                            e.setBoxShape(MainPagePushButton::Panel, 8);
+                            e.setMetric(MainPagePushButton::Panel | QskAspect::Border, 2);
+                            e.setGradient(MainPagePushButton::Panel | QskAspect::Border, QColor("#82f5d4"));
+                            e.setGradient(MainPagePushButton::Panel, QColor("#82d6f5"));
+                            e.setGradient(MainPagePushButton::Panel | MainPagePushButton::Hovered, QColor("#82f5d4"));
+                            e.setAnimation(MainPagePushButton::Panel | QskAspect::Color, 100);
 
 
-                        //For QskGraphicLabel
-                        e.setBoxShape(QskGraphicLabel::Panel, 8);
-                        e.setMetric(QskGraphicLabel::Panel | QskAspect::Border, 2);
-                        e.setGradient(QskGraphicLabel::Panel | QskAspect::Border, QColor("#5a756e"));
-                        e.setGradient(QskGraphicLabel::Panel, QColor("#82f5d4")); 
-                        // e.setColor(QskGraphicLabel::Graphic, QColor("#f5bd82")); //Does not work                    
+                            //For MainPageGraphicLabel
+                            // e.setBoxShape(MainPageGraphicLabel::Panel, 8);
+                            // e.setMetric(MainPageGraphicLabel::Panel | QskAspect::Border, 2);
+                            // e.setGradient(MainPageGraphicLabel::Panel | QskAspect::Border, QColor("#5a756e"));
+                            // e.setGradient(MainPageGraphicLabel::Panel, QColor("#82f5d4")); 
+                            // // e.setColor(MainPageGraphicLabel::Graphic, QColor("#f5bd82")); //Does not work                    
 
-                        //For QskLinearBox -- banner
-                        e.setGradient(QskLinearBox::Panel, QColor("#f5d682"));
-                        // e.setMetric(QskLinearBox::Panel | QskAspect::Border, 5);
-                        // e.setGradient(QskLinearBox::Panel | QskAspect::Border, QColor("#f5d682"));
+                            //For MainPageBannerBox -- banner
+                            e.setGradient(MainPageBannerBox::Panel, QColor("#f5d682"));
+                            e.setMargin(MainPageBannerBox::Panel, QskMargins(25));
+                            e.setBoxBorderMetrics(MainPageBannerBox::Panel, QskBoxBorderMetrics(5));
+                            e.setBoxShape(MainPageBannerBox::Panel, QskBoxShapeMetrics(8));
+                            e.setGradient(MainPageBannerBox::Panel | QskAspect::Border, QColor("#f5bd82"));
+                        }
                     }
 
                 }

@@ -22,35 +22,68 @@
 
 #include <QskSkinManager.h>
 
+QSK_SUBCONTROL(MainPageTextLabel, Panel)
+QSK_SUBCONTROL(MainPageTextLabel, Text)
+
+QSK_SUBCONTROL(MainPagePushButton, Panel)
+QSK_SUBCONTROL(MainPagePushButton, Text)
+
+QSK_SUBCONTROL(MainPageGraphicLabel, Panel)
+
+QSK_SUBCONTROL(MainPageBannerBox, Panel);
+
+MainPageTextLabel::MainPageTextLabel(const QString& text, QQuickItem* parent) : QskTextLabel(text, parent)
+{
+    setSubcontrolProxy(QskTextLabel::Panel, Panel);
+    setSubcontrolProxy(QskTextLabel::Text, Text);
+}
+
+MainPagePushButton::MainPagePushButton(const QString& text, QQuickItem* parent) : QskPushButton(text, parent)
+{
+    setSubcontrolProxy(QskPushButton::Panel, Panel);
+    setSubcontrolProxy(QskPushButton::Text, Text);
+}
+
+MainPageGraphicLabel::MainPageGraphicLabel(const QskGraphic& graphic, QQuickItem* parent) : QskGraphicLabel(graphic, parent)
+{
+    setSubcontrolProxy(QskGraphicLabel::Panel, Panel);
+}
+
+MainPageBannerBox::MainPageBannerBox() : QskLinearBox()
+{
+    this->setOrientation(Qt::Vertical);
+    setSubcontrolProxy(QskLinearBox::Panel, Panel);
+}
+
 class LightBannerFactory :  public BannerFactory
 {
     public:
-        QskTextLabel* createTileTitle() override
+        MainPageTextLabel* createTileTitle() override
         {
-            auto* lightTileTitle = new QskTextLabel("Active Lights: 10");
+            auto* lightTileTitle = new MainPageTextLabel("Active Lights: 10");
             lightTileTitle->setPanel(true);
             lightTileTitle->setFixedWidth(300);
             lightTileTitle->setLayoutAlignmentHint(Qt::AlignCenter);
             return lightTileTitle;
         }
 
-        QskPushButton* createMasterSwitch() override
+        MainPagePushButton* createMasterSwitch() override
         {
-            auto* lightMasterSwitch = new QskPushButton("Master switch light");
+            auto* lightMasterSwitch = new MainPagePushButton("Master switch light");
             lightMasterSwitch->setFixedSize(180,180);
             lightMasterSwitch->setLayoutAlignmentHint(Qt::AlignCenter);
             return lightMasterSwitch;
         }
 
-        QskGraphicLabel* createIconLabel() override
+        MainPageGraphicLabel* createIconLabel() override
         {
             QImage lightIconImage("assets/lamp.png");
             QskGraphic lightIconGraphic = QskGraphic::fromImage(lightIconImage);
-            auto* lightIconLabel = new QskGraphicLabel(lightIconGraphic);
+            auto* lightIconLabel = new MainPageGraphicLabel(lightIconGraphic);
             // lightIconLabel->setPanel(true);
             lightIconLabel->setFixedSize(360,360);
             lightIconLabel->setLayoutAlignmentHint(Qt::AlignCenter);
-            lightIconLabel->setColor(QskGraphicLabel::Graphic, QColor("#f5bd82"));
+            lightIconLabel->setColor(MainPageGraphicLabel::Graphic, QColor("#f5bd82"));
             return lightIconLabel;
         }
 
@@ -60,28 +93,28 @@ class LightBannerFactory :  public BannerFactory
 class WifiBannerFactory :  public BannerFactory
 {
     public:
-        QskTextLabel* createTileTitle() override
+        MainPageTextLabel* createTileTitle() override
         {
-            auto* wifiTileTitle = new QskTextLabel("Active Wifi: 3");
+            auto* wifiTileTitle = new MainPageTextLabel("Active Wifi: 3");
             wifiTileTitle->setPanel(true);
             wifiTileTitle->setFixedWidth(300);
             wifiTileTitle->setLayoutAlignmentHint(Qt::AlignCenter);
             return wifiTileTitle;
         }
 
-        QskPushButton* createMasterSwitch() override
+        MainPagePushButton* createMasterSwitch() override
         {
-            auto* wifiMasterSwitch = new QskPushButton("Master switch Wifi");
+            auto* wifiMasterSwitch = new MainPagePushButton("Master switch Wifi");
             wifiMasterSwitch->setFixedSize(180,180);
             wifiMasterSwitch->setLayoutAlignmentHint(Qt::AlignCenter);
             return wifiMasterSwitch;
         }
 
-        QskGraphicLabel* createIconLabel() override
+        MainPageGraphicLabel* createIconLabel() override
         {
             QImage wifiIconImage("assets/wifi-router.png");
             QskGraphic wifiIconGraphic = QskGraphic::fromImage(wifiIconImage);
-            auto* wifiIconLabel = new QskGraphicLabel(wifiIconGraphic);
+            auto* wifiIconLabel = new MainPageGraphicLabel(wifiIconGraphic);
             // wifiIconLabel->setPanel(true);
             wifiIconLabel->setFixedSize(360,360);
             wifiIconLabel->setLayoutAlignmentHint(Qt::AlignCenter);
@@ -94,28 +127,28 @@ class WifiBannerFactory :  public BannerFactory
 class AcBannerFactory :  public BannerFactory
 {
     public:
-        QskTextLabel* createTileTitle() override
+        MainPageTextLabel* createTileTitle() override
         {
-            auto* acTileTitle = new QskTextLabel("Active AC: 3");
+            auto* acTileTitle = new MainPageTextLabel("Active AC: 3");
             acTileTitle->setPanel(true);
             acTileTitle->setFixedWidth(300);
             acTileTitle->setLayoutAlignmentHint(Qt::AlignCenter);
             return acTileTitle;
         }
 
-        QskPushButton* createMasterSwitch() override
+        MainPagePushButton* createMasterSwitch() override
         {
-            auto* acMasterSwitch = new QskPushButton("Master switch AC");
+            auto* acMasterSwitch = new MainPagePushButton("Master switch AC");
             acMasterSwitch->setFixedSize(180,180);
             acMasterSwitch->setLayoutAlignmentHint(Qt::AlignCenter);
             return acMasterSwitch;
         }
 
-        QskGraphicLabel* createIconLabel() override
+        MainPageGraphicLabel* createIconLabel() override
         {
             QImage acIconImage("assets/air-conditioner.png");
             QskGraphic acIconGraphic = QskGraphic::fromImage(acIconImage);
-            auto* acIconLabel = new QskGraphicLabel(acIconGraphic);
+            auto* acIconLabel = new MainPageGraphicLabel(acIconGraphic);
             // acIconLabel->setPanel(true);
             acIconLabel->setFixedSize(360,360);
             acIconLabel->setLayoutAlignmentHint(Qt::AlignCenter);           
@@ -138,20 +171,18 @@ MainPage::MainPage() : QskLinearBox()
 
     //TODO:
     //this->addItem(new Banner("Active Lights", "Master Switch Light", "assets/lamp.png"));
+    //this->addItem(new Banner("Active AC, "Master Switch AC", "assets/air-conditioner.png"));
+    //this->addItem(new Banner("Active Wifi, "Master Switch Wifi, "assets/wifi-router.png"));
 }
 
-QskLinearBox* MainPage::buildBanner(BannerFactory& factory)
+MainPageBannerBox* MainPage::buildBanner(BannerFactory& factory)
 {
-    auto* banner = new QskLinearBox(Qt::Vertical);
-    // banner->setSize(720,800);
+    auto* banner = new MainPageBannerBox();
     banner->setPanel(true);
-    banner->setMargins(QskMargins(25));
-    banner->setBoxBorderMetricsHint(QskLinearBox::Panel, QskBoxBorderMetrics(5));
-    banner->setColor(QskLinearBox::Panel | QskAspect::Border, QColor("#f5bd82"));
-    banner->setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
     banner->addItem(factory.createTileTitle());
     banner->addItem(factory.createIconLabel());
     banner->addItem(factory.createMasterSwitch());
     return banner;
 }
+
 

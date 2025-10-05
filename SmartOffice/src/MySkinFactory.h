@@ -2,6 +2,9 @@
 #define MYSKINFACTORY_H
 
 #include <QskSkinFactory.h>
+#include <qcolor.h>
+
+
 
 class MySkinFactory : public QskSkinFactory
 {

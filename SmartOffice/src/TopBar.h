@@ -1,6 +1,7 @@
 #ifndef TOPBAR_H
 #define TOPBAR_H
 
+#include <QskAspect.h>
 #include <QskGraphicLabel.h>
 #include <QskGridBox.h>
 #include <QskGraphicLabel.h>
@@ -11,6 +12,8 @@
 
 class TopBar : public QskLinearBox
 {
+    QSK_SUBCONTROLS(Panel)
+
     private:
         QskPushButton* m_menuButton = new QskPushButton;
     public:
