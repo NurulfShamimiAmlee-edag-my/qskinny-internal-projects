@@ -38,9 +38,9 @@ class TopBar : public QskLinearBox
         QSK_SUBCONTROLS(Panel)
 
         TopBar(QQuickItem* parent = nullptr);
-        QskGraphicLabel* setGraphicLabel(QString text);
+        QskGraphicLabel* setGraphicLabel(const QString& path);
         QskTextLabel* setStatusLabels(QString text);
-        TopBarMenuButton* setMenuButton(QString text);
+        TopBarMenuButton* setMenuButton(const QString& path);
         TopBarMenuButton* getMenuButton();
 };
 

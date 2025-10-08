@@ -9,6 +9,7 @@
 #include <QskSizePolicy.h>
 #include <QskTextLabel.h>
 #include <QskGraphic.h>
+#include <QskGraphicIO.h>
 #include <qcolor.h>
 #include <qimage.h>
 #include <qnamespace.h>
@@ -17,6 +18,7 @@
 #include "MyGraphicRole.h"
 
 #include <iostream>
+#include <qpixmap.h>
 
 QSK_SUBCONTROL(TopBar, Panel)
 
@@ -46,23 +48,25 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     this->setFixedHeight(50);
     this->addItem(setGraphicLabel("assets/capybara.png"));  
     //TODO: Create a class that can use both logo and label -> label is used to display latest information
-    this->addItem(setGraphicLabel("assets/thermometer-svgrepo-com.svg"));
-    this->addItem(setGraphicLabel("assets/water.png"));
-    this->addItem(setGraphicLabel("assets/electricity.png"));
+    this->addItem(setGraphicLabel("assets/qvg/thermometer-svgrepo-com.svg"));
+    this->addItem(setGraphicLabel("assets/qvg/water.png"));
+    this->addItem(setGraphicLabel("assets/qvg/electricity.png"));
     // this->addItem(setStatusLabels("Temperature"));
     // this->addItem(setStatusLabels("Humiditiy"));
     // this->addItem(setStatusLabels("Energy"));
-    this->addItem(setMenuButton("assets/list.png"));
+    this->addItem(setMenuButton("assets/qvg/list.qvg"));
 };
 
-QskGraphicLabel* TopBar::setGraphicLabel (QString text)
+QskGraphicLabel* TopBar::setGraphicLabel (const QString& path)
 {
-    QImage image(text);
-    QskGraphic graphic = QskGraphic::fromImage(image);
-    auto* graphicLabel = new QskGraphicLabel(graphic);
-    graphicLabel->setPanel(true);
-    graphicLabel->setGraphicRole(MimiGraphicRole::Warning);
-    graphicLabel->setGradientHint(QskGraphicLabel::Graphic, Qt::magenta);
+    // QImage image(text);
+    QPixmap image(path);
+    // QskGraphic graphic = QskGraphic::fromImage(image);
+    QskGraphic graphic = QskGraphic::fromPixmap(image);
+    auto* graphicLabel = new QskGraphicLabel();
+    // graphicLabel->setGraphicRole(MimiGraphicRole::Warning);
+    // graphicLabel->setGradientHint(QskGraphicLabel::Graphic, Qt::magenta);
+    graphicLabel->setGraphic(graphic);
     return graphicLabel;
 }
 
@@ -77,11 +81,11 @@ QskTextLabel* TopBar::setStatusLabels(QString text)
     return statusLabel;
 }
 
-TopBarMenuButton* TopBar::setMenuButton(QString text)
+TopBarMenuButton* TopBar::setMenuButton(const QString& path)
 {
     // auto* menuButton = new TopBarMenuButton();
-    QImage buttonImage(text);
-    QskGraphic buttonGraphic = QskGraphic::fromImage(buttonImage);
+    // QImage buttonImage(path);
+    QskGraphic buttonGraphic = QskGraphicIO::read(path);
     m_menuButton->setIcon(buttonGraphic);
     m_menuButton->setIconStrutSize(QSizeF(25,25));
     // m_menuButton->setColor(TopBarMenuButton::Panel, QColor("#d6d4ad"));

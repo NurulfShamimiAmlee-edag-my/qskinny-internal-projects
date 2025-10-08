@@ -49,8 +49,8 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                         {
                             //TODO: Doesn't work
                             QskColorFilter filter;
-                            filter.addColorSubstitution(0xff000000, Qt::magenta);
-                            e.setGraphicRole(QskGraphicLabel::Graphic, MimiGraphicRole::Warning);    
+                            filter.addColorSubstitution(Qt::black, Qt::magenta);
+                            e.setGraphicRole(TopBarMenuButton::Icon, MimiGraphicRole::Warning);    
                             setGraphicFilter(MimiGraphicRole::Warning, filter);
     
                             
