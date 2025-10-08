@@ -10,6 +10,8 @@
 #include <QskPushButton.h>
 #include <qquickitem.h>
 
+
+
 class TopBarMenuButton : public QskPushButton
 {
     public:
@@ -17,6 +19,15 @@ class TopBarMenuButton : public QskPushButton
 
         TopBarMenuButton();
 };
+
+class TopBarGraphicLabel : public QskGraphicLabel
+{
+    public:
+        QSK_SUBCONTROLS(Panel, Graphic);
+
+        TopBarGraphicLabel();
+};
+
 
 class TopBar : public QskLinearBox
 {
@@ -27,7 +38,7 @@ class TopBar : public QskLinearBox
         QSK_SUBCONTROLS(Panel)
 
         TopBar(QQuickItem* parent = nullptr);
-        QskGraphicLabel* setLogo(QString text);
+        QskGraphicLabel* setGraphicLabel(QString text);
         QskTextLabel* setStatusLabels(QString text);
         TopBarMenuButton* setMenuButton(QString text);
         TopBarMenuButton* getMenuButton();

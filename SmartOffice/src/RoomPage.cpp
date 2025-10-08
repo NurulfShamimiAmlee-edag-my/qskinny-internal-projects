@@ -5,6 +5,7 @@
 #include <QskLinearBox.h>
 #include <QskPushButton.h>
 #include <QskSizePolicy.h>
+#include <QskSkinnable.h>
 #include <QskStackBox.h>
 #include <QskTextLabel.h>
 #include <QskFontRole.h>
@@ -13,6 +14,7 @@
 #include <iostream>
 #include <qnamespace.h>
 #include <qpoint.h>
+#include <qvectornd.h>
 
 RoomPage::RoomPage() : QskLinearBox()
 {
@@ -25,25 +27,35 @@ RoomPage::RoomPage() : QskLinearBox()
     auto* horizontalBoxContainer = new QskLinearBox(Qt::Horizontal, this);
 
 
+
     /* Image and Buttons Placement */
-    auto* roomImageBox = new QskStackBox();
+    auto* roomImageBox = new QskBox();
+    auto roomRect = roomImageBox->contentsRect();
     horizontalBoxContainer->addItem(roomImageBox);
 
-    auto* roomBackgroundBox = new QskGraphicLabel(createGraphic("assets/meeting-room.jpg"));
-    roomBackgroundBox->setFixedWidth(1080);
+    auto* roomBackgroundBox = new QskGraphicLabel(createGraphic("assets/meeting-room.jpg"),roomImageBox);
+    // auto imageHint = roomBackgroundBox->sizeConstraint();
+    // qreal y = roomRect.y() + 0.6 * roomRect.height() - 0.5 * imageHint.height();
+    // qreal x = roomRect.center().x() - 0.5 * imageHint.width();
+    QRectF imageRect(0,0,960,960);
+    roomBackgroundBox->setGeometry(0, -100,960,1080);
+    // std::cout << y << x << std::endl;
+    // std::cout << imageHint.height() << imageHint.width() << std::endl;
 
-    // auto* buttonBox = new QskBox();
-    // buttonBox->setSizePolicy(QskSizePolicy::Expanding, QskSizePolicy::Expanding);
-    // buttonBox->setParentItem(roomImageBox);
-    auto* testButton = new QskPushButton("test");
-    testButton->setSizePolicy(QskSizePolicy::Fixed, QskSizePolicy::Fixed);
-    testButton->setMargins(QMarginsF(0,-20,0,0)); //why is this not working?
+    auto* testButton = new QskPushButton("test", roomImageBox);
     testButton->setColor(QskPushButton::Panel, QColor("#82f5d4"));
-    testButton->setPosition(QPointF(500,500));
+    testButton->setGeometry(100,100, 100,100);
+    testButton->setZ(2);
+    std::cout << testButton->x() << testButton->y() << std::endl;
+
+    auto* testButton2 = new QskPushButton("test2", roomImageBox);
+    testButton2->setColor(QskPushButton::Panel, QColor("#82f5d4"));
+    testButton2->setGeometry(150,100, 100,100);
+    testButton2->setZ(1);
 
     //TODO: get test button to appear on the image without sacrificing the buttons properties.
-    roomImageBox->addItem(roomBackgroundBox);
-    roomImageBox->addItem(testButton);
+    // roomImageBox->addItem(roomBackgroundBox);
+    // roomImageBox->addItem(testButton);
 
 
     /* Image and Buttons Placement */

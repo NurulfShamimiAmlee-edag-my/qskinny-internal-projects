@@ -9,16 +9,32 @@
 #include <QskSizePolicy.h>
 #include <QskTextLabel.h>
 #include <QskGraphic.h>
+#include <qcolor.h>
+#include <qimage.h>
 #include <qnamespace.h>
+#include <QskColorFilter.h>
+#include <QPainter>
+#include "MyGraphicRole.h"
+
+#include <iostream>
 
 QSK_SUBCONTROL(TopBar, Panel)
 
 QSK_SUBCONTROL(TopBarMenuButton, Panel)
 QSK_SUBCONTROL(TopBarMenuButton, Text)
 
+QSK_SUBCONTROL(TopBarGraphicLabel, Panel)
+QSK_SUBCONTROL(TopBarGraphicLabel, Graphic)
+
 TopBarMenuButton::TopBarMenuButton(): QskPushButton()
 {
     setSubcontrolProxy(QskPushButton::Panel, Panel);
+};
+
+TopBarGraphicLabel::TopBarGraphicLabel(): QskGraphicLabel()
+{
+    setSubcontrolProxy(QskGraphicLabel::Panel, Panel);
+    setSubcontrolProxy(QskGraphicLabel::Graphic, Graphic);
 };
 
 TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
@@ -28,23 +44,26 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     this->setOrientation(Qt::Horizontal);
     this->setPanel(true);
     this->setFixedHeight(50);
-    this->addItem(setLogo("assets/capybara.png"));  
+    this->addItem(setGraphicLabel("assets/capybara.png"));  
     //TODO: Create a class that can use both logo and label -> label is used to display latest information
-    this->addItem(setLogo("assets/thermometer.png"));
-    this->addItem(setLogo("assets/water.png"));
-    this->addItem(setLogo("assets/electricity.png"));
+    this->addItem(setGraphicLabel("assets/thermometer-svgrepo-com.svg"));
+    this->addItem(setGraphicLabel("assets/water.png"));
+    this->addItem(setGraphicLabel("assets/electricity.png"));
     // this->addItem(setStatusLabels("Temperature"));
     // this->addItem(setStatusLabels("Humiditiy"));
     // this->addItem(setStatusLabels("Energy"));
     this->addItem(setMenuButton("assets/list.png"));
 };
 
-QskGraphicLabel* TopBar::setLogo(QString text)
+QskGraphicLabel* TopBar::setGraphicLabel (QString text)
 {
-    QImage companyLogo(text);
-    QskGraphic companyGraphic = QskGraphic::fromImage(companyLogo);
-    auto* companyLogoLabel = new QskGraphicLabel(companyGraphic);
-    return companyLogoLabel;
+    QImage image(text);
+    QskGraphic graphic = QskGraphic::fromImage(image);
+    auto* graphicLabel = new QskGraphicLabel(graphic);
+    graphicLabel->setPanel(true);
+    graphicLabel->setGraphicRole(MimiGraphicRole::Warning);
+    graphicLabel->setGradientHint(QskGraphicLabel::Graphic, Qt::magenta);
+    return graphicLabel;
 }
 
 QskTextLabel* TopBar::setStatusLabels(QString text)

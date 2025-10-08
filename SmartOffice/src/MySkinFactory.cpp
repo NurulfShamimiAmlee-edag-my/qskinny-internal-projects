@@ -13,12 +13,16 @@
 #include <QskTextLabel.h>
 #include <QskGraphicLabel.h>
 #include <QskMargins.h>
+#include <QskColorFilter.h>
+#include <QskRgbValue.h>
 #include <qfont.h>
 #include <qnamespace.h>
+#include <iostream>
 
 #include "TopBar.h"
 #include "NavigationBox.h"
 #include "MainPage.h"
+#include "MyGraphicRole.h"
 MySkinFactory::MySkinFactory(QObject* parent) : QskSkinFactory(parent)
 {
 
@@ -43,6 +47,13 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                         setupFontTable("System", false);
 
                         {
+                            //TODO: Doesn't work
+                            QskColorFilter filter;
+                            filter.addColorSubstitution(0xff000000, Qt::magenta);
+                            e.setGraphicRole(QskGraphicLabel::Graphic, MimiGraphicRole::Warning);    
+                            setGraphicFilter(MimiGraphicRole::Warning, filter);
+    
+                            
                             //TopBar
                             e.setBoxShape(TopBar::Panel, QskBoxShapeMetrics(8));
                             e.setGradient(TopBar::Panel, QColor("#5a756e"), QColor("#8a9ba1"));
@@ -58,7 +69,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setGradient(NavigationButton::Panel, QColor("#82f5d4"), QColor("#82d6f5"));
                             e.setGradient(NavigationButton::Panel | NavigationButton::Hovered, QColor("#82f5d4"));
                             e.setAnimation(NavigationButton::Panel | QskAspect::Color, 100);
-
+                        
                         }
                         
                         {   //For MainPageTextLabel

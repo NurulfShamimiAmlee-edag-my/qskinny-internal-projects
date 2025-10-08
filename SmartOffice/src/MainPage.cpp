@@ -18,6 +18,7 @@
 #include <QskTextOptions.h>
 #include <QskSkinnable.h>
 #include <qnamespace.h>
+#include <iostream>
 
 
 #include <QskSkinManager.h>
