@@ -15,10 +15,10 @@
 #include <qnamespace.h>
 #include <QskColorFilter.h>
 #include <QPainter>
+
+
 #include "MyGraphicRole.h"
 
-#include <iostream>
-#include <qpixmap.h>
 
 QSK_SUBCONTROL(TopBar, Panel)
 
@@ -46,26 +46,21 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     this->setOrientation(Qt::Horizontal);
     this->setPanel(true);
     this->setFixedHeight(50);
-    this->addItem(setGraphicLabel("assets/capybara.png"));  
+    this->addItem(setGraphicLabel("assets/qvg/capybara.qvg"));  
     //TODO: Create a class that can use both logo and label -> label is used to display latest information
-    this->addItem(setGraphicLabel("assets/qvg/thermometer-svgrepo-com.svg"));
-    this->addItem(setGraphicLabel("assets/qvg/water.png"));
-    this->addItem(setGraphicLabel("assets/qvg/electricity.png"));
+    this->addItem(setGraphicLabel("assets/qvg/thermometer-svgrepo-com.qvg"));
+    this->addItem(setGraphicLabel("assets/qvg/water.qvg"));
+    this->addItem(setGraphicLabel("assets/qvg/electricity.qvg"));
     // this->addItem(setStatusLabels("Temperature"));
     // this->addItem(setStatusLabels("Humiditiy"));
     // this->addItem(setStatusLabels("Energy"));
     this->addItem(setMenuButton("assets/qvg/list.qvg"));
 };
 
-QskGraphicLabel* TopBar::setGraphicLabel (const QString& path)
+TopBarGraphicLabel* TopBar::setGraphicLabel (const QString& path)
 {
-    // QImage image(text);
-    QPixmap image(path);
-    // QskGraphic graphic = QskGraphic::fromImage(image);
-    QskGraphic graphic = QskGraphic::fromPixmap(image);
-    auto* graphicLabel = new QskGraphicLabel();
-    // graphicLabel->setGraphicRole(MimiGraphicRole::Warning);
-    // graphicLabel->setGradientHint(QskGraphicLabel::Graphic, Qt::magenta);
+    QskGraphic graphic = QskGraphicIO::read(path);
+    auto* graphicLabel = new TopBarGraphicLabel();
     graphicLabel->setGraphic(graphic);
     return graphicLabel;
 }

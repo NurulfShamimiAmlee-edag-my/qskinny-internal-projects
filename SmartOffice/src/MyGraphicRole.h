@@ -2,7 +2,7 @@
 enum MimiGraphicRole
 {
     Default,
-    Active,
-    Warning,
+    TopBar,
+    MainPage,
     Error,
 };

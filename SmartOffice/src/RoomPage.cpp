@@ -11,7 +11,6 @@
 #include <QskFontRole.h>
 #include <QskBoxShapeMetrics.h>
 #include <qmargins.h>
-#include <iostream>
 #include <qnamespace.h>
 #include <qpoint.h>
 #include <qvectornd.h>
@@ -33,7 +32,7 @@ RoomPage::RoomPage() : QskLinearBox()
     auto roomRect = roomImageBox->contentsRect();
     horizontalBoxContainer->addItem(roomImageBox);
 
-    auto* roomBackgroundBox = new QskGraphicLabel(createGraphic("assets/meeting-room.jpg"),roomImageBox);
+    auto* roomBackgroundBox = new QskGraphicLabel(createGraphic("assets/jpg/meeting-room.jpg"),roomImageBox);
     // auto imageHint = roomBackgroundBox->sizeConstraint();
     // qreal y = roomRect.y() + 0.6 * roomRect.height() - 0.5 * imageHint.height();
     // qreal x = roomRect.center().x() - 0.5 * imageHint.width();
@@ -46,7 +45,7 @@ RoomPage::RoomPage() : QskLinearBox()
     testButton->setColor(QskPushButton::Panel, QColor("#82f5d4"));
     testButton->setGeometry(100,100, 100,100);
     testButton->setZ(2);
-    std::cout << testButton->x() << testButton->y() << std::endl;
+    // std::cout << testButton->x() << testButton->y() << std::endl;
 
     auto* testButton2 = new QskPushButton("test2", roomImageBox);
     testButton2->setColor(QskPushButton::Panel, QColor("#82f5d4"));

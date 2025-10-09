@@ -17,7 +17,6 @@
 #include <QskRgbValue.h>
 #include <qfont.h>
 #include <qnamespace.h>
-#include <iostream>
 
 #include "TopBar.h"
 #include "NavigationBox.h"
@@ -47,11 +46,18 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                         setupFontTable("System", false);
 
                         {
-                            //TODO: Doesn't work
-                            QskColorFilter filter;
-                            filter.addColorSubstitution(Qt::black, Qt::magenta);
-                            e.setGraphicRole(TopBarMenuButton::Icon, MimiGraphicRole::Warning);    
-                            setGraphicFilter(MimiGraphicRole::Warning, filter);
+                            
+                            //Change icon's color
+                            QskColorFilter filterMainPage;
+                            filterMainPage.addColorSubstitution(Qt::black, qRgb(138,155,161));
+                            QskColorFilter filterTopBar;
+                            filterTopBar.addColorSubstitution(Qt::black, qRgb(245,189,130));       
+
+                            e.setGraphicRole(TopBarGraphicLabel::Graphic,  MimiGraphicRole::TopBar);
+                            e.setGraphicRole(MainPageGraphicLabel::Graphic, MimiGraphicRole::MainPage);  
+
+                            setGraphicFilter(MimiGraphicRole::MainPage, filterMainPage);
+                            setGraphicFilter(MimiGraphicRole::TopBar, filterTopBar);
     
                             
                             //TopBar
@@ -90,14 +96,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setGradient(MainPagePushButton::Panel, QColor("#8a9ba1"),QColor("#82d6f5"));
                             e.setGradient(MainPagePushButton::Panel | MainPagePushButton::Hovered, QColor("#82f5d4"));
                             e.setAnimation(MainPagePushButton::Panel | QskAspect::Color, 100);
-
-
-                            //For MainPageGraphicLabel
-                            // e.setBoxShape(MainPageGraphicLabel::Panel, 8);
-                            // e.setMetric(MainPageGraphicLabel::Panel | QskAspect::Border, 2);
-                            // e.setGradient(MainPageGraphicLabel::Panel | QskAspect::Border, QColor("#5a756e"));
-                            // e.setGradient(MainPageGraphicLabel::Panel, QColor("#82f5d4")); 
-                            // // e.setColor(MainPageGraphicLabel::Graphic, QColor("#f5bd82")); //Does not work                    
+                  
 
                             //For MainPageBannerBox -- banner
                             e.setGradient(MainPageBannerBox::Panel, QColor("#f5bd82"), QColor("#f5d682"));

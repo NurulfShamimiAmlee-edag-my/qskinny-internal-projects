@@ -4,7 +4,6 @@
 #include <QskAspect.h>
 #include <QskGraphicLabel.h>
 #include <QskGridBox.h>
-#include <QskGraphicLabel.h>
 #include <QskLinearBox.h>
 #include <QskTextLabel.h>
 #include <QskPushButton.h>
@@ -38,7 +37,7 @@ class TopBar : public QskLinearBox
         QSK_SUBCONTROLS(Panel)
 
         TopBar(QQuickItem* parent = nullptr);
-        QskGraphicLabel* setGraphicLabel(const QString& path);
+        TopBarGraphicLabel* setGraphicLabel(const QString& path);
         QskTextLabel* setStatusLabels(QString text);
         TopBarMenuButton* setMenuButton(const QString& path);
         TopBarMenuButton* getMenuButton();

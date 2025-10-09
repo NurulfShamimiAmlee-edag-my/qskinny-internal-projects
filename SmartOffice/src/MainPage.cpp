@@ -17,11 +17,9 @@
 #include <QskFontRole.h>
 #include <QskTextOptions.h>
 #include <QskSkinnable.h>
-#include <qnamespace.h>
-#include <iostream>
-
-
+#include <QskGraphicIO.h>
 #include <QskSkinManager.h>
+#include <qnamespace.h>
 
 QSK_SUBCONTROL(MainPageTextLabel, Panel)
 QSK_SUBCONTROL(MainPageTextLabel, Text)
@@ -48,6 +46,7 @@ MainPagePushButton::MainPagePushButton(const QString& text, QQuickItem* parent) 
 MainPageGraphicLabel::MainPageGraphicLabel(const QskGraphic& graphic, QQuickItem* parent) : QskGraphicLabel(graphic, parent)
 {
     setSubcontrolProxy(QskGraphicLabel::Panel, Panel);
+    setSubcontrolProxy(QskGraphicLabel::Graphic, Graphic);
 }
 
 MainPageBannerBox::MainPageBannerBox() : QskLinearBox()
@@ -55,6 +54,8 @@ MainPageBannerBox::MainPageBannerBox() : QskLinearBox()
     this->setOrientation(Qt::Vertical);
     setSubcontrolProxy(QskLinearBox::Panel, Panel);
 }
+
+
 
 class LightBannerFactory :  public BannerFactory
 {
@@ -78,10 +79,8 @@ class LightBannerFactory :  public BannerFactory
 
         MainPageGraphicLabel* createIconLabel() override
         {
-            QImage lightIconImage("assets/lamp.png");
-            QskGraphic lightIconGraphic = QskGraphic::fromImage(lightIconImage);
+            QskGraphic lightIconGraphic = QskGraphicIO::read(QString("assets/qvg/lamp.qvg"));
             auto* lightIconLabel = new MainPageGraphicLabel(lightIconGraphic);
-            // lightIconLabel->setPanel(true);
             lightIconLabel->setFixedSize(360,360);
             lightIconLabel->setLayoutAlignmentHint(Qt::AlignCenter);
             lightIconLabel->setColor(MainPageGraphicLabel::Graphic, QColor("#f5bd82"));
@@ -113,8 +112,8 @@ class WifiBannerFactory :  public BannerFactory
 
         MainPageGraphicLabel* createIconLabel() override
         {
-            QImage wifiIconImage("assets/wifi-router.png");
-            QskGraphic wifiIconGraphic = QskGraphic::fromImage(wifiIconImage);
+
+            QskGraphic wifiIconGraphic = QskGraphicIO::read(QString("assets/qvg/wifi-router.qvg"));
             auto* wifiIconLabel = new MainPageGraphicLabel(wifiIconGraphic);
             // wifiIconLabel->setPanel(true);
             wifiIconLabel->setFixedSize(360,360);
@@ -147,10 +146,8 @@ class AcBannerFactory :  public BannerFactory
 
         MainPageGraphicLabel* createIconLabel() override
         {
-            QImage acIconImage("assets/air-conditioner.png");
-            QskGraphic acIconGraphic = QskGraphic::fromImage(acIconImage);
+            QskGraphic acIconGraphic = QskGraphicIO::read(QString("assets/qvg/air-conditioner.qvg"));
             auto* acIconLabel = new MainPageGraphicLabel(acIconGraphic);
-            // acIconLabel->setPanel(true);
             acIconLabel->setFixedSize(360,360);
             acIconLabel->setLayoutAlignmentHint(Qt::AlignCenter);           
             return acIconLabel;
