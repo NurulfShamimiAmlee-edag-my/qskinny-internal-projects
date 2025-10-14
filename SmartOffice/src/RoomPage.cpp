@@ -1,4 +1,5 @@
 #include "RoomPage.h"
+#include <QskBoundedValueInput.h>
 #include <QskGraphic.h>
 #include <QskGraphicLabel.h>
 #include <QskGridBox.h>
@@ -10,6 +11,7 @@
 #include <QskTextLabel.h>
 #include <QskFontRole.h>
 #include <QskBoxShapeMetrics.h>
+#include <QskSlider.h>
 #include <qmargins.h>
 #include <qnamespace.h>
 #include <qpoint.h>
@@ -18,6 +20,7 @@
 RoomPage::RoomPage() : QskLinearBox()
 {
     this->setOrientation(Qt::Vertical);
+    setPadding(50);
     // auto* testBox = new QskLinearBox(this);
     auto* roomName = new QskTextLabel("Meeting Room A", this);
     roomName->setFontRole({QskFontRole::Display, QskFontRole::High});
@@ -52,24 +55,65 @@ RoomPage::RoomPage() : QskLinearBox()
     testButton2->setGeometry(150,100, 100,100);
     testButton2->setZ(1);
 
-    //TODO: get test button to appear on the image without sacrificing the buttons properties.
-    // roomImageBox->addItem(roomBackgroundBox);
-    // roomImageBox->addItem(testButton);
 
 
-    /* Image and Buttons Placement */
-
-    /* Debug */
-    // std::cout<< roomImageBox->itemCount() << std::endl;
-    /* Debug */
-    
     
     auto* verticalContainer = new QskLinearBox(Qt::Vertical, horizontalBoxContainer);
+
+    //Controllers Box
     auto* sliderBox = new QskLinearBox(Qt::Vertical, verticalContainer);
     sliderBox->setPanel(true);
     sliderBox->setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
     sliderBox->setColor(QskLinearBox::Panel, QColor("#f5bd82"));
-    auto* sliderPlaceHolder = new QskTextLabel("Slider Place Holder", sliderBox);
+
+    auto* sliderBoxTitle = new QskTextLabel("Controllers", sliderBox);
+    sliderBoxTitle->setFontRole({QskFontRole::Headline, QskFontRole::High});
+    sliderBoxTitle->setAlignment(Qt::AlignCenter);
+
+    //Temperature Controller
+    auto* tempSliderBox = new QskLinearBox(Qt::Vertical, sliderBox);
+    auto* currentTempLabel = new QskTextLabel("Current Temperature: 20", tempSliderBox);
+    auto* tempSlider = new QskSlider(Qt::Horizontal,tempSliderBox);
+    tempSlider->setPreferredSize(QSizeF(360,10));
+    tempSlider->setBoundaries(16,30);
+    tempSlider->setValue(20);
+    tempSlider->setStepSize(1);
+    
+    connect(tempSlider, &QskBoundedValueInput::valueChanged, [currentTempLabel](qreal v)
+    {
+        currentTempLabel->setText("Current Temperature: " + QString::number(int(v)));
+    });
+
+
+    //Light Intensity Controller
+    auto* lightIntensityBox = new QskLinearBox(Qt::Vertical, sliderBox);
+    auto* currentLightIntensityLabel = new QskTextLabel("Current Light Intensity: 20%", lightIntensityBox);
+    auto* lightIntensitySlider = new  QskSlider(Qt::Horizontal, lightIntensityBox);
+    lightIntensitySlider->setPreferredSize(QSizeF(360, 10));
+    lightIntensitySlider->setBoundaries(0, 100);
+    lightIntensitySlider->setValue(20);
+    lightIntensitySlider->setStepSize(10);
+
+    connect(lightIntensitySlider, &QskBoundedValueInput::valueChanged, [currentLightIntensityLabel](qreal v)
+    {
+        currentLightIntensityLabel->setText("Current Light Intensity: " + QString::number(int(v))+"%");
+    });
+
+    //Blind Controller
+    auto* blindBox = new QskLinearBox(Qt::Vertical, sliderBox);
+    auto* blindLabel = new QskTextLabel("Current Blind Position: 20%", blindBox);
+    auto* blindSlider = new  QskSlider(Qt::Horizontal, blindBox);
+    blindSlider->setPreferredSize(QSizeF(360, 10));
+    blindSlider->setBoundaries(0, 100);
+    blindSlider->setValue(20);
+    blindSlider->setStepSize(20);
+
+    connect(blindSlider, &QskBoundedValueInput::valueChanged, [blindLabel](qreal v)
+    {
+        blindLabel->setText("Current Light Intensity: " + QString::number(int(v))+"%");
+    });
+
+    //Information Box
     auto* informationBox = new QskLinearBox(Qt::Vertical, verticalContainer);
     informationBox->setPanel(true);
     informationBox->setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));

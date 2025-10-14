@@ -10,6 +10,7 @@
 #include <QskSkin.h>
 #include <QskSkinHintTableEditor.h>
 #include <QskSkinnable.h>
+#include <QskSlider.h>
 #include <QskTextLabel.h>
 #include <QskGraphicLabel.h>
 #include <QskMargins.h>
@@ -104,6 +105,15 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setBoxBorderMetrics(MainPageBannerBox::Panel, QskBoxBorderMetrics(5));
                             e.setBoxShape(MainPageBannerBox::Panel, QskBoxShapeMetrics(8));
                             e.setGradient(MainPageBannerBox::Panel | QskAspect::Border, QColor("#f5bd82"));
+                        }
+
+                        {
+                            //For RoomPage
+                            e.setGradient(QskSlider::Handle, QColor("#82f5d4"));
+                            e.setGradient(QskSlider::Panel, QColor("#82d6f5"));
+                            e.setBoxShape(QskSlider::Handle, QskBoxShapeMetrics(20));
+                            e.setStrutSize(QskSlider::Handle, QSizeF(20,20));
+                            
                         }
                     }
 
