@@ -1,6 +1,7 @@
 #ifndef SETTINGSPAGE_H
 #define SETTINGSPAGE_H
 
+#include <QskGraphicLabel.h>
 #include <QskLinearBox.h>
 #include <QskTextLabel.h>
 #include <qevent.h>
@@ -21,8 +22,7 @@ class DropBox : public QskBox
 };
 
 
-//Example given by Copilot does not work
-class DragLabel : public QskTextLabel
+class DragGraphicLabel : public QskGraphicLabel
 {
     Q_OBJECT
     private:
@@ -32,7 +32,8 @@ class DragLabel : public QskTextLabel
         DropBox* m_targetArea = nullptr;
     
     public:
-        DragLabel(const QString &text, DropBox* m_targetArea);
+        QSK_SUBCONTROLS(Panel, Graphic)
+        DragGraphicLabel(QString graphicPath, DropBox* m_targetArea);
     protected:
         void mousePressEvent(QMouseEvent* e) override;
         void mouseMoveEvent(QMouseEvent* e) override;

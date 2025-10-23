@@ -39,15 +39,7 @@ class MainPageBannerBox : public QskLinearBox
     public:
         QSK_SUBCONTROLS(Panel);
 
-        MainPageBannerBox();
-};
-
-class BannerFactory
-{
-    public:
-        virtual MainPageTextLabel* createTileTitle() = 0;
-        virtual MainPagePushButton* createMasterSwitch() = 0;
-        virtual MainPageGraphicLabel* createIconLabel() = 0;
+        MainPageBannerBox(QString labelText, QString path, QString buttonText);
 };
 
 
@@ -55,7 +47,6 @@ class MainPage : public QskLinearBox
 {
     public:
         MainPage();
-        MainPageBannerBox* buildBanner(BannerFactory& factory);
 };
 
 

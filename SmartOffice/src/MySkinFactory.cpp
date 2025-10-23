@@ -11,18 +11,22 @@
 #include <QskSkinHintTableEditor.h>
 #include <QskSkinnable.h>
 #include <QskSlider.h>
+#include <QskStateCombination.h>
 #include <QskTextLabel.h>
+#include <QskSwitchButton.h>
 #include <QskGraphicLabel.h>
 #include <QskMargins.h>
 #include <QskColorFilter.h>
 #include <QskRgbValue.h>
 #include <qfont.h>
 #include <qnamespace.h>
+#include <qsize.h>
 
 #include "TopBar.h"
 #include "NavigationBox.h"
 #include "MainPage.h"
 #include "MyGraphicRole.h"
+#include "SettingsPage.h"
 MySkinFactory::MySkinFactory(QObject* parent) : QskSkinFactory(parent)
 {
 
@@ -39,6 +43,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
     {
         class DefaultSkin : public QskSkin
         {
+
             protected:
                 void initHints() override
                 {
@@ -56,9 +61,11 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
 
                             e.setGraphicRole(TopBarGraphicLabel::Graphic,  MimiGraphicRole::TopBar);
                             e.setGraphicRole(MainPageGraphicLabel::Graphic, MimiGraphicRole::MainPage);  
+                            e.setGraphicRole(TopBarMenuButton::Icon, MimiGraphicRole::Default);
 
                             setGraphicFilter(MimiGraphicRole::MainPage, filterMainPage);
                             setGraphicFilter(MimiGraphicRole::TopBar, filterTopBar);
+                            setGraphicFilter(MimiGraphicRole::Default, filterMainPage);
     
                             
                             //TopBar
@@ -79,14 +86,14 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                         
                         }
                         
-                        {   //For MainPageTextLabel
-                            e.setShadowColor(MainPageTextLabel::Panel, QColor("#82f5d4"));
-                            e.setMetric(MainPageTextLabel::Panel | QskAspect::Border, 2);
-                            e.setFontRole(MainPageTextLabel::Text, QskFontRole::Title);
-                            e.setBoxShape(MainPageTextLabel::Panel, 8);
+                        {   
+                            // //ForMainPageGraphicLabel                            
+                            // e.setBoxShape(MainPageGraphicLabel::Panel, 360);
+                            // e.setGradient(MainPageGraphicLabel::Panel, QColor("#75645e"));
+                            
+                            //For MainPageTextLabel
                             e.setColor(MainPageTextLabel::Text, QColor("#5a756e"));
-                            e.setGradient(MainPageTextLabel::Panel, QColor("#f5d682"));
-                            e.setGradient(MainPageTextLabel::Panel | QskAspect::Border, QColor("#5a756e"));
+                            e.setFontRole(MainPageTextLabel::Text, {QskFontRole::Display, QskFontRole::VeryHigh});
                             e.setAlignment(MainPageTextLabel::Text, Qt::AlignCenter);
                             e.setPadding(MainPageTextLabel::Panel, QskMargins(25));
 
@@ -105,15 +112,50 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setBoxBorderMetrics(MainPageBannerBox::Panel, QskBoxBorderMetrics(5));
                             e.setBoxShape(MainPageBannerBox::Panel, QskBoxShapeMetrics(8));
                             e.setGradient(MainPageBannerBox::Panel | QskAspect::Border, QColor("#f5bd82"));
+
+                            
+                            //For QskSwitchButton - Groove
+                            const QSizeF  strutSize(300,100);
+                            e.setStrutSize(QskSwitchButton::Groove | QskAspect::Horizontal, strutSize);
+                            e.setStrutSize(QskSwitchButton::Groove | QskAspect::Vertical, strutSize.transposed());
+                            e.setBoxShape(QskSwitchButton::Groove, 100, Qt::RelativeSize);
+                            e.setBoxBorderMetrics(QskSwitchButton::Groove, 8);
+                            e.setGradient(QskSwitchButton::Groove, QColor("#f5bd82"));
+
+
+                            //For QskSwitchButton - Handle
+                            e.setBoxShape(QskSwitchButton::Handle, 100, Qt::RelativeSize);
+                            e.setPosition(QskSwitchButton::Handle, 0.1, {QskStateCombination::CombinationNoState, QskSwitchButton::Disabled});
+                            e.setPosition(QskSwitchButton::Handle | QskSwitchButton::Checked, 0.9, {QskStateCombination::CombinationNoState, QskSwitchButton::Disabled});
+                            e.setStrutSize(QskSwitchButton::Handle, 50, 50);
+                            e.setGradient(QskSwitchButton::Handle, QColor("#82f5d4"));
+
                         }
 
                         {
                             //For RoomPage
+                            //QskSlider
                             e.setGradient(QskSlider::Handle, QColor("#82f5d4"));
                             e.setGradient(QskSlider::Panel, QColor("#82d6f5"));
                             e.setBoxShape(QskSlider::Handle, QskBoxShapeMetrics(20));
                             e.setStrutSize(QskSlider::Handle, QSizeF(20,20));
-                            
+
+                            //QskPushButton
+                            e.setBoxShape(QskPushButton::Panel, QskBoxShapeMetrics(100));
+                            e.setGradient(QskPushButton::Panel, QColor("#f5bd82"), QColor("#f5d682"));
+                            e.setGradient(QskPushButton::Panel | QskPushButton::Pressed, QColor("#f5bd82"));
+                            e.setGradient(QskPushButton::Panel | QskPushButton::Hovered, QColor("#f5d682"));
+                            e.setAnimation(QskPushButton::Panel | QskAspect::Color, 100);  
+                                                      
+                        }
+
+                        {
+                            //For SettingsPage
+                            e.setGradient(DragGraphicLabel::Panel, QColor("#82f5d4"), QColor("#82d6f5"));
+                            // e.setStrutSize(DragGraphicLabel::Panel | QskAspect::Horizontal, QSizeF(10,10));
+                            // e.setStrutSize(DragGraphicLabel::Panel | QskAspect::Vertical, QSizeF(10,10)); 
+                            // e.setStrutSize(DragGraphicLabel::Graphic, QSizeF(10,10));
+                            e.setBoxShape(DragGraphicLabel::Panel, 100);
                         }
                     }
 

@@ -7,7 +7,7 @@
 BottomSection::BottomSection() :  QskStackBox()
 {
     this->addItem(new MainPage());
-    this->addItem(new RoomPage());
+    this->addItem(new RoomPage("Meeting Room A","assets/jpg/meeting-room.jpg"));
     this->addItem(new SummaryPage());
     this->addItem(new SettingsPage());
 }
