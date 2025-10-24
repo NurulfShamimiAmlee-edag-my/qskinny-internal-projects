@@ -6,6 +6,7 @@
 #include <QskGraphicLabel.h>
 #include <QskGridBox.h>
 #include <QskLinearBox.h>
+#include <QskNamespace.h>
 #include <QskPushButton.h>
 #include <QskSizePolicy.h>
 #include <QskSkinnable.h>
@@ -82,7 +83,7 @@ ControllerBox::ControllerBox() : QskLinearBox()
     tempButton->setBoxShapeHint(QskPushButton::Panel, QskBoxShapeMetrics(50));
     auto* tempSlider = new QskSlider(Qt::Horizontal,tempSliderBox);
     auto* currentTempLabel = new QskTextLabel("20 °C", tempSliderBox);
-    tempSlider->setPreferredSize(QSizeF(360,10));
+    tempSlider->setSnapping(true);
     tempSlider->setBoundaries(16,30);
     tempSlider->setValue(20);
     tempSlider->setStepSize(1);

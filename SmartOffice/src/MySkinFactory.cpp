@@ -18,7 +18,11 @@
 #include <QskMargins.h>
 #include <QskColorFilter.h>
 #include <QskRgbValue.h>
+#include <QFontDatabase>
+#include <qcontainerfwd.h>
 #include <qfont.h>
+#include <qfontdatabase.h>
+#include <qlogging.h>
 #include <qnamespace.h>
 #include <qsize.h>
 
@@ -49,7 +53,22 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                 {
                     QskSkinHintTableEditor e(&hintTable());
                     {
-                        setupFontTable("System", false);
+                        
+                        {
+                            //SetupFont
+
+                            const QString fontPath = QStringLiteral("fonts/Segoe UI.ttf");
+                            int fontId = QFontDatabase::addApplicationFont(fontPath);
+
+                            QStringList families = QFontDatabase::applicationFontFamilies(fontId);
+                            
+                            QString family = families.first();
+                            
+                            setupFontTable(family, false);
+                            // QFont appFont(family)
+                            // setFont({QskFontRole::Display, QskFontRole::VeryHigh}, QFont(family, -1, QFont::DemiBold));
+                        }
+
 
                         {
                             
@@ -114,31 +133,52 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setGradient(MainPageBannerBox::Panel | QskAspect::Border, QColor("#f5bd82"));
 
                             
-                            //For QskSwitchButton - Groove
+                            //For MainPageSwitchButton - Groove
                             const QSizeF  strutSize(300,100);
-                            e.setStrutSize(QskSwitchButton::Groove | QskAspect::Horizontal, strutSize);
-                            e.setStrutSize(QskSwitchButton::Groove | QskAspect::Vertical, strutSize.transposed());
-                            e.setBoxShape(QskSwitchButton::Groove, 100, Qt::RelativeSize);
-                            e.setBoxBorderMetrics(QskSwitchButton::Groove, 8);
-                            e.setGradient(QskSwitchButton::Groove, QColor("#f5bd82"));
+                            e.setStrutSize(MainPageSwitchButton::Groove | QskAspect::Horizontal, strutSize);
+                            e.setStrutSize(MainPageSwitchButton::Groove | QskAspect::Vertical, strutSize.transposed());
+                            e.setBoxShape(MainPageSwitchButton::Groove, 100, Qt::RelativeSize);
+                            e.setBoxBorderMetrics(MainPageSwitchButton::Groove, 8);
+                            e.setGradient(MainPageSwitchButton::Groove, QColor("#f5bd82"));
 
 
-                            //For QskSwitchButton - Handle
-                            e.setBoxShape(QskSwitchButton::Handle, 100, Qt::RelativeSize);
-                            e.setPosition(QskSwitchButton::Handle, 0.1, {QskStateCombination::CombinationNoState, QskSwitchButton::Disabled});
-                            e.setPosition(QskSwitchButton::Handle | QskSwitchButton::Checked, 0.9, {QskStateCombination::CombinationNoState, QskSwitchButton::Disabled});
-                            e.setStrutSize(QskSwitchButton::Handle, 50, 50);
-                            e.setGradient(QskSwitchButton::Handle, QColor("#82f5d4"));
+                            //For MainPageSwitchButton - Handle
+                            e.setBoxShape(MainPageSwitchButton::Handle, 100, Qt::RelativeSize);
+                            e.setPosition(MainPageSwitchButton::Handle, 0.1, {QskStateCombination::CombinationNoState, MainPageSwitchButton::Disabled});
+                            e.setPosition(MainPageSwitchButton::Handle | MainPageSwitchButton::Checked, 0.9, {QskStateCombination::CombinationNoState, MainPageSwitchButton::Disabled});
+                            e.setStrutSize(MainPageSwitchButton::Handle, 50, 50);
+                            e.setGradient(MainPageSwitchButton::Handle, QColor("#82f5d4"));
 
                         }
 
                         {
                             //For RoomPage
-                            //QskSlider
+                            //QskSlider - see example on how to skin this from QskSkinFluent2Skin.cpp
                             e.setGradient(QskSlider::Handle, QColor("#82f5d4"));
-                            e.setGradient(QskSlider::Panel, QColor("#82d6f5"));
+                            e.setGradient(QskSlider::Groove, QColor("#82d6f5"));
+                            e.setGradient(QskSlider::Tick, Qt::white);
+                        
                             e.setBoxShape(QskSlider::Handle, QskBoxShapeMetrics(20));
                             e.setStrutSize(QskSlider::Handle, QSizeF(20,20));
+
+                            const qreal size = 10.0;
+                            e.setMetric( QskSlider::Panel | QskAspect::Size, size );
+                            e.setBoxShape( QskSlider::Panel, 0 );
+                            e.setBoxBorderMetrics( QskSlider::Panel, 0 );
+                            e.setPadding( QskSlider::Panel | QskAspect::Horizontal, QskMargins( 0.5 * size, 0 ) );
+                            e.setPadding( QskSlider::Panel | QskAspect::Vertical, QskMargins( 0, 0.5 * size) );
+
+                            for ( auto subControl : { QskSlider::Groove, QskSlider::Fill } )
+                            {
+                                e.setMetric( subControl | QskAspect::Size, 4.0 );
+                                e.setBoxShape( subControl, 100, Qt::RelativeSize );
+                            }
+
+
+                            e.setFlag( QskSlider::Tick | QskAspect::Option, Qsk::Maybe);
+                            e.setStrutSize( QskSlider::Tick | QskAspect::Horizontal, 2, -2);
+                            e.setStrutSize( QskSlider::Tick | QskAspect::Vertical, -2, 2 );
+
 
                             //QskPushButton
                             e.setBoxShape(QskPushButton::Panel, QskBoxShapeMetrics(100));

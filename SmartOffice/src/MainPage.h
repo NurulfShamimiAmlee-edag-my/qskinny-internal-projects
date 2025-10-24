@@ -4,10 +4,12 @@
 #include <QskAspect.h>
 #include <QskLinearBox.h>
 #include <QskStackBox.h>
+#include <QskSwitchButton.h>
 #include <QskTextLabel.h>
 #include <QskPushButton.h>
 #include <QskGraphicLabel.h>
 #include <qnamespace.h>
+#include <qquickitem.h>
 
 class MainPageTextLabel : public QskTextLabel
 {
@@ -40,6 +42,14 @@ class MainPageBannerBox : public QskLinearBox
         QSK_SUBCONTROLS(Panel);
 
         MainPageBannerBox(QString labelText, QString path, QString buttonText);
+};
+
+class MainPageSwitchButton : public QskSwitchButton
+{
+    public:
+        QSK_SUBCONTROLS(Groove, Handle, Icon);
+
+        MainPageSwitchButton(QQuickItem* parent);
 };
 
 

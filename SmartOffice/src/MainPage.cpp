@@ -32,7 +32,13 @@ QSK_SUBCONTROL(MainPagePushButton, Text)
 
 QSK_SUBCONTROL(MainPageGraphicLabel, Panel)
 
-QSK_SUBCONTROL(MainPageBannerBox, Panel);
+QSK_SUBCONTROL(MainPageBannerBox, Panel)
+
+QSK_SUBCONTROL(MainPageSwitchButton, Groove)
+QSK_SUBCONTROL(MainPageSwitchButton, Handle)
+QSK_SUBCONTROL(MainPageSwitchButton, Icon)
+
+
 
 MainPageTextLabel::MainPageTextLabel(const QString& text, QQuickItem* parent) : QskTextLabel(text, parent)
 {
@@ -52,6 +58,13 @@ MainPageGraphicLabel::MainPageGraphicLabel(const QskGraphic& graphic, QQuickItem
     setSubcontrolProxy(QskGraphicLabel::Graphic, Graphic);
 }
 
+MainPageSwitchButton::MainPageSwitchButton(QQuickItem* parent) : QskSwitchButton(parent)
+{
+    setSubcontrolProxy(QskSwitchButton::Groove, Groove);
+    setSubcontrolProxy(QskSwitchButton::Handle, Handle);
+    setSubcontrolProxy(QskSwitchButton::Icon, Icon);
+}
+
 MainPageBannerBox::MainPageBannerBox(QString labelText, QString path, QString buttonText) : QskLinearBox()
 {
     this->setOrientation(Qt::Vertical);
@@ -66,25 +79,24 @@ MainPageBannerBox::MainPageBannerBox(QString labelText, QString path, QString bu
     auto* textLabel = new MainPageTextLabel(labelText, this);
     textLabel->setLayoutAlignmentHint(Qt::AlignCenter);
 
-    auto* masterButton = new MainPagePushButton(buttonText, this);
-    masterButton->setFixedSize(180, 180);
-    masterButton->setLayoutAlignmentHint(Qt::AlignCenter);
+    // auto* masterButton = new MainPagePushButton(buttonText, this);
+    // masterButton->setFixedSize(180, 180);
+    // masterButton->setLayoutAlignmentHint(Qt::AlignCenter);
 
-    connect(masterButton, &MainPagePushButton::clicked, [textLabel, this]()
-    {
-        textLabel->setText("0");
-        this->setDisabled(true);
-    });
+    // connect(masterButton, &MainPagePushButton::clicked, [textLabel, this]()
+    // {
+    //     textLabel->setText("0");
+    //     this->setDisabled(true);
+    // });
 
-    auto* switchVerticalButton = new QskSwitchButton(this);
+    auto* switchVerticalButton = new MainPageSwitchButton(this);
     switchVerticalButton->setLayoutAlignmentHint(Qt::AlignCenter);
-    connect(switchVerticalButton, &QskSwitchButton::toggled, [textLabel, this](bool checked)
+    connect(switchVerticalButton, &MainPageSwitchButton::toggled, [textLabel, this](bool checked)
     {
         textLabel->setText(checked ? "0" : "Nothing");
         this->setDisabled(true);
     });
 }
-
 
 
 MainPage::MainPage() : QskLinearBox()
