@@ -1,4 +1,7 @@
 #include "RoomPage.h"
+#include "TemperatureSlider.h"
+#include "TemperatureButton.h"
+#include "SliderBox.h"
 
 #include <QskBoundedValueInput.h>
 #include <QskBox.h>
@@ -50,7 +53,6 @@ ImageAndButtonsBox::ImageAndButtonsBox(QString imagePath) : QskBox()
     wifiButton->setGeometry(350,100, 100,100);
     wifiButton->setZ(1);
 
-
 }
 
 InfoAndControllerBox::InfoAndControllerBox() : QskLinearBox()
@@ -74,30 +76,13 @@ ControllerBox::ControllerBox() : QskLinearBox()
     sliderBoxTitle->setAlignment(Qt::AlignCenter);
 
     //Temperature Controller
-    //TODO: Implement button on the left of the slider, right-label of current value
-    //Optional TODO: Create visible ticks for the sliders.
-    auto* tempSliderBox = new QskLinearBox(Qt::Horizontal, this);
-    auto* tempButton = new QskPushButton(tempSliderBox);
-    tempButton->setIcon(QskGraphicIO::read(QString("assets/qvg/air-conditioner.qvg")));
-    tempButton->setFixedSize(50,50);
-    tempButton->setBoxShapeHint(QskPushButton::Panel, QskBoxShapeMetrics(50));
-    auto* tempSlider = new QskSlider(Qt::Horizontal,tempSliderBox);
-    auto* currentTempLabel = new QskTextLabel("20 °C", tempSliderBox);
-    tempSlider->setSnapping(true);
-    tempSlider->setBoundaries(16,30);
-    tempSlider->setValue(20);
-    tempSlider->setStepSize(1);
-    
-    connect(tempSlider, &QskBoundedValueInput::valueChanged, [currentTempLabel](qreal v)
-    {
-        currentTempLabel->setText(QString::number(int(v))+" °C");
-    });
-
+    addItem(new SliderBox(new TemperatureSlider(), new TemperatureButton(), new QskTextLabel("°C")));
 
     //Light Intensity Controller
     auto* lightIntensityBox = new QskLinearBox(Qt::Vertical, this);
     auto* currentLightIntensityLabel = new QskTextLabel("Current Light Intensity: 20%", lightIntensityBox);
-    auto* lightIntensitySlider = new  QskSlider(Qt::Horizontal, lightIntensityBox);
+    auto* lightIntensitySlider = new  LightIntensitySlider();
+    lightIntensityBox->addItem(lightIntensitySlider);
     lightIntensitySlider->setPreferredSize(QSizeF(360, 10));
     lightIntensitySlider->setBoundaries(0, 100);
     lightIntensitySlider->setValue(20);
@@ -149,6 +134,5 @@ RoomPage::RoomPage(QString roomName, QString imagePath) : QskLinearBox()
 
     addItem(new HorizontalDisplayBox(imagePath));
     
-
 }
 

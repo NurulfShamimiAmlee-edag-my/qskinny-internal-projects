@@ -27,11 +27,12 @@
 #include <qsize.h>
 
 #include "TopBar.h"
-#include "NavigationBox.h"
 #include "MainPage.h"
 #include "MyGraphicRole.h"
-#include "SettingsPage.h"
 #include "DragGraphicLabel.h"
+#include "NavigationButton.h"
+#include "TemperatureSlider.h"
+#include "TemperatureButton.h"
 MySkinFactory::MySkinFactory(QObject* parent) : QskSkinFactory(parent)
 {
 
@@ -161,39 +162,38 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
 
                         {
                             //For RoomPage
-                            //QskSlider - see example on how to skin this from QskSkinFluent2Skin.cpp
-                            e.setGradient(QskSlider::Handle, QColor("#82f5d4"));
-                            e.setGradient(QskSlider::Groove, QColor("#82d6f5"));
-                            e.setGradient(QskSlider::Tick, Qt::white);
+                            //TemperatureSlider - see example on how to skin this from QskSkinFluent2Skin.cpp
+                            e.setGradient(TemperatureSlider::Handle, QColor("#82f5d4"));
+                            e.setGradient(TemperatureSlider::Groove, QColor("#82d6f5"));
+                            e.setGradient(TemperatureSlider::Tick, Qt::white);
                         
-                            e.setBoxShape(QskSlider::Handle, QskBoxShapeMetrics(20));
-                            e.setStrutSize(QskSlider::Handle, QSizeF(20,20));
+                            e.setBoxShape(TemperatureSlider::Handle, QskBoxShapeMetrics(20));
+                            e.setStrutSize(TemperatureSlider::Handle, QSizeF(20,20));
 
                             const qreal size = 10.0;
-                            e.setMetric( QskSlider::Panel | QskAspect::Size, size );
-                            e.setBoxShape( QskSlider::Panel, 0 );
-                            e.setBoxBorderMetrics( QskSlider::Panel, 0 );
-                            e.setPadding( QskSlider::Panel | QskAspect::Horizontal, QskMargins( 0.5 * size, 0 ) );
-                            e.setPadding( QskSlider::Panel | QskAspect::Vertical, QskMargins( 0, 0.5 * size) );
+                            e.setMetric( TemperatureSlider::Panel | QskAspect::Size, size );
+                            e.setBoxShape( TemperatureSlider::Panel, 0 );
+                            e.setBoxBorderMetrics( TemperatureSlider::Panel, 0 );
+                            e.setPadding( TemperatureSlider::Panel | QskAspect::Horizontal, QskMargins( 0.5 * size, 0 ) );
+                            e.setPadding( TemperatureSlider::Panel | QskAspect::Vertical, QskMargins( 0, 0.5 * size) );
 
-                            for ( auto subControl : { QskSlider::Groove, QskSlider::Fill } )
+                            for ( auto subControl : { TemperatureSlider::Groove, TemperatureSlider::Fill } )
                             {
                                 e.setMetric( subControl | QskAspect::Size, 4.0 );
                                 e.setBoxShape( subControl, 100, Qt::RelativeSize );
                             }
 
+                            e.setFlag( TemperatureSlider::Tick | QskAspect::Option, Qsk::Maybe);
+                            e.setStrutSize( TemperatureSlider::Tick | QskAspect::Horizontal, 2, -2);
+                            e.setStrutSize( TemperatureSlider::Tick | QskAspect::Vertical, -2, 2 );
 
-                            e.setFlag( QskSlider::Tick | QskAspect::Option, Qsk::Maybe);
-                            e.setStrutSize( QskSlider::Tick | QskAspect::Horizontal, 2, -2);
-                            e.setStrutSize( QskSlider::Tick | QskAspect::Vertical, -2, 2 );
 
-
-                            //QskPushButton
-                            e.setBoxShape(QskPushButton::Panel, QskBoxShapeMetrics(100));
-                            e.setGradient(QskPushButton::Panel, QColor("#f5bd82"), QColor("#f5d682"));
-                            e.setGradient(QskPushButton::Panel | QskPushButton::Pressed, QColor("#f5bd82"));
-                            e.setGradient(QskPushButton::Panel | QskPushButton::Hovered, QColor("#f5d682"));
-                            e.setAnimation(QskPushButton::Panel | QskAspect::Color, 100);  
+                            //TemperatureButton
+                            e.setBoxShape(TemperatureButton::Panel, QskBoxShapeMetrics(50));
+                            e.setGradient(TemperatureButton::Panel, QColor("#f5bd82"), QColor("#f5d682"));
+                            e.setGradient(TemperatureButton::Panel | TemperatureButton::Pressed, QColor("#f5bd82"));
+                            e.setGradient(TemperatureButton::Panel | TemperatureButton::Hovered, QColor("#f5d682"));
+                            e.setAnimation(TemperatureButton::Panel | QskAspect::Color, 100);  
                                                       
                         }
 
