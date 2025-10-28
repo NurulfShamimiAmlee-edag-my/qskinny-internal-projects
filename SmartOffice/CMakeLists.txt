@@ -24,7 +24,16 @@ add_executable(smartoffice
     src/PageViewer.cpp
     src/NavigationBox.cpp
     src/BottomSection.cpp
-    src/MySkinFactory.cpp)
+    src/MySkinFactory.cpp
+    src/TopBarMenuButton.cpp
+    src/TopBarGraphicLabel.cpp
+    src/NavigationButton.cpp
+    src/MainPageTextLabel.cpp
+    src/MainPagePushButton.cpp
+    src/MainPageGraphicLabel.cpp
+    src/MainPageSwitchButton.cpp
+    src/DragGraphicLabel.cpp
+    src/DropBox.cpp)
 
  
 target_link_libraries(smartoffice PRIVATE

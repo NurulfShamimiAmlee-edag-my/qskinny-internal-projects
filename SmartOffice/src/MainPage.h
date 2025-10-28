@@ -11,46 +11,21 @@
 #include <qnamespace.h>
 #include <qquickitem.h>
 
-class MainPageTextLabel : public QskTextLabel
-{
-    public:
-        QSK_SUBCONTROLS(Panel, Text);
-
-        MainPageTextLabel(const QString& text, QQuickItem* parent = nullptr);
-};
-
-class MainPagePushButton : public QskPushButton
-{
-    public:
-        QSK_SUBCONTROLS(Panel, Text);
-
-        MainPagePushButton(const QString& text, QQuickItem* parent = nullptr);
-};
-
-class MainPageGraphicLabel : public QskGraphicLabel
-{
-    public:
-        QSK_SUBCONTROLS(Panel);
-
-        MainPageGraphicLabel(const QskGraphic& graphic, QQuickItem* parent = nullptr);
-
-};
+#include "MainPageTextLabel.h"
+#include "MainPagePushButton.h"
+#include "MainPageGraphicLabel.h"
+#include "MainPageSwitchButton.h"
 
 class MainPageBannerBox : public QskLinearBox
 {
+    
     public:
         QSK_SUBCONTROLS(Panel);
 
-        MainPageBannerBox(QString labelText, QString path, QString buttonText);
+        MainPageBannerBox(QString labelText, QString path);
+        MainPageBannerBox();
 };
 
-class MainPageSwitchButton : public QskSwitchButton
-{
-    public:
-        QSK_SUBCONTROLS(Groove, Handle, Icon);
-
-        MainPageSwitchButton(QQuickItem* parent);
-};
 
 
 class MainPage : public QskLinearBox

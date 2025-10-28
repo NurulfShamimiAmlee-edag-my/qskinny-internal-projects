@@ -31,6 +31,7 @@
 #include "MainPage.h"
 #include "MyGraphicRole.h"
 #include "SettingsPage.h"
+#include "DragGraphicLabel.h"
 MySkinFactory::MySkinFactory(QObject* parent) : QskSkinFactory(parent)
 {
 
@@ -56,7 +57,6 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                         
                         {
                             //SetupFont
-
                             const QString fontPath = QStringLiteral("fonts/Segoe UI.ttf");
                             int fontId = QFontDatabase::addApplicationFont(fontPath);
 
@@ -65,8 +65,16 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             QString family = families.first();
                             
                             setupFontTable(family, false);
+                            
                             // QFont appFont(family)
                             // setFont({QskFontRole::Display, QskFontRole::VeryHigh}, QFont(family, -1, QFont::DemiBold));
+
+                            // QFont font(family, QFont::DemiBold);
+                            // font.setItalic(false);
+                            // font.setWeight(QFont::Normal);
+
+                            // font.setPointSize(48);
+                            // setFont({QskFontRole::Display, QskFontRole::VeryHigh}, font);
                         }
 
 

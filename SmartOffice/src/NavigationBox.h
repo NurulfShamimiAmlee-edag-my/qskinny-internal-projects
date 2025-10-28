@@ -5,12 +5,7 @@
 #include <QskLinearBox.h>
 #include <QskPushButton.h>
 
-class NavigationButton : public QskPushButton
-{
-    public:
-        QSK_SUBCONTROLS(Panel, Text);
-        NavigationButton(QString text);
-};
+#include "NavigationButton.h"
 
 class  NavigationBox : public QskLinearBox
 {

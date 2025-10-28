@@ -22,22 +22,6 @@
 
 QSK_SUBCONTROL(TopBar, Panel)
 
-QSK_SUBCONTROL(TopBarMenuButton, Panel)
-QSK_SUBCONTROL(TopBarMenuButton, Text)
-
-QSK_SUBCONTROL(TopBarGraphicLabel, Panel)
-QSK_SUBCONTROL(TopBarGraphicLabel, Graphic)
-
-TopBarMenuButton::TopBarMenuButton(): QskPushButton()
-{
-    setSubcontrolProxy(QskPushButton::Panel, Panel);
-};
-
-TopBarGraphicLabel::TopBarGraphicLabel(): QskGraphicLabel()
-{
-    setSubcontrolProxy(QskGraphicLabel::Panel, Panel);
-    setSubcontrolProxy(QskGraphicLabel::Graphic, Graphic);
-};
 
 TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
 {

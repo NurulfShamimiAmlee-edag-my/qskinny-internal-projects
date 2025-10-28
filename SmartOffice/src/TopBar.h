@@ -9,24 +9,8 @@
 #include <QskPushButton.h>
 #include <qquickitem.h>
 
-
-
-class TopBarMenuButton : public QskPushButton
-{
-    public:
-        QSK_SUBCONTROLS(Panel, Text);
-
-        TopBarMenuButton();
-};
-
-class TopBarGraphicLabel : public QskGraphicLabel
-{
-    public:
-        QSK_SUBCONTROLS(Panel, Graphic);
-
-        TopBarGraphicLabel();
-};
-
+#include "TopBarMenuButton.h"
+#include "TopBarGraphicLabel.h"
 
 class TopBar : public QskLinearBox
 {

@@ -23,49 +23,12 @@
 #include <QskSkinManager.h>
 #include <qbytearrayalgorithms.h>
 #include <qnamespace.h>
-
-QSK_SUBCONTROL(MainPageTextLabel, Panel)
-QSK_SUBCONTROL(MainPageTextLabel, Text)
-
-QSK_SUBCONTROL(MainPagePushButton, Panel)
-QSK_SUBCONTROL(MainPagePushButton, Text)
-
-QSK_SUBCONTROL(MainPageGraphicLabel, Panel)
+#include <qquickitem.h>
 
 QSK_SUBCONTROL(MainPageBannerBox, Panel)
 
-QSK_SUBCONTROL(MainPageSwitchButton, Groove)
-QSK_SUBCONTROL(MainPageSwitchButton, Handle)
-QSK_SUBCONTROL(MainPageSwitchButton, Icon)
 
-
-
-MainPageTextLabel::MainPageTextLabel(const QString& text, QQuickItem* parent) : QskTextLabel(text, parent)
-{
-    setSubcontrolProxy(QskTextLabel::Panel, Panel);
-    setSubcontrolProxy(QskTextLabel::Text, Text);
-}
-
-MainPagePushButton::MainPagePushButton(const QString& text, QQuickItem* parent) : QskPushButton(text, parent)
-{
-    setSubcontrolProxy(QskPushButton::Panel, Panel);
-    setSubcontrolProxy(QskPushButton::Text, Text);
-}
-
-MainPageGraphicLabel::MainPageGraphicLabel(const QskGraphic& graphic, QQuickItem* parent) : QskGraphicLabel(graphic, parent)
-{
-    setSubcontrolProxy(QskGraphicLabel::Panel, Panel);
-    setSubcontrolProxy(QskGraphicLabel::Graphic, Graphic);
-}
-
-MainPageSwitchButton::MainPageSwitchButton(QQuickItem* parent) : QskSwitchButton(parent)
-{
-    setSubcontrolProxy(QskSwitchButton::Groove, Groove);
-    setSubcontrolProxy(QskSwitchButton::Handle, Handle);
-    setSubcontrolProxy(QskSwitchButton::Icon, Icon);
-}
-
-MainPageBannerBox::MainPageBannerBox(QString labelText, QString path, QString buttonText) : QskLinearBox()
+MainPageBannerBox::MainPageBannerBox(QString labelText, QString path) : QskLinearBox()
 {
     this->setOrientation(Qt::Vertical);
     this->setPanel(true);
@@ -73,29 +36,22 @@ MainPageBannerBox::MainPageBannerBox(QString labelText, QString path, QString bu
     
     QskGraphic graphic = QskGraphicIO::read(path);
     auto* graphicLabel = new MainPageGraphicLabel(graphic, this);
-    graphicLabel->setFixedSize(200,200);
-    graphicLabel->setLayoutAlignmentHint(Qt::AlignCenter);
 
     auto* textLabel = new MainPageTextLabel(labelText, this);
-    textLabel->setLayoutAlignmentHint(Qt::AlignCenter);
-
-    // auto* masterButton = new MainPagePushButton(buttonText, this);
-    // masterButton->setFixedSize(180, 180);
-    // masterButton->setLayoutAlignmentHint(Qt::AlignCenter);
-
-    // connect(masterButton, &MainPagePushButton::clicked, [textLabel, this]()
-    // {
-    //     textLabel->setText("0");
-    //     this->setDisabled(true);
-    // });
 
     auto* switchVerticalButton = new MainPageSwitchButton(this);
-    switchVerticalButton->setLayoutAlignmentHint(Qt::AlignCenter);
     connect(switchVerticalButton, &MainPageSwitchButton::toggled, [textLabel, this](bool checked)
     {
         textLabel->setText(checked ? "0" : "Nothing");
         this->setDisabled(true);
     });
+}
+
+MainPageBannerBox::MainPageBannerBox() : QskLinearBox()
+{
+    this->setOrientation(Qt::Vertical);
+    this->setPanel(true);
+    setSubcontrolProxy(QskLinearBox::Panel, Panel);
 }
 
 
@@ -104,9 +60,9 @@ MainPage::MainPage() : QskLinearBox()
 
     this->setOrientation(Qt::Horizontal);
 
-    this->addItem(new MainPageBannerBox("10", "assets/qvg/lamp.qvg", "OFF"));
-    this->addItem(new MainPageBannerBox("5", "assets/qvg/air-conditioner.qvg", "OFF"));
-    this->addItem(new MainPageBannerBox("5", "assets/qvg/wifi-router.qvg", "OFF"));
+    this->addItem(new MainPageBannerBox("10", "assets/qvg/lamp.qvg"));
+    this->addItem(new MainPageBannerBox("5", "assets/qvg/air-conditioner.qvg"));
+    this->addItem(new MainPageBannerBox("5", "assets/qvg/wifi-router.qvg"));
 }
 
 
