@@ -18,6 +18,12 @@
 
 class MainPageBannerBox : public QskLinearBox
 {
+    private:
+        /*
+            TODO: If master switch from room page is toggled, update the banner text label
+            - consider that the master switch should control the related utility only.
+        */
+        MainPageTextLabel* m_bannerText = nullptr;
     
     public:
         QSK_SUBCONTROLS(Panel);

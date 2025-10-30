@@ -32,6 +32,7 @@ MainPageBannerBox::MainPageBannerBox(QString labelText, QString path) : QskLinea
 {
     this->setOrientation(Qt::Vertical);
     this->setPanel(true);
+    setAcceptHoverEvents(true);
     setSubcontrolProxy(QskLinearBox::Panel, Panel);
     
     QskGraphic graphic = QskGraphicIO::read(path);
@@ -42,8 +43,13 @@ MainPageBannerBox::MainPageBannerBox(QString labelText, QString path) : QskLinea
     auto* switchVerticalButton = new MainPageSwitchButton(this);
     connect(switchVerticalButton, &MainPageSwitchButton::toggled, [textLabel, this](bool checked)
     {
-        textLabel->setText(checked ? "0" : "Nothing");
-        this->setDisabled(true);
+        
+        //textLabel->setText(checked ? "0" : "Nothing") --> just another method to set text to 0 whenever button is toggled
+        if (checked)
+        {
+            textLabel->setText("0");
+        }
+        // this->setDisabled(true); --> if we want to disable the switch is also possible 
     });
 }
 

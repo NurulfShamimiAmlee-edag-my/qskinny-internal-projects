@@ -94,7 +94,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
 
                             e.setGraphicRole(TopBarGraphicLabel::Graphic,  MimiGraphicRole::TopBar);
                             e.setGraphicRole(MainPageGraphicLabel::Graphic, MimiGraphicRole::MainPage);  
-                            e.setGraphicRole(TopBarMenuButton::Icon, MimiGraphicRole::Default);
+                            e.setGraphicRole(TopBarMenuButton::Icon, MimiGraphicRole::TopBar);
 
                             setGraphicFilter(MimiGraphicRole::MainPage, filterMainPage);
                             setGraphicFilter(MimiGraphicRole::TopBar, filterTopBar);
@@ -140,11 +140,12 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                   
 
                             //For MainPageBannerBox -- banner
-                            e.setGradient(MainPageBannerBox::Panel, QColor("#f5bd82"), QColor("#f5d682"));
+                            e.setGradient(MainPageBannerBox::Panel, QColor("#f5d682"));
                             e.setMargin(MainPageBannerBox::Panel, QskMargins(25,10,25,10));
                             e.setBoxBorderMetrics(MainPageBannerBox::Panel, QskBoxBorderMetrics(5));
+                            e.setBoxBorderMetrics(MainPageBannerBox::Panel | MainPageBannerBox::Hovered, QskBoxBorderMetrics(1));
                             e.setBoxShape(MainPageBannerBox::Panel, QskBoxShapeMetrics(8));
-                            e.setGradient(MainPageBannerBox::Panel | QskAspect::Border, QColor("#f5bd82"));
+                            // e.setGradient(MainPageBannerBox::Panel | QskAspect::Border, QColor("#f5bd82"));
                             
 
                             //For MainPageSwitchButton - Groove
@@ -215,10 +216,10 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             //TabButton
                             e.setStrutSize(QskTabButton::Panel, 30, 16);
                             e.setBoxShape(QskTabButton::Panel, QskBoxShapeMetrics(10));
+                            e.setBoxBorderMetrics(QskTabButton::Panel , 3);
+                            e.setBoxBorderMetrics(QskTabButton::Panel | QskTabButton::Checked, 1);
                             e.setGradient(QskTabButton::Panel, QColor("#f5d682"));
-                            e.setColor(QskTabButton::Panel | QskTabButton::Checked, QColor("#f5bd82"));
-                            e.setFontRole(QskTabButton::Text | QskTabButton::Checked, {QskFontRole::Body, QskFontRole::VeryHigh});
-                            
+                            e.setGradient(QskTabButton::Panel | QskTabButton::Checked, QColor("#f5bd82"));
                         }
 
                         {

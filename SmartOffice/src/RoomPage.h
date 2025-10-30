@@ -4,6 +4,7 @@
 #include <QskBox.h>
 #include <QskLinearBox.h>
 #include <QskGraphicLabel.h>
+#include <QskPushButton.h>
 #include <qnamespace.h>
 
 
@@ -30,12 +31,19 @@ class ImageAndButtonsBox : public QskBox
 {
     private:
         QskGraphicLabel* m_roomImage = nullptr;
+        QskPushButton* m_lightButton = nullptr;
+        QskPushButton* m_wifiButton = nullptr;
+        QskPushButton* m_acButton = nullptr;
+        QskPushButton* m_blindButton = nullptr;
+        QskPushButton* m_socketButton = nullptr;
+        QRectF m_contentRect;
     
     public:
         ImageAndButtonsBox(QString imagePath);
 
     protected:
         void geometryChange(const QRectF& newGeometry, const QRectF& oldGeometry) override;
+        void setButtonPosition(QskPushButton* buttons, qreal buttonWidth, qreal buttonHeight, qreal buttonX, qreal buttonY, qreal buttonZ);
 
 };
 
