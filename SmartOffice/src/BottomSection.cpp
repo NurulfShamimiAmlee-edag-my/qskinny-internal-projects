@@ -1,13 +1,13 @@
 #include "BottomSection.h"
 #include "MainPage.h"
-#include "RoomPage.h"
 #include "SettingsPage.h"
 #include "SummaryPage.h"
+#include "RoomPageTab.h"
 
-BottomSection::BottomSection() :  QskStackBox()
+BottomSection::BottomSection() :  QskSwipeView()
 {
     this->addItem(new MainPage());
-    this->addItem(new RoomPage("Meeting Room A","assets/jpg/meeting-room.jpg"));
+    this->addItem(new RoomPageTab());
     this->addItem(new SummaryPage());
     this->addItem(new SettingsPage());
 }

@@ -3,14 +3,19 @@
 
 #include <QskBox.h>
 #include <QskLinearBox.h>
+#include <QskGraphicLabel.h>
 #include <qnamespace.h>
 
 
 class RoomPage : public QskLinearBox
 {
-         
+    private:
+        QString m_roomName;     
+    
     public:
         RoomPage(QString roomName, QString imagePath);
+        void setRoomName(const QString& name);
+        QString getRoomName();
 };
 
 
@@ -23,8 +28,14 @@ class HorizontalDisplayBox : public QskLinearBox
 
 class ImageAndButtonsBox : public QskBox
 {
+    private:
+        QskGraphicLabel* m_roomImage = nullptr;
+    
     public:
         ImageAndButtonsBox(QString imagePath);
+
+    protected:
+        void geometryChange(const QRectF& newGeometry, const QRectF& oldGeometry) override;
 
 };
 

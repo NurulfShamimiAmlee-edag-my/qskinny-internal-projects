@@ -62,7 +62,7 @@ MainPage::MainPage() : QskLinearBox()
 
     this->addItem(new MainPageBannerBox("10", "assets/qvg/lamp.qvg"));
     this->addItem(new MainPageBannerBox("5", "assets/qvg/air-conditioner.qvg"));
-    this->addItem(new MainPageBannerBox("5", "assets/qvg/wifi-router.qvg"));
+    this->addItem(new MainPageBannerBox("5", "assets/qvg/wifi.qvg"));
 }
 
 

@@ -32,9 +32,8 @@ int main( int argc, char* argv[] )
     
     QskWindow window;
     window.addItem(new PageViewer());
-    // window.addItem( verticalContainerBox );
-    window.resize(1920, 1080);
-    // window.resize(1024, 600);
+    // window.resize(1920, 1080);
+    window.resize(1024, 600); //TOFIX: NavigationBar is not visible after windows resize
     window.show();
  
     return app.exec();

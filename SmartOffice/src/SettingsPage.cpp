@@ -53,7 +53,7 @@ SettingsPage::SettingsPage() : QskLinearBox()
         if(row == 0)
         {
             auto* acDragGraphicLabel = new DragGraphicLabel("assets/qvg/air-conditioner.qvg", dropArea);
-            auto* wifiDragGraphicLabel = new DragGraphicLabel("assets/qvg/wifi-router.qvg", dropArea);
+            auto* wifiDragGraphicLabel = new DragGraphicLabel("assets/qvg/wifi.qvg", dropArea);
             auto* lightDragGraphicLabel =  new DragGraphicLabel("assets/qvg/lamp.qvg", dropArea);
 
             horizontalDragGraphicLabelsBox->addItem(acDragGraphicLabel);

@@ -36,7 +36,8 @@ add_executable(smartoffice
     src/DropBox.cpp
     src/TemperatureSlider.cpp
     src/SliderBox.cpp
-    src/TemperatureButton.cpp)
+    src/TemperatureButton.cpp
+    src/RoomPageTab.cpp)
 
  
 target_link_libraries(smartoffice PRIVATE

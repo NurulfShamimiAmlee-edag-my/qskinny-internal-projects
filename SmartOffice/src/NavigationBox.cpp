@@ -9,11 +9,10 @@
 NavigationBox::NavigationBox() : QskLinearBox()
 {
     this->setOrientation(Qt::Horizontal);
-    this->setFixedHeight(50);
+    // this->setFixedHeight(50); --> previously was set because the it became to big when the size of the window was big... something to consider in the future
+    m_previousButton->setFixedWidth(75);
 
-    m_previousButton->setFixedSize(75,25);
-
-    m_nextButton->setFixedSize(75,25);
+    m_nextButton->setFixedWidth(75);
     m_nextButton->setLayoutAlignmentHint(Qt::AlignRight);
 
     this->addItem(m_previousButton);

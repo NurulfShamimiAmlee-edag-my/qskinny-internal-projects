@@ -29,16 +29,13 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     
     this->setOrientation(Qt::Horizontal);
     this->setPanel(true);
-    this->setFixedHeight(50);
     this->addItem(setGraphicLabel("assets/qvg/capybara.qvg"));  
     //TODO: Create a class that can use both logo and label -> label is used to display latest information
     this->addItem(setGraphicLabel("assets/qvg/thermometer-svgrepo-com.qvg"));
     this->addItem(setGraphicLabel("assets/qvg/water.qvg"));
     this->addItem(setGraphicLabel("assets/qvg/electricity.qvg"));
-    // this->addItem(setStatusLabels("Temperature"));
-    // this->addItem(setStatusLabels("Humiditiy"));
-    // this->addItem(setStatusLabels("Energy"));
     this->addItem(setMenuButton("assets/qvg/list.qvg"));
+
 };
 
 TopBarGraphicLabel* TopBar::setGraphicLabel (const QString& path)
@@ -62,13 +59,11 @@ QskTextLabel* TopBar::setStatusLabels(QString text)
 
 TopBarMenuButton* TopBar::setMenuButton(const QString& path)
 {
-    // auto* menuButton = new TopBarMenuButton();
-    // QImage buttonImage(path);
     QskGraphic buttonGraphic = QskGraphicIO::read(path);
     m_menuButton->setIcon(buttonGraphic);
-    m_menuButton->setIconStrutSize(QSizeF(25,25));
-    // m_menuButton->setColor(TopBarMenuButton::Panel, QColor("#d6d4ad"));
-    m_menuButton->setFixedSize(30,30);
+    m_menuButton->setIconStrutSize(QSizeF(20,20)); //Strutsize of the icon actually influence the size of all property in TopBar box... interesting
+    //TODO: Figure out a better size policy so that the size of the box is not dependent on the icon strut size?
+
     return m_menuButton;
 }
 

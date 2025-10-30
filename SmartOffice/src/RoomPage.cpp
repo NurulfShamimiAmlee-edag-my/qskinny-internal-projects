@@ -27,6 +27,8 @@
 #include <qpoint.h>
 #include <qvectornd.h>
 
+#include <iostream>
+
 
 HorizontalDisplayBox::HorizontalDisplayBox(QString imagePath) : QskLinearBox()
 {
@@ -37,21 +39,37 @@ HorizontalDisplayBox::HorizontalDisplayBox(QString imagePath) : QskLinearBox()
 
 ImageAndButtonsBox::ImageAndButtonsBox(QString imagePath) : QskBox()
 {
-    // contentsRect();
     QImage image(imagePath);
     QskGraphic imageGraphic = QskGraphic::fromImage(image);
-    auto* roomGraphicLabel = new QskGraphicLabel(imageGraphic, this);
-    roomGraphicLabel->setGeometry(0,-100, 960,1080);
+    m_roomImage = new QskGraphicLabel(imageGraphic, this);
+    // The following sets the image in the box manually... it is better to use geometryChange()
+    // roomGraphicLabel->setGeometry(0,100, sizeConstraint().width() , sizeConstraint().height());
 
     auto* lampButton = new QskPushButton(this);
     lampButton->setIcon(QskGraphicIO::read(QString("assets/qvg/lamp.qvg")));
-    lampButton->setGeometry(100,100, 100,100);
+    lampButton->setGeometry(100,100, 50,50);
     lampButton->setZ(2);
 
     auto* wifiButton = new QskPushButton(this);
     wifiButton->setIcon(QskGraphicIO::read(QString("assets/qvg/air-conditioner.qvg")));
-    wifiButton->setGeometry(350,100, 100,100);
+    wifiButton->setGeometry(350,100, 50,50);
     wifiButton->setZ(1);
+
+}
+
+void ImageAndButtonsBox::geometryChange(const QRectF& newGeometry, const QRectF& oldGeometry)
+{
+    QskBox::geometryChange(newGeometry, oldGeometry);
+
+    QRectF c = contentsRect(); //contentsRect cannot be used in constructor as the box has yet to be created when the constructor was called.
+    
+    std::cout << "width: " << c.width() << "," << "Height: " << c.height() << std::endl;
+
+    QRectF imageRect(c.left(), c.top(), c.width(), c.height());
+    m_roomImage->setX(imageRect.x());
+    m_roomImage->setY(imageRect.y());
+    m_roomImage->setWidth(imageRect.width());
+    m_roomImage->setHeight(imageRect.height());
 
 }
 
@@ -124,15 +142,20 @@ InfoBox::InfoBox() : QskLinearBox()
     auto* informationAC = new QskTextLabel("AC Info _______", this);
 }
 
-RoomPage::RoomPage(QString roomName, QString imagePath) : QskLinearBox()
+RoomPage::RoomPage(QString roomName, QString imagePath) : QskLinearBox(Qt::Vertical), m_roomName(roomName)
 {
-    this->setOrientation(Qt::Vertical);
+    addItem(new HorizontalDisplayBox(imagePath));   
+}
 
-    auto* nameRoom = new QskTextLabel(roomName, this);
+void RoomPage::setRoomName(const QString& name)
+{
+    auto* nameRoom = new QskTextLabel(name, this);
     nameRoom->setFontRole({QskFontRole::Display, QskFontRole::High});
     nameRoom->setAlignment(Qt::AlignCenter); 
+}
 
-    addItem(new HorizontalDisplayBox(imagePath));
-    
+QString RoomPage::getRoomName()
+{
+    return m_roomName;
 }
 

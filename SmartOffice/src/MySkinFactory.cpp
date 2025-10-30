@@ -18,6 +18,9 @@
 #include <QskMargins.h>
 #include <QskColorFilter.h>
 #include <QskRgbValue.h>
+#include <QskTabBar.h>
+#include <QskTabView.h>
+#include <QskTabButton.h>
 #include <QFontDatabase>
 #include <qcontainerfwd.h>
 #include <qfont.h>
@@ -33,6 +36,8 @@
 #include "NavigationButton.h"
 #include "TemperatureSlider.h"
 #include "TemperatureButton.h"
+
+
 MySkinFactory::MySkinFactory(QObject* parent) : QskSkinFactory(parent)
 {
 
@@ -81,11 +86,11 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
 
                         {
                             
-                            //Change icon's color
+                            //Change icon's color: rgb color obtained from converting hex to rgb via imagecolorpicker.com
                             QskColorFilter filterMainPage;
                             filterMainPage.addColorSubstitution(Qt::black, qRgb(138,155,161));
                             QskColorFilter filterTopBar;
-                            filterTopBar.addColorSubstitution(Qt::black, qRgb(245,189,130));       
+                            filterTopBar.addColorSubstitution(Qt::black, qRgb(90,117,110));       
 
                             e.setGraphicRole(TopBarGraphicLabel::Graphic,  MimiGraphicRole::TopBar);
                             e.setGraphicRole(MainPageGraphicLabel::Graphic, MimiGraphicRole::MainPage);  
@@ -98,7 +103,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             
                             //TopBar
                             e.setBoxShape(TopBar::Panel, QskBoxShapeMetrics(8));
-                            e.setGradient(TopBar::Panel, QColor("#5a756e"), QColor("#8a9ba1"));
+                            e.setGradient(TopBar::Panel, QColor("#f5d682"), QColor("#f5bd82"));
                             e.setPadding(TopBar::Panel, 5);
                             //TopBarMenuButton
                             e.setBoxShape(TopBarMenuButton::Panel, QskBoxShapeMetrics(8));
@@ -108,7 +113,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
 
                             //NavigationButton
                             e.setBoxShape(NavigationButton::Panel, QskBoxShapeMetrics(8));
-                            e.setGradient(NavigationButton::Panel, QColor("#82f5d4"), QColor("#82d6f5"));
+                            e.setGradient(NavigationButton::Panel, QColor("#f5d682"), QColor("#f5bd82"));
                             e.setGradient(NavigationButton::Panel | NavigationButton::Hovered, QColor("#82f5d4"));
                             e.setAnimation(NavigationButton::Panel | QskAspect::Color, 100);
                         
@@ -136,14 +141,14 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
 
                             //For MainPageBannerBox -- banner
                             e.setGradient(MainPageBannerBox::Panel, QColor("#f5bd82"), QColor("#f5d682"));
-                            e.setMargin(MainPageBannerBox::Panel, QskMargins(25));
+                            e.setMargin(MainPageBannerBox::Panel, QskMargins(25,10,25,10));
                             e.setBoxBorderMetrics(MainPageBannerBox::Panel, QskBoxBorderMetrics(5));
                             e.setBoxShape(MainPageBannerBox::Panel, QskBoxShapeMetrics(8));
                             e.setGradient(MainPageBannerBox::Panel | QskAspect::Border, QColor("#f5bd82"));
-
                             
+
                             //For MainPageSwitchButton - Groove
-                            const QSizeF  strutSize(300,100);
+                            const QSizeF  strutSize(150,50);
                             e.setStrutSize(MainPageSwitchButton::Groove | QskAspect::Horizontal, strutSize);
                             e.setStrutSize(MainPageSwitchButton::Groove | QskAspect::Vertical, strutSize.transposed());
                             e.setBoxShape(MainPageSwitchButton::Groove, 100, Qt::RelativeSize);
@@ -155,7 +160,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setBoxShape(MainPageSwitchButton::Handle, 100, Qt::RelativeSize);
                             e.setPosition(MainPageSwitchButton::Handle, 0.1, {QskStateCombination::CombinationNoState, MainPageSwitchButton::Disabled});
                             e.setPosition(MainPageSwitchButton::Handle | MainPageSwitchButton::Checked, 0.9, {QskStateCombination::CombinationNoState, MainPageSwitchButton::Disabled});
-                            e.setStrutSize(MainPageSwitchButton::Handle, 50, 50);
+                            e.setStrutSize(MainPageSwitchButton::Handle, 25, 25);
                             e.setGradient(MainPageSwitchButton::Handle, QColor("#82f5d4"));
 
                         }
@@ -193,8 +198,27 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setGradient(TemperatureButton::Panel, QColor("#f5bd82"), QColor("#f5d682"));
                             e.setGradient(TemperatureButton::Panel | TemperatureButton::Pressed, QColor("#f5bd82"));
                             e.setGradient(TemperatureButton::Panel | TemperatureButton::Hovered, QColor("#f5d682"));
-                            e.setAnimation(TemperatureButton::Panel | QskAspect::Color, 100);  
+                            e.setAnimation(TemperatureButton::Panel | QskAspect::Color, 100); 
+                            
+                            //QskPushButton - on image
+                            e.setBoxShape(QskPushButton::Panel, QskBoxShapeMetrics(50));
+                            e.setGradient(QskPushButton::Panel, QColor("#f5bd82"), QColor("#f5d682"));
+                            e.setGradient(QskPushButton::Panel | QskPushButton::Pressed, QColor("#f5bd82"));
+                            e.setGradient(QskPushButton::Panel | QskPushButton::Hovered, QColor("#f5d682"));
+                            e.setAnimation(QskPushButton::Panel | QskAspect::Color, 100); 
+
                                                       
+                        }
+
+                        {
+                            //Based on example from FusionSkin
+                            //TabButton
+                            e.setStrutSize(QskTabButton::Panel, 30, 16);
+                            e.setBoxShape(QskTabButton::Panel, QskBoxShapeMetrics(10));
+                            e.setGradient(QskTabButton::Panel, QColor("#f5d682"));
+                            e.setColor(QskTabButton::Panel | QskTabButton::Checked, QColor("#f5bd82"));
+                            e.setFontRole(QskTabButton::Text | QskTabButton::Checked, {QskFontRole::Body, QskFontRole::VeryHigh});
+                            
                         }
 
                         {

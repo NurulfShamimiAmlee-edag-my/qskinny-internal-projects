@@ -2,12 +2,8 @@
 #include <QskPushButton.h>
 #include <QskTextLabel.h>
 
-SliderBox::SliderBox(QskSlider* slider, QskPushButton* button, QskTextLabel* currentValue) : QskLinearBox(Qt::Horizontal)
+SliderBox::SliderBox(QskSlider* slider, QskPushButton* button, QskTextLabel* currentValue) : QskLinearBox(Qt::Horizontal), m_button(button), m_slider(slider), m_currentValue(currentValue)
 {
-    m_button = button;
-    m_slider = slider;
-    m_currentValue = currentValue;
-    
     addItem(m_button);
     addItem(m_slider);
     addItem(m_currentValue);

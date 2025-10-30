@@ -2,7 +2,8 @@
 #define BOTTOMSECTION_H
 
 #include <QskStackBox.h>
-class BottomSection : public QskStackBox
+#include <QskSwipeView.h>
+class BottomSection : public QskSwipeView
 {
     public:
         BottomSection();
