@@ -215,6 +215,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             //Based on example from FusionSkin
                             //TabButton
                             e.setStrutSize(QskTabButton::Panel, 30, 16);
+                            e.setPadding(QskTabButton::Panel, QskMargins(3));
                             e.setBoxShape(QskTabButton::Panel, QskBoxShapeMetrics(10));
                             e.setBoxBorderMetrics(QskTabButton::Panel , 3);
                             e.setBoxBorderMetrics(QskTabButton::Panel | QskTabButton::Checked, 1);

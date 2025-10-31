@@ -1,11 +1,12 @@
 #include "RoomPageTab.h"
 #include "RoomPage.h"
+#include "RoomImageWithButtonsBox.h"
 
 RoomPageTab::RoomPageTab() : QskTabView()
 {
-    auto* roomPageA = new RoomPage("Meeting Room A","assets/jpg/meeting-room.jpg");
+    auto* roomPageA = new RoomPage("Meeting Room A", new MeetingRoomA());
     addTab(roomPageA->getRoomName(), roomPageA);
-    addTab("Conference Room", new RoomPage("Meeting Room B","assets/jpg/conferenceroom.jpg"));
+    addTab("Conference Room", new RoomPage("Conference Room",new ConferenceRoom()));
 }
 
 void RoomPageTab::addRoomPage(RoomPage* roomPage)

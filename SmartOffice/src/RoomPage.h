@@ -11,47 +11,15 @@
 class RoomPage : public QskLinearBox
 {
     private:
-        QString m_roomName;     
+        QString m_roomName; //hold room name of tab button label
+        QskLinearBox *m_verticalContainer = nullptr; //Hold controller and info box    
     
     public:
-        RoomPage(QString roomName, QString imagePath);
+        RoomPage(QString roomName, QskBox* imageAndButtonsBox);
         void setRoomName(const QString& name);
         QString getRoomName();
 };
 
-
-class HorizontalDisplayBox : public QskLinearBox
-{
-    public:
-        HorizontalDisplayBox(QString imagePath);
-
-};
-
-class ImageAndButtonsBox : public QskBox
-{
-    private:
-        QskGraphicLabel* m_roomImage = nullptr;
-        QskPushButton* m_lightButton = nullptr;
-        QskPushButton* m_wifiButton = nullptr;
-        QskPushButton* m_acButton = nullptr;
-        QskPushButton* m_blindButton = nullptr;
-        QskPushButton* m_socketButton = nullptr;
-        QRectF m_contentRect;
-    
-    public:
-        ImageAndButtonsBox(QString imagePath);
-
-    protected:
-        void geometryChange(const QRectF& newGeometry, const QRectF& oldGeometry) override;
-        void setButtonPosition(QskPushButton* buttons, qreal buttonWidth, qreal buttonHeight, qreal buttonX, qreal buttonY, qreal buttonZ);
-
-};
-
-class InfoAndControllerBox : public QskLinearBox
-{
-    public:
-        InfoAndControllerBox();
-};
 
 class ControllerBox : public QskLinearBox
 {

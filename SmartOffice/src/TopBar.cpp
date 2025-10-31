@@ -15,9 +15,11 @@
 #include <qnamespace.h>
 #include <QskColorFilter.h>
 #include <QPainter>
+#include <qtimer.h>
 
 
 #include "MyGraphicRole.h"
+#include "TopBarMenuButton.h"
 
 
 QSK_SUBCONTROL(TopBar, Panel)
@@ -29,11 +31,12 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     
     this->setOrientation(Qt::Horizontal);
     this->setPanel(true);
-    this->addItem(setGraphicLabel("assets/qvg/capybara.qvg"));  
+    this->addItem(setGraphicLabel("assets/qvg/edag-logo.qvg"));  
     //TODO: Create a class that can use both logo and label -> label is used to display latest information
     this->addItem(setGraphicLabel("assets/qvg/thermometer-svgrepo-com.qvg"));
     this->addItem(setGraphicLabel("assets/qvg/water.qvg"));
     this->addItem(setGraphicLabel("assets/qvg/electricity.qvg"));
+    this->addItem(setClockAndDate());
     this->addItem(setMenuButton("assets/qvg/list.qvg"));
 
 };
@@ -60,11 +63,29 @@ QskTextLabel* TopBar::setStatusLabels(QString text)
 TopBarMenuButton* TopBar::setMenuButton(const QString& path)
 {
     QskGraphic buttonGraphic = QskGraphicIO::read(path);
+    m_menuButton = new TopBarMenuButton();
     m_menuButton->setIcon(buttonGraphic);
     m_menuButton->setIconStrutSize(QSizeF(20,20)); //Strutsize of the icon actually influence the size of all property in TopBar box... interesting
     //TODO: Figure out a better size policy so that the size of the box is not dependent on the icon strut size?
 
     return m_menuButton;
+}
+
+QskLinearBox* TopBar::setClockAndDate()
+{
+    setMargins(2,0,2,0);//TODO: No margin top and bottom, left and right have margin -- not the final solution
+    m_dateAndClockBox = new QskLinearBox(Qt::Horizontal);
+    m_dateLabel = new QskTextLabel(QDate::currentDate().toString(Qt::DateFormat::TextDate), this);
+    m_timeLabel = new QskTextLabel(QTime::currentTime().toString("hh:mm:ss"),this);
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout, [this](){
+        const QString t = QTime::currentTime().toString("hh:mm:ss");
+        m_timeLabel->setText(t);
+        m_dateLabel->setText(QDate::currentDate().toString(Qt::DateFormat::ISODate));
+    });
+    m_timer->start(1000);
+
+    return m_dateAndClockBox;
 }
 
 TopBarMenuButton* TopBar::getMenuButton()

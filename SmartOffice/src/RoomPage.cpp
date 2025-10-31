@@ -27,80 +27,6 @@
 #include <qpoint.h>
 #include <qvectornd.h>
 
-#include <iostream>
-
-
-HorizontalDisplayBox::HorizontalDisplayBox(QString imagePath) : QskLinearBox()
-{
-    setOrientation(Qt::Horizontal);
-    addItem(new ImageAndButtonsBox(imagePath));
-    addItem(new InfoAndControllerBox());
-}
-
-ImageAndButtonsBox::ImageAndButtonsBox(QString imagePath) : QskBox()
-{
-    QImage image(imagePath);
-    QskGraphic imageGraphic = QskGraphic::fromImage(image);
-    m_roomImage = new QskGraphicLabel(imageGraphic, this);
-    // The following sets the image in the box manually... it is better to use geometryChange()
-    // roomGraphicLabel->setGeometry(0,100, sizeConstraint().width() , sizeConstraint().height());
-
-    m_lightButton = new QskPushButton(this);
-    m_lightButton->setIcon(QskGraphicIO::read(QString("assets/qvg/lamp.qvg")));
-    // m_lightButton->setGeometry(100,100, 50,50);
-    // m_lightButton->setZ(2);
-
-    m_acButton = new QskPushButton(this);
-    m_acButton->setIcon(QskGraphicIO::read(QString("assets/qvg/air-conditioner.qvg")));
-    // m_acButton->setGeometry(200,100, 50,50);
-    // m_acButton->setZ(1);
-
-    m_wifiButton = new QskPushButton(this);
-    m_wifiButton->setIcon(QskGraphicIO::read(QString("assets/qvg/wifi.qvg")));
-    // m_wifiButton->setGeometry(200,300, 50,50);
-    // m_wifiButton->setZ(1);
-
-}
-
-void ImageAndButtonsBox::geometryChange(const QRectF& newGeometry, const QRectF& oldGeometry)
-{
-    QskBox::geometryChange(newGeometry, oldGeometry);
-
-    // QRectF c = contentsRect(); //contentsRect cannot be used in constructor as the box has yet to be created when the constructor was called.
-    m_contentRect = contentsRect().marginsRemoved(QMarginsF(8,0,8,0));// if you want image to  have margins
-
-    QRectF imageRect(m_contentRect.left(), m_contentRect.top(), m_contentRect.width(), m_contentRect.height());
-    m_roomImage->setX(imageRect.x());
-    m_roomImage->setY(imageRect.y());
-    m_roomImage->setWidth(imageRect.width());
-    m_roomImage->setHeight(imageRect.height());
-
-    setButtonPosition(m_lightButton, 50, 50, 100, 100, 1);
-    setButtonPosition(m_acButton, 50, 50, 200, 100, 1);
-    setButtonPosition(m_wifiButton, 50, 50, 200, 300, 1);
-
-    std::cout << "width: " << m_contentRect.x() << "," << "Height: " << m_contentRect.y() << std::endl;
-
-}
-
-void ImageAndButtonsBox::setButtonPosition(QskPushButton* buttons, qreal buttonWidth, qreal buttonHeight, qreal buttonX, qreal buttonY, qreal buttonZ)
-{
-    QRectF buttonRect(m_contentRect.left() + buttonX, m_contentRect.top() + buttonY, buttonWidth, buttonHeight); //How do I place a button in relation to the image size?
-
-    buttons->setX(buttonRect.x());
-    buttons->setY(buttonRect.y());
-    buttons->setZ(buttonZ);//still a random number
-    buttons->setWidth(buttonRect.width());
-    buttons->setHeight(buttonRect.height());
-}
-
-InfoAndControllerBox::InfoAndControllerBox() : QskLinearBox()
-{
-    setOrientation(Qt::Vertical);
-    addItem(new ControllerBox());
-    addItem(new InfoBox());
-}
-
 ControllerBox::ControllerBox() : QskLinearBox()
 {
     setOrientation(Qt::Vertical);
@@ -163,9 +89,12 @@ InfoBox::InfoBox() : QskLinearBox()
     auto* informationAC = new QskTextLabel("AC Info _______", this);
 }
 
-RoomPage::RoomPage(QString roomName, QString imagePath) : QskLinearBox(Qt::Vertical), m_roomName(roomName)
+RoomPage::RoomPage(QString roomName, QskBox* imageAndButtonsBox) : QskLinearBox(Qt::Horizontal), m_roomName(roomName)
 {
-    addItem(new HorizontalDisplayBox(imagePath));   
+    addItem(imageAndButtonsBox);
+    m_verticalContainer = new QskLinearBox(Qt::Vertical, this);
+    m_verticalContainer->addItem(new ControllerBox());
+    m_verticalContainer->addItem(new InfoBox());
 }
 
 void RoomPage::setRoomName(const QString& name)

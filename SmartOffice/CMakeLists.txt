@@ -37,7 +37,8 @@ add_executable(smartoffice
     src/TemperatureSlider.cpp
     src/SliderBox.cpp
     src/TemperatureButton.cpp
-    src/RoomPageTab.cpp)
+    src/RoomPageTab.cpp
+    src/RoomImageWithButtonsBox.cpp)
 
  
 target_link_libraries(smartoffice PRIVATE
