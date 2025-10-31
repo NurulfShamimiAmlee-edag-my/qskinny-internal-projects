@@ -142,6 +142,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             //For MainPageBannerBox -- banner
                             e.setGradient(MainPageBannerBox::Panel, QColor("#f5d682"));
                             e.setMargin(MainPageBannerBox::Panel, QskMargins(25,10,25,10));
+                            e.setPadding(MainPageBannerBox::Panel, QskMargins(25));
                             e.setBoxBorderMetrics(MainPageBannerBox::Panel, QskBoxBorderMetrics(5));
                             e.setBoxBorderMetrics(MainPageBannerBox::Panel | MainPageBannerBox::Hovered, QskBoxBorderMetrics(1));
                             e.setBoxShape(MainPageBannerBox::Panel, QskBoxShapeMetrics(8));

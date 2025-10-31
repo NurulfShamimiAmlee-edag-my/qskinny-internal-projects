@@ -10,6 +10,7 @@
 #include <QskGraphicLabel.h>
 #include <qnamespace.h>
 #include <qquickitem.h>
+#include <qvectornd.h>
 
 #include "MainPageTextLabel.h"
 #include "MainPagePushButton.h"
@@ -30,6 +31,7 @@ class MainPageBannerBox : public QskLinearBox
 
         MainPageBannerBox(QString labelText, QString path);
         MainPageBannerBox();
+        void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
 };
 
 

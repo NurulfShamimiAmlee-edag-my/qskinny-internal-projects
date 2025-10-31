@@ -24,6 +24,7 @@
 #include <qbytearrayalgorithms.h>
 #include <qnamespace.h>
 #include <qquickitem.h>
+#include <qsize.h>
 
 QSK_SUBCONTROL(MainPageBannerBox, Panel)
 
@@ -60,15 +61,27 @@ MainPageBannerBox::MainPageBannerBox() : QskLinearBox()
     setSubcontrolProxy(QskLinearBox::Panel, Panel);
 }
 
+void MainPageBannerBox::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
+{
+    QskLinearBox::geometryChange(newGeometry, oldGeometry);
+    qreal smallestSide = qMin(width(), height());
+
+    if (width() != height())
+    {
+        setSize(QSizeF(smallestSide, smallestSide));
+    }
+
+    qDebug() << "Contents Rect in geometry change: " << contentsRect();
+}
+
 
 MainPage::MainPage() : QskLinearBox()
 {
-
     this->setOrientation(Qt::Horizontal);
-
     this->addItem(new MainPageBannerBox("10", "assets/qvg/lamp.qvg"));
     this->addItem(new MainPageBannerBox("5", "assets/qvg/air-conditioner.qvg"));
     this->addItem(new MainPageBannerBox("5", "assets/qvg/wifi.qvg"));
+
 }
 
 
