@@ -4,15 +4,8 @@
 #include <QskPushButton.h>
 #include <qquickitem.h>
 
-QSK_SUBCONTROL(TemperatureButton, Panel)
-QSK_SUBCONTROL(TemperatureButton, Icon)
 
-TemperatureButton::TemperatureButton() : QskPushButton()
+TemperatureButton::TemperatureButton() : SliderButtons()
 {
-    setSubcontrolProxy(QskPushButton::Panel, Panel);
-    setSubcontrolProxy(QskPushButton::Icon, Icon);
-
     setIcon(QskGraphicIO::read(QString("assets/qvg/air-conditioner.qvg")));;
-    setFixedSize(50,50);
-    // setBoxShapeHint(50);
 }

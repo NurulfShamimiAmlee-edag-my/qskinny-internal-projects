@@ -63,6 +63,7 @@ MainPageBannerBox::MainPageBannerBox() : QskLinearBox()
 
 void MainPageBannerBox::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
+    //Use geometryChange to set banner box size instead of fixing it direectly using setFixeddSize
     QskLinearBox::geometryChange(newGeometry, oldGeometry);
     qreal smallestSide = qMin(width(), height());
 
@@ -77,10 +78,15 @@ void MainPageBannerBox::geometryChange(const QRectF &newGeometry, const QRectF &
 
 MainPage::MainPage() : QskLinearBox()
 {
-    this->setOrientation(Qt::Horizontal);
-    this->addItem(new MainPageBannerBox("10", "assets/qvg/lamp.qvg"));
-    this->addItem(new MainPageBannerBox("5", "assets/qvg/air-conditioner.qvg"));
-    this->addItem(new MainPageBannerBox("5", "assets/qvg/wifi.qvg"));
+    this->setOrientation(Qt::Vertical);
+    auto* welcomeText = new QskTextLabel("Welcome!", this);//A place holder
+    auto* hztlBx = new QskLinearBox(this);
+    welcomeText->setFontRole({QskFontRole::Display, QskFontRole::High});
+    welcomeText->setAlignment(Qt::AlignCenter);
+    hztlBx->addItem(hztlBx);
+    hztlBx->addItem(new MainPageBannerBox("10", "assets/qvg/lamp.qvg"));
+    hztlBx->addItem(new MainPageBannerBox("5", "assets/qvg/air-conditioner.qvg"));
+    hztlBx->addItem(new MainPageBannerBox("5", "assets/qvg/wifi.qvg"));
 
 }
 

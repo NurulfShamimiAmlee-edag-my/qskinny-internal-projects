@@ -1,5 +1,7 @@
 #include "DropBox.h"
+#include <QskBoxShapeMetrics.h>
 #include <QskGraphic.h>
+#include <QskLinearBox.h>
 #include <qtimer.h>
 
 DropBox::DropBox() : QskLinearBox()
@@ -7,13 +9,13 @@ DropBox::DropBox() : QskLinearBox()
     setFlags(QFlag(Qt::ItemIsDropEnabled));
     setAutoLayoutChildren(true);
     setPanel(true);
-    setBackgroundColor(QColor("#f5bd82"));
-    // setMargins(25);
+    setColor(QskLinearBox::Panel, QColor("#f5bd82"));
+    setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
+    setMargins(10,5,10,5);
     // m_label = new QskTextLabel("Drop Area", this);
     // m_graphicLabel = new MainPageGraphicLabel(this);
     m_label = new MainPageTextLabel("Drop Area",this);
-    // m_label->setTextColor(QColor("#5a756e"));
-    // m_label->setAlignment(Qt::AlignCenter);m,.
+
 
 }
 

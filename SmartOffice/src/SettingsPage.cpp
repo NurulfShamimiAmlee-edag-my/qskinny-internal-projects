@@ -2,6 +2,7 @@
 #include <QGuiApplication>
 #include <QMimeData>
 #include <QDrag>
+#include <QskBoxShapeMetrics.h>
 #include <QskEvent.h>
 #include <QskGraphicLabel.h>
 #include <QskLinearBox.h>
@@ -45,7 +46,8 @@ SettingsPage::SettingsPage() : QskLinearBox()
     auto* DragGraphicLabelsBox = new QskLinearBox(Qt::Vertical);
     DragGraphicLabelsBox->setPanel(true);
     DragGraphicLabelsBox->setColor(QskLinearBox::Panel, QColor("#f5d682"));
-    // DragGraphicLabelsBox->setMargins(25);
+    DragGraphicLabelsBox->setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
+    DragGraphicLabelsBox->setMargins(5);
 
     for (int row = 0 ; row < 2; row++)
     {

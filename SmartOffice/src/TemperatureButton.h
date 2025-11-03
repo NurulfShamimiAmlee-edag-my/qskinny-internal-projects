@@ -1,13 +1,11 @@
 #ifndef TEMPERATUREBUTTON_H
 #define TEMPERATUREBUTTON_H
 
-#include <QskPushButton.h>
+#include "SliderButtons.h"
 
-class TemperatureButton : public QskPushButton
+class TemperatureButton : public SliderButtons
 {
-    public:
-        QSK_SUBCONTROLS(Panel, Icon)    
-
+    public: 
         TemperatureButton();
 
 };

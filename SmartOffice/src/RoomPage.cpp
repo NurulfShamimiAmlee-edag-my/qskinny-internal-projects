@@ -1,6 +1,8 @@
 #include "RoomPage.h"
+#include "RoomImageWithButtonsBox.h"
 #include "TemperatureSlider.h"
 #include "TemperatureButton.h"
+#include "LightButton.h"
 #include "SliderBox.h"
 
 #include <QskBoundedValueInput.h>
@@ -27,85 +29,53 @@
 #include <qpoint.h>
 #include <qvectornd.h>
 
-ControllerBox::ControllerBox() : QskLinearBox()
+
+RoomPage::RoomPage(ImageAndButtonBoxFactory* imageAndButtonsBox) : QskLinearBox(Qt::Horizontal), m_imageAndButtons(imageAndButtonsBox)
 {
-    setOrientation(Qt::Vertical);
-    setPanel(true);
-    setMargins(25);
-    setPadding(25);
-    setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
-    setColor(QskLinearBox::Panel, QColor("#f5bd82"));
-
-    auto* sliderBoxTitle = new QskTextLabel("Controllers", this);
-    sliderBoxTitle->setFontRole({QskFontRole::Headline, QskFontRole::High});
-    sliderBoxTitle->setAlignment(Qt::AlignCenter);
-
-    //Temperature Controller
-    addItem(new SliderBox(new TemperatureSlider(), new TemperatureButton(), new QskTextLabel("°C")));
-
-    //Light Intensity Controller
-    auto* lightIntensityBox = new QskLinearBox(Qt::Vertical, this);
-    auto* currentLightIntensityLabel = new QskTextLabel("Current Light Intensity: 20%", lightIntensityBox);
-    auto* lightIntensitySlider = new  LightIntensitySlider();
-    lightIntensityBox->addItem(lightIntensitySlider);
-    lightIntensitySlider->setPreferredSize(QSizeF(360, 10));
-    lightIntensitySlider->setBoundaries(0, 100);
-    lightIntensitySlider->setValue(20);
-    lightIntensitySlider->setStepSize(10);
-
-    connect(lightIntensitySlider, &QskBoundedValueInput::valueChanged, [currentLightIntensityLabel](qreal v)
-    {
-        currentLightIntensityLabel->setText("Current Light Intensity: " + QString::number(int(v))+"%");
-    });
-
-    //Blind Controller
-    auto* blindBox = new QskLinearBox(Qt::Vertical, this);
-    auto* blindLabel = new QskTextLabel("Current Blind Position: 20%", blindBox);
-    auto* blindSlider = new  QskSlider(Qt::Horizontal, blindBox);
-    blindSlider->setPreferredSize(QSizeF(360, 10));
-    blindSlider->setBoundaries(0, 100);
-    blindSlider->setValue(20);
-    blindSlider->setStepSize(20);
-
-    connect(blindSlider, &QskBoundedValueInput::valueChanged, [blindLabel](qreal v)
-    {
-        blindLabel->setText("Current Light Intensity: " + QString::number(int(v))+"%");
-    });
-}
-
-InfoBox::InfoBox() : QskLinearBox()
-{
-    setOrientation(Qt::Vertical);
-    // auto* informationBox = new QskLinearBox(Qt::Vertical, this);
-    setPanel(true);
-    setPadding(25);
-    setMargins(25);
-    setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
-    setColor(QskLinearBox::Panel, QColor("#f5d682"));    
-    auto* informationBoxTitle = new QskTextLabel("Energy Consumption", this);
-    informationBoxTitle->setAlignment(Qt::AlignCenter);
-    informationBoxTitle->setFontRole({QskFontRole::Headline, QskFontRole::High});
-    auto* informationLight = new QskTextLabel("Lights Info ______", this);
-    auto* informationAC = new QskTextLabel("AC Info _______", this);
-}
-
-RoomPage::RoomPage(QString roomName, QskBox* imageAndButtonsBox) : QskLinearBox(Qt::Horizontal), m_roomName(roomName)
-{
-    addItem(imageAndButtonsBox);
+    m_roomPageName = m_imageAndButtons->getRoomName();
+    addItem(m_imageAndButtons);
     m_verticalContainer = new QskLinearBox(Qt::Vertical, this);
-    m_verticalContainer->addItem(new ControllerBox());
-    m_verticalContainer->addItem(new InfoBox());
+    setControllerBox(m_verticalContainer);
+    setInfoBox(m_verticalContainer);
 }
 
-void RoomPage::setRoomName(const QString& name)
+QString RoomPage::getRoomPageName()
 {
-    auto* nameRoom = new QskTextLabel(name, this);
-    nameRoom->setFontRole({QskFontRole::Display, QskFontRole::High});
-    nameRoom->setAlignment(Qt::AlignCenter); 
+    return m_roomPageName;
 }
 
-QString RoomPage::getRoomName()
+void RoomPage::setControllerBox(QskLinearBox* parent)
 {
-    return m_roomName;
+    m_controllerBox = new QskLinearBox(Qt::Vertical, parent);
+    m_controllerBox->setPanel(true);
+    m_controllerBox->setMargins(25);
+    m_controllerBox->setPadding(25);
+    m_controllerBox->setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
+    m_controllerBox->setColor(QskLinearBox::Panel, QColor("#f5bd82"));
+
+    // auto* sliderBoxTitle = new QskTextLabel("Controller", m_controllerBox);
+    // sliderBoxTitle->setFontRole({QskFontRole::Headline, QskFontRole::High});
+
+    //SliderBox section -> TODO: Change it so that whe don't directly set it like this
+    m_controllerBox->addItem(new SliderBox(new TemperatureSlider(), new TemperatureButton(), new QskTextLabel("°C")));
+    m_controllerBox->addItem(new SliderBox(new LightIntensitySlider(), new LightButton(), new QskTextLabel("%") ));
+    m_controllerBox->addItem(new SliderBox(new LightIntensitySlider(), new LightButton(), new QskTextLabel("%")));
+
+}
+
+void RoomPage::setInfoBox(QskLinearBox* parent)
+{
+    m_infoBox = new QskLinearBox(Qt::Vertical, parent);
+    m_infoBox->setPanel(true);
+    m_infoBox->setPadding(25);
+    m_infoBox->setMargins(25,25,25,35);
+    m_infoBox->setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
+    m_infoBox->setColor(QskLinearBox::Panel, QColor("#f5d682"));    
+    // auto* informationBoxTitle = new QskTextLabel("Energy Consumption", m_infoBox);
+    // informationBoxTitle->setAlignment(Qt::AlignCenter);
+    // informationBoxTitle->setFontRole({QskFontRole::Headline, QskFontRole::High});
+    auto* informationLight = new QskTextLabel("Lights Info ______", m_infoBox);
+    auto* informationAC = new QskTextLabel("AC Info _______", m_infoBox);
+
 }
 

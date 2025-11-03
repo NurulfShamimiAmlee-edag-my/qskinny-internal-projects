@@ -1,6 +1,7 @@
 #include "SliderBox.h"
 #include <QskPushButton.h>
 #include <QskTextLabel.h>
+#include <qnamespace.h>
 
 SliderBox::SliderBox(QskSlider* slider, QskPushButton* button, QskTextLabel* currentValue) : QskLinearBox(Qt::Horizontal), m_button(button), m_slider(slider), m_currentValue(currentValue)
 {
@@ -14,5 +15,10 @@ SliderBox::SliderBox(QskSlider* slider, QskPushButton* button, QskTextLabel* cur
     connect(slider, &QskBoundedValueInput::valueChanged, [this](qreal v)
     {
         m_currentValue->setText(QString::number(int(v))+ m_unit );
+    });
+
+    connect(button, &QskPushButton::clicked, [this]()
+    {
+        m_slider->setValue(m_slider->minimum());
     });
 }

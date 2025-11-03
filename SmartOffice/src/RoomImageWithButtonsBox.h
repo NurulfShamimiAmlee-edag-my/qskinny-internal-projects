@@ -15,10 +15,15 @@ class ImageAndButtonBoxFactory : public QskBox
         void addAcButtonToImage(QskPushButton* acButton);
         void addBlindButtonToImage(QskPushButton* blindButton);
         void addSocketButtonToImage(QskPushButton* socketButton);
+        QString getRoomName();
+    
+    protected:
+        QString m_roomName;
 
 
     protected:
         void setButtonPosition(QRectF contentRectangle, QskPushButton* buttons, qreal buttonWidth, qreal buttonHeight, qreal buttonX, qreal buttonY, qreal buttonZ);
+        void setRoomName(const QString& rooName);
 
 };
 

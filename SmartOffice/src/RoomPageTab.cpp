@@ -4,9 +4,13 @@
 
 RoomPageTab::RoomPageTab() : QskTabView()
 {
-    auto* roomPageA = new RoomPage("Meeting Room A", new MeetingRoomA());
-    addTab(roomPageA->getRoomName(), roomPageA);
-    addTab("Conference Room", new RoomPage("Conference Room",new ConferenceRoom()));
+    auto* roomPageA = new RoomPage(new MeetingRoomA());
+    auto* conferenceRoom = new RoomPage(new ConferenceRoom());
+
+    for(auto roomPage : {roomPageA, conferenceRoom})
+    {
+        addTab(roomPage->getRoomPageName(), roomPage);
+    }
 }
 
 void RoomPageTab::addRoomPage(RoomPage* roomPage)
@@ -14,7 +18,7 @@ void RoomPageTab::addRoomPage(RoomPage* roomPage)
     m_roomPages.append(roomPage);
     for (auto room : m_roomPages)
     {
-        addTab(room->getRoomName(), room);
+        addTab(room->getRoomPageName(), room);
     }
 }
 

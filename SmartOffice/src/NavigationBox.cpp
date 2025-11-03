@@ -9,7 +9,7 @@
 NavigationBox::NavigationBox() : QskLinearBox()
 {
     this->setOrientation(Qt::Horizontal);
-    // this->setFixedHeight(50); --> previously was set because the it became to big when the size of the window was big... something to consider in the future
+    this->setFixedHeight(35); //--> previously was set because the it became to big when the size of the window was big... something to consider in the future
     m_previousButton->setFixedWidth(75);
 
     m_nextButton->setFixedWidth(75);

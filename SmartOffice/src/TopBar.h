@@ -32,6 +32,9 @@ class TopBar : public QskLinearBox
         TopBarMenuButton* setMenuButton(const QString& path);
         QskLinearBox* setClockAndDate();
         TopBarMenuButton* getMenuButton();
+    
+    protected:
+        void geometryChange(const QRectF& newGeometry, const QRectF& oldGeometry) override;
 };
 
 

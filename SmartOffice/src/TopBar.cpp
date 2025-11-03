@@ -28,6 +28,7 @@ QSK_SUBCONTROL(TopBar, Panel)
 TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
 {
     setSubcontrolProxy(QskLinearBox::Panel, Panel);
+    setFixedHeight(35);
     
     this->setOrientation(Qt::Horizontal);
     this->setPanel(true);
@@ -40,6 +41,13 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     this->addItem(setMenuButton("assets/qvg/list.qvg"));
 
 };
+
+void TopBar::geometryChange(const QRectF& newGeometry, const QRectF& oldGeometry)
+{
+    QskLinearBox::geometryChange(newGeometry, newGeometry);
+
+    qDebug()<< "Contenst Rect of TopBar" << contentsRect() ;
+}
 
 TopBarGraphicLabel* TopBar::setGraphicLabel (const QString& path)
 {

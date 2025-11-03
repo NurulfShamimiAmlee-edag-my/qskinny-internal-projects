@@ -1,5 +1,6 @@
 #include "TemperatureSlider.h"
 #include <qnamespace.h>
+#include <qsize.h>
 
 QSK_SUBCONTROL(TemperatureSlider, Handle)
 QSK_SUBCONTROL(TemperatureSlider, Groove)
@@ -19,6 +20,7 @@ TemperatureSlider::TemperatureSlider() : QskSlider()
     setSubcontrolProxy(QskSlider::Panel, Panel);    
 
     setOrientation(Qt::Horizontal);
+    setPreferredWidth(360);
     setSnapping(true);
     setBoundaries(16,30);
     setValue(20);
@@ -33,6 +35,7 @@ LightIntensitySlider::LightIntensitySlider() : QskSlider()
     setSubcontrolProxy(QskSlider::Panel, Panel); 
     
     setOrientation(Qt::Horizontal);
+    // setPreferredSize(QSizeF(360,10));
     setBoundaries(0,100);
     setValue(20);
     setStepSize(10);

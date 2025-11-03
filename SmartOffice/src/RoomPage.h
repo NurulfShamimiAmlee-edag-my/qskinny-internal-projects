@@ -1,6 +1,7 @@
 #ifndef ROOMPAGE_H
 #define ROOMPAGE_H
 
+#include "RoomImageWithButtonsBox.h"
 #include <QskBox.h>
 #include <QskLinearBox.h>
 #include <QskGraphicLabel.h>
@@ -11,26 +12,19 @@
 class RoomPage : public QskLinearBox
 {
     private:
-        QString m_roomName; //hold room name of tab button label
-        QskLinearBox *m_verticalContainer = nullptr; //Hold controller and info box    
+        QString m_roomPageName; //hold room name of tab button label
+        QskLinearBox *m_verticalContainer = nullptr; //Hold controller and info box 
+        QskLinearBox *m_controllerBox = nullptr;
+        QskLinearBox *m_infoBox = nullptr;
+        ImageAndButtonBoxFactory *m_imageAndButtons = nullptr;
+        
+    private:
+        void setControllerBox(QskLinearBox* parent);
+        void setInfoBox(QskLinearBox* parent);
     
     public:
-        RoomPage(QString roomName, QskBox* imageAndButtonsBox);
-        void setRoomName(const QString& name);
-        QString getRoomName();
-};
-
-
-class ControllerBox : public QskLinearBox
-{
-    public:
-        ControllerBox();
-};
-
-class InfoBox : public QskLinearBox
-{
-    public:
-        InfoBox();
+        RoomPage(ImageAndButtonBoxFactory* imageAndButtonsBox);
+        QString getRoomPageName();
 };
 
 

@@ -14,16 +14,27 @@ void ImageAndButtonBoxFactory::setButtonPosition(QRectF contentRectangle,QskPush
 
 }
 
+QString ImageAndButtonBoxFactory::getRoomName()
+{
+    return m_roomName;
+}
+
+void ImageAndButtonBoxFactory::setRoomName(const QString& roomName)
+{
+    m_roomName = roomName;
+}
 
 MeetingRoomA::MeetingRoomA(QString imagePath) : ImageAndButtonBoxFactory()
 {
     QImage image(imagePath);
-    QskGraphic imageGraphic = QskGraphic::fromImage(image);
+    QskGraphic imageGraphic = QskGraphic::fromImage(image); //Image size preferred: 1440x1080
     m_roomImage = new QskGraphicLabel(imageGraphic, this);
+    setRoomName("Meeting Room A");
 }
 
 MeetingRoomA::MeetingRoomA() : ImageAndButtonBoxFactory()
 {
+    setRoomName("Meeting Room A");
     QImage image("assets/jpg/meeting-room.jpg");
     QskGraphic imageGraphic = QskGraphic::fromImage(image);
     m_roomImage = new QskGraphicLabel(imageGraphic, this);
@@ -60,13 +71,14 @@ void MeetingRoomA::geometryChange(const QRectF& newGeometry, const QRectF& oldGe
     setButtonPosition(m_contentRect,m_acButton, 50, 50, 200, 100, 1);
     setButtonPosition(m_contentRect, m_wifiButton, 50, 50, 200, 300, 1);
 
-    qDebug() << m_contentRect ;
+    // qDebug() << m_contentRect ;
 
 }
 
 ConferenceRoom::ConferenceRoom() : ImageAndButtonBoxFactory()
 {
-    QImage image("assets/jpg/conferenceroom.jpg");
+    setRoomName("Conference Room B");
+    QImage image("assets/jpg/conferenceroomb.jpg");
     QskGraphic imageGraphic = QskGraphic::fromImage(image);
     m_roomImage = new QskGraphicLabel(imageGraphic, this);
 
@@ -98,6 +110,6 @@ void ConferenceRoom::geometryChange(const QRectF& newGeometry, const QRectF& old
 
     setButtonPosition(m_contentRect, m_lightButton, 50, 50, 100, 100, 1);
     setButtonPosition(m_contentRect, m_acButton, 50, 50, 200, 200, 1);
-    setButtonPosition(m_contentRect, m_wifiButton, 50, 50, 400, 300, 1);
+    setButtonPosition(m_contentRect, m_wifiButton, 50, 50, 170, 100, 1);
 
 } 

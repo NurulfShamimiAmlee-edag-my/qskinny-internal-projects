@@ -194,13 +194,39 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setStrutSize( TemperatureSlider::Tick | QskAspect::Horizontal, 2, -2);
                             e.setStrutSize( TemperatureSlider::Tick | QskAspect::Vertical, -2, 2 );
 
+                            //LightIntensitySlider - see example on how to skin this from QskSkinFluent2Skin.cpp
+                            e.setGradient(LightIntensitySlider::Handle, QColor("#82f5d4"));
+                            e.setGradient(LightIntensitySlider::Groove, QColor("#82d6f5"));
+                            e.setGradient(LightIntensitySlider::Tick, Qt::white);
+                        
+                            e.setBoxShape(LightIntensitySlider::Handle, QskBoxShapeMetrics(20));
+                            e.setStrutSize(LightIntensitySlider::Handle, QSizeF(20,20));
+
+                            // const qreal size = 10.0;
+                            e.setMetric( LightIntensitySlider::Panel | QskAspect::Size, size );
+                            e.setBoxShape( LightIntensitySlider::Panel, 0 );
+                            e.setBoxBorderMetrics( LightIntensitySlider::Panel, 0 );
+                            e.setPadding( LightIntensitySlider::Panel | QskAspect::Horizontal, QskMargins( 0.5 * size, 0 ) );
+                            e.setPadding( LightIntensitySlider::Panel | QskAspect::Vertical, QskMargins( 0, 0.5 * size) );
+
+                            for ( auto subControl : { LightIntensitySlider::Groove, LightIntensitySlider::Fill } )
+                            {
+                                e.setMetric( subControl | QskAspect::Size, 4.0 );
+                                e.setBoxShape( subControl, 100, Qt::RelativeSize );
+                            }
+
+                            e.setFlag( LightIntensitySlider::Tick | QskAspect::Option, Qsk::Maybe);
+                            e.setStrutSize( LightIntensitySlider::Tick | QskAspect::Horizontal, 2, -2);
+                            e.setStrutSize( LightIntensitySlider::Tick | QskAspect::Vertical, -2, 2 );
+
+
 
                             //TemperatureButton
-                            e.setBoxShape(TemperatureButton::Panel, QskBoxShapeMetrics(50));
-                            e.setGradient(TemperatureButton::Panel, QColor("#f5bd82"), QColor("#f5d682"));
-                            e.setGradient(TemperatureButton::Panel | TemperatureButton::Pressed, QColor("#f5bd82"));
-                            e.setGradient(TemperatureButton::Panel | TemperatureButton::Hovered, QColor("#f5d682"));
-                            e.setAnimation(TemperatureButton::Panel | QskAspect::Color, 100); 
+                            e.setBoxShape(SliderButtons::Panel, QskBoxShapeMetrics(50));
+                            e.setGradient(SliderButtons::Panel, QColor("#f5d682"), QColor("#82f5d4"));
+                            e.setGradient(SliderButtons::Panel | SliderButtons::Pressed, QColor("#82f5d4"));
+                            e.setGradient(SliderButtons::Panel | SliderButtons::Hovered, QColor("#f5d682"));
+                            e.setAnimation(SliderButtons::Panel | QskAspect::Color, 100); 
                             
                             //QskPushButton - on image
                             e.setBoxShape(QskPushButton::Panel, QskBoxShapeMetrics(50));
@@ -222,15 +248,23 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setBoxBorderMetrics(QskTabButton::Panel | QskTabButton::Checked, 1);
                             e.setGradient(QskTabButton::Panel, QColor("#f5d682"));
                             e.setGradient(QskTabButton::Panel | QskTabButton::Checked, QColor("#f5bd82"));
+
+                            //TabBar
+                            // e.setMargin(QskTabBar::Panel, QskMargins(0,25,0,25));
                         }
 
                         {
                             //For SettingsPage
+                            //For DragGraphicLabel
                             e.setGradient(DragGraphicLabel::Panel, QColor("#82f5d4"), QColor("#82d6f5"));
-                            // e.setStrutSize(DragGraphicLabel::Panel | QskAspect::Horizontal, QSizeF(10,10));
-                            // e.setStrutSize(DragGraphicLabel::Panel | QskAspect::Vertical, QSizeF(10,10)); 
-                            // e.setStrutSize(DragGraphicLabel::Graphic, QSizeF(10,10));
+                            // e.setStrutSize(DragGraphicLabel::Panel,10,10);
+                            // e.setStrutSize(DragGraphicLabel::Panel | QskAspect::Vertical, QSizeF(10,10).transposed()); 
+                            // e.setStrutSize(DragGraphicLabel::Graphic, 10,10);
                             e.setBoxShape(DragGraphicLabel::Panel, 100);
+
+                            //ForDropBox
+                            // e.setMargin(DropBox::Panel,QskMargins(25,10,25,10));
+                            // e.setGradient(DropBox::Panel,QColor("#f5bd82"));
                         }
                     }
 
