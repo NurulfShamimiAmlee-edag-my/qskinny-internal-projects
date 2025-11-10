@@ -5,6 +5,7 @@
 
 #pragma once
 
+//This is an example from  QSkinny
 #include "Diagram.h"
 
 #include <QskLinearBox.h>

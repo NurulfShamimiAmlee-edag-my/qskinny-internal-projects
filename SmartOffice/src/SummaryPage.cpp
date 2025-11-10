@@ -9,7 +9,7 @@
 SummaryPage::SummaryPage() : QskLinearBox(Qt::Vertical)
 {
     auto verticalSummaryBox = new QskLinearBox(Qt::Vertical, this);
-    setPadding(10);
+    verticalSummaryBox->setPadding(25);
     setMargins(10);
 
     auto energyConsumptionBox = new QskLinearBox(Qt::Vertical, verticalSummaryBox);

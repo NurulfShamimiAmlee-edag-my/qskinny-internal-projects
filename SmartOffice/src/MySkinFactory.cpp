@@ -291,7 +291,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setPadding( UsageDiagramBox::Panel, 0 );
                                
                             QskShadowMetrics shadowMetrics( 0, 10 );
-                            e.setGradient( UsageDiagramBox::Panel, QGradient::CleanMirror );
+                            e.setGradient( UsageDiagramBox::Panel, QGradient::JuicyPeach );
                             e.setShadowMetrics( UsageDiagramBox::Panel, shadowMetrics );
                             e.setShadowColor( UsageDiagramBox::Panel, Qt::lightGray );
 
