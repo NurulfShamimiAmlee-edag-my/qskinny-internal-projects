@@ -1,0 +1,57 @@
+/******************************************************************************
+ * Copyright (C) 2021 Edelhirsch Software GmbH
+ *           SPDX-License-Identifier: BSD-3-Clause
+ *****************************************************************************/
+
+#include "DiagramSegmentsNode.h"
+
+#include <QtMath>
+
+DiagramSegmentsNode::DiagramSegmentsNode()
+    : m_geometry( QSGGeometry::defaultAttributes_Point2D(), 0 )
+{
+    m_geometry.setDrawingMode( QSGGeometry::DrawLines );
+
+    setGeometry( &m_geometry );
+    setMaterial( &m_material );
+}
+
+void DiagramSegmentsNode::update( const QRectF& rect, const QColor& color,
+    const QVector< QVector< QPointF > >& dataPoints, int xGridLines )
+{
+    Q_UNUSED( rect )
+
+    if( color != m_color )
+    {
+        m_material.setColor( color );
+        m_color = color;
+        markDirty( QSGNode::DirtyMaterial );
+    }
+
+    if( m_rect == rect && m_dataPoints == dataPoints && m_xGridLines == xGridLines )
+    {
+        return;
+    }
+
+    m_rect = rect;
+    m_dataPoints = dataPoints;
+    m_xGridLines = xGridLines;
+
+    const qreal step = rect.width() / ( xGridLines - 1 );
+
+    m_geometry.allocate( m_xGridLines * 2 );
+    auto vertexData = m_geometry.vertexDataAsPoint2D();
+
+    for( int i = 0; i < m_xGridLines; ++i )
+    {
+        const qreal x = i * step;
+
+        vertexData[2 * i].x = x;
+        vertexData[2 * i].y = rect.height();
+
+        vertexData[2 * i + 1].x = x;
+        vertexData[2 * i + 1].y = 0;
+    }
+
+    markDirty( QSGNode::DirtyGeometry );
+}

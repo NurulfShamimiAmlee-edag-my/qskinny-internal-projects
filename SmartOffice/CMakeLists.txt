@@ -45,7 +45,12 @@ add_executable(smartoffice
     src/UsageBox.cpp
     src/SingletonBannerDb.cpp
     src/MasterSwitchButton.cpp
-    src/ImageButtons.cpp)
+    src/ImageButtons.cpp
+    src/Diagram.cpp
+    src/DiagramSkinlet.cpp
+    src/DiagramSegmentsNode.cpp
+    src/DiagramDataNode.cpp
+    src/UsageDiagram.cpp)
 
  
 target_link_libraries(smartoffice PRIVATE

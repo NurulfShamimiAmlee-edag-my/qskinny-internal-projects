@@ -30,6 +30,7 @@
 #include <qnamespace.h>
 #include <qsize.h>
 
+#include "DiagramSkinlet.h"
 #include "MainPageSwitchButton.h"
 #include "TopBar.h"
 #include "MainPage.h"
@@ -41,6 +42,7 @@
 #include "SliderButtons.h"
 #include "MasterSwitchButton.h"
 #include "ImageButtons.h"
+#include "UsageDiagram.h"
 
 MySkinFactory::MySkinFactory(QObject* parent) : QskSkinFactory(parent)
 {
@@ -58,7 +60,14 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
     {
         class DefaultSkin : public QskSkin
         {
+            public:
+                DefaultSkin(QObject* parent = nullptr) : QskSkin(parent)
+                {
+                    declareSkinlet<Diagram, DiagramSkinlet>();
+                }
 
+                ~DefaultSkin() override {};
+            
             protected:
                 void initHints() override
                 {
@@ -105,10 +114,11 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             setGraphicFilter(MimiGraphicRole::TopBar, filterTopBar);
                             setGraphicFilter(MimiGraphicRole::Default, filterMainPage);
     
-                            
+
                             //TopBar
                             e.setBoxShape(TopBar::Panel, QskBoxShapeMetrics(8));
                             e.setGradient(TopBar::Panel, QColor("#f5d682"), QColor("#f5bd82"));
+                            // e.setGradient(TopBar::Panel, QGradient::SoftCherish); -- if we like to use different gradient color :D
 
                             //TopBarMenuButton
                             e.setBoxShape(TopBarMenuButton::Panel, QskBoxShapeMetrics(8));
@@ -143,7 +153,6 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setGradient(MainPagePushButton::Panel | MainPagePushButton::Hovered, QColor("#82f5d4"));
                             e.setAnimation(MainPagePushButton::Panel | QskAspect::Color, 100);
                   
-/*  */
                             //For MainPageBannerBox -- banner
                             e.setGradient(MainPageBannerBox::Panel, QColor("#f5d682"));
                             e.setMargin(MainPageBannerBox::Panel, QskMargins(25,10,25,10));
@@ -264,6 +273,47 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
 
                             //TabBar
                             // e.setMargin(QskTabBar::Panel, QskMargins(0,25,0,25));
+                        }
+
+                        {
+                            //For SummaryPage
+                            // diagram:
+                            e.setBoxBorderMetrics( UsageDiagramBox::DaysBox, 0, 0, 3, 3 );
+                            e.setFontRole( UsageDiagramBox::DayText, { QskFontRole::Caption, QskFontRole::Low } );
+
+                            e.setStrutSize( UsageDiagramLegend::Symbol, 8, 8 );
+                            e.setBoxShape( UsageDiagramLegend::Symbol, 100, Qt::RelativeSize ); // a circle
+                            e.setGradient( UsageDiagramLegend::Symbol | UsageDiagramLegend::Water, { 0xff6776ff } );
+                            e.setGradient( UsageDiagramLegend::Symbol | UsageDiagramLegend::Electricity, { 0xffff3122 } );
+                            e.setGradient( UsageDiagramLegend::Symbol | UsageDiagramLegend::Gas, { 0xffff7d34 } );
+
+                            e.setPadding( UsageDiagramBox::Panel, 0 );
+                               
+                            QskShadowMetrics shadowMetrics( 0, 10 );
+                            e.setGradient( UsageDiagramBox::Panel, Qt::white );
+                            e.setShadowMetrics( UsageDiagramBox::Panel, shadowMetrics );
+                            e.setShadowColor( UsageDiagramBox::Panel, Qt::lightGray );
+
+                            e.setColor(UsageDiagramBox::DaysBox | QskAspect::Border, Qt::gray);
+                            e.setColor( UsageDiagramBox::DayText, Qt::black);
+
+                            // new diagram:
+                            e.setColor( Diagram::ChartArea1, 0x666776ff );
+                            e.setColor( Diagram::ChartArea2, 0x66ff3122 );
+                            e.setColor( Diagram::ChartArea3, 0x66ff7d34 );
+
+                            e.setColor( Diagram::ChartBar1, 0xff6776ff );
+                            e.setColor( Diagram::ChartBar2, 0xffff3122 );
+                            e.setColor( Diagram::ChartBar3, 0xffff7d34 );
+
+                            e.setStrutSize( Diagram::ChartBar1, { 6, -1 } );
+                            e.setStrutSize( Diagram::ChartBar2, { 6, -1 } );
+                            e.setStrutSize( Diagram::ChartBar3, { 6, -1 } );
+
+                            e.setBoxShape( Diagram::ChartBar1, { 3, 3, 0, 0 } );
+                            e.setBoxShape( Diagram::ChartBar2, { 3, 3, 0, 0 } );
+                            e.setBoxShape( Diagram::ChartBar3, { 3, 3, 0, 0 } );
+
                         }
 
                         {
