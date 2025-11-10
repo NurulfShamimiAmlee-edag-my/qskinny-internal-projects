@@ -23,6 +23,7 @@
 #include <QskTabButton.h>
 #include <QskShadowMetrics.h>
 #include <QFontDatabase>
+#include <qbrush.h>
 #include <qcontainerfwd.h>
 #include <qfont.h>
 #include <qfontdatabase.h>
@@ -290,11 +291,11 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setPadding( UsageDiagramBox::Panel, 0 );
                                
                             QskShadowMetrics shadowMetrics( 0, 10 );
-                            e.setGradient( UsageDiagramBox::Panel, Qt::white );
+                            e.setGradient( UsageDiagramBox::Panel, QGradient::CleanMirror );
                             e.setShadowMetrics( UsageDiagramBox::Panel, shadowMetrics );
                             e.setShadowColor( UsageDiagramBox::Panel, Qt::lightGray );
 
-                            e.setColor(UsageDiagramBox::DaysBox | QskAspect::Border, Qt::gray);
+                            e.setColor(UsageDiagramBox::DaysBox | QskAspect::Border, Qt::white);
                             e.setColor( UsageDiagramBox::DayText, Qt::black);
 
                             // new diagram:
