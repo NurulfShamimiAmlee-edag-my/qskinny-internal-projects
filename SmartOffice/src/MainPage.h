@@ -13,25 +13,35 @@
 #include <qvectornd.h>
 
 #include "MainPageTextLabel.h"
-#include "MainPagePushButton.h"
 #include "MainPageGraphicLabel.h"
 #include "MainPageSwitchButton.h"
+#include "SingletonBannerDb.h"
 
 class MainPageBannerBox : public QskLinearBox
 {
-    private:
+    protected:
         /*
             TODO: If master switch from room page is toggled, update the banner text label
             - consider that the master switch should control the related utility only.
         */
         MainPageTextLabel* m_bannerText = nullptr;
+        MainPageGraphicLabel* m_graphicLabel = nullptr;
+        MainPageSwitchButton* m_switchButton = nullptr;
+        QVector<MainPageBannerBox*> m_bannersList;
+        SingletonBannerDb::BannerSlot m_slot;
+
     
     public:
         QSK_SUBCONTROLS(Panel);
 
-        MainPageBannerBox(QString labelText, QString path);
+        MainPageBannerBox(QString labelText, SingletonBannerDb::BannerSlot slot);
         MainPageBannerBox();
+    
+    protected:
         void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
+        void setBannerButton();
+        void setBannerGraphicLabel();
+        void setBannerSwitchButton();
 };
 
 

@@ -34,13 +34,18 @@ add_executable(smartoffice
     src/MainPageSwitchButton.cpp
     src/DragGraphicLabel.cpp
     src/DropBox.cpp
-    src/TemperatureSlider.cpp
+    src/Sliders.cpp
     src/SliderBox.cpp
     src/TemperatureButton.cpp
     src/RoomPageTab.cpp
     src/RoomImageWithButtonsBox.cpp
     src/SliderButtons.cpp
-    src/LightButton.cpp)
+    src/LightButton.cpp
+    src/BlindGraphicLabel.cpp
+    src/UsageBox.cpp
+    src/SingletonBannerDb.cpp
+    src/MasterSwitchButton.cpp
+    src/ImageButtons.cpp)
 
  
 target_link_libraries(smartoffice PRIVATE

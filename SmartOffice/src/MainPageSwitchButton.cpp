@@ -1,4 +1,5 @@
 #include "MainPageSwitchButton.h"
+#include <QskSwitchButton.h>
 
 QSK_SUBCONTROL(MainPageSwitchButton, Groove)
 QSK_SUBCONTROL(MainPageSwitchButton, Handle)

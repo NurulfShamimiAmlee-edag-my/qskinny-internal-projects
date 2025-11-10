@@ -5,17 +5,23 @@
 
 #include "MainPageGraphicLabel.h"
 #include "MainPageTextLabel.h"
+#include "SingletonBannerDb.h"
+#include "MainPage.h"
 
-class DropBox : public QskLinearBox
+class DropBox : public MainPageBannerBox
 {
     Q_OBJECT
     
     private:
-        MainPageTextLabel* m_label = nullptr;
-        MainPageGraphicLabel* m_graphicLabel = nullptr;
+        bool m_bannerChanged;
+        SingletonBannerDb::BannerSlot m_slot;
+    
+    private:
+        // MainPageTextLabel* m_label = nullptr;
+        // MainPageGraphicLabel* m_graphicLabel = nullptr;
         void flashBackground(const QColor& color);
     public:
-        DropBox();
+        DropBox(const SingletonBannerDb::BannerSlot& slot);
         bool containsPoint(const QPointF &point) const;
         void handleDrop(QskGraphic labelGraphic);
         

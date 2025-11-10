@@ -1,4 +1,5 @@
 #include "DragGraphicLabel.h"
+#include "SingletonBannerDb.h"
 
 #include <QskGraphicIO.h>
 #include <QskGraphic.h>
@@ -86,7 +87,7 @@ void DragGraphicLabel::mouseReleaseEvent(QMouseEvent* e)
         }
 
         setPosition(m_initPos);
-        setDisabled(true); //so that user won't try to the label multiple times
+        // setDisabled(true); //so that user won't try to the label multiple times
     }
 
     QskGraphicLabel::mouseReleaseEvent(e);

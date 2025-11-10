@@ -49,5 +49,5 @@ PageViewer::PageViewer() : QskLinearBox()
 
     this->addItem(topBar);
     this->addItem(bottomSection);
-    this->addItem(navigationBox);
+    // this->addItem(navigationBox);
 }

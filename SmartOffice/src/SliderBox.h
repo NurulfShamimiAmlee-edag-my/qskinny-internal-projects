@@ -1,6 +1,6 @@
-#ifndef SLIDERBOX_H
-#define SLIDERBOX_H
+#pragma once
 
+#include <QskGraphicLabel.h>
 #include <QskLinearBox.h>
 #include <QskPushButton.h>
 #include <QskSlider.h>
@@ -10,18 +10,22 @@
 class SliderBox : public QskLinearBox
 {
     private:
-        QskSlider* m_slider = nullptr;
-        QskPushButton* m_button = nullptr;
-        QskTextLabel* m_currentValue = nullptr;
-        QString m_unit;
+        QskGraphicLabel* m_graphicLabel = nullptr;
+        QskSlider* m_slider[3];
+        QskPushButton* m_button[2];
+        QskTextLabel* m_currentValue[3];
+        QString m_unit[3];
+        
     
     public:
-        SliderBox(QskSlider* slider = nullptr, QskPushButton* button = nullptr, QskTextLabel* currentValue = nullptr);
+        SliderBox(QskSlider* slider, QskPushButton* button, QskTextLabel* currentValue);
+        SliderBox();
         QskSlider* getSlider();
         QskPushButton* getButton();
         QskTextLabel* getCurrentValueLabel();
-
+        QskLinearBox* createTemperatureSliderBox();
+        QskLinearBox* createLightIntesitySliderBox();
+        QskLinearBox* createBlindPositionSliderBox();
 };
 
 
-#endif //SLIDERBOX_H

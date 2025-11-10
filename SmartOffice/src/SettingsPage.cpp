@@ -26,6 +26,8 @@
 
 #include "DragGraphicLabel.h"
 #include "DropBox.h"
+#include "SingletonBannerDb.h"
+
 
 
 SettingsPage::SettingsPage() : QskLinearBox()
@@ -33,14 +35,15 @@ SettingsPage::SettingsPage() : QskLinearBox()
     setOrientation(Qt::Vertical);
 
     auto *dropBoxAreaHorizontal = new QskLinearBox(Qt::Horizontal, this);
-    auto dropBox = new DropBox();
-    auto dropBox2 = new DropBox();
-    auto dropBox3 = new DropBox();
-    dropBoxAreaHorizontal->addItem(dropBox);
-    dropBoxAreaHorizontal->addItem(dropBox2);
-    dropBoxAreaHorizontal->addItem(dropBox3);
+    auto dropBox = new DropBox(SingletonBannerDb::Slot1);
+    auto dropBox2 = new DropBox(SingletonBannerDb::Slot2);
+    auto dropBox3 = new DropBox(SingletonBannerDb::Slot3);
     
-    auto dropArea = {dropBox, dropBox2, dropBox3};
+    m_listOfDropBox = {dropBox, dropBox2, dropBox3};
+    for (auto dropArea : m_listOfDropBox)
+    {
+        dropBoxAreaHorizontal->addItem(dropArea);
+    }
 
     //DragGraphicLabelArea
     auto* DragGraphicLabelsBox = new QskLinearBox(Qt::Vertical);
@@ -54,28 +57,31 @@ SettingsPage::SettingsPage() : QskLinearBox()
         auto* horizontalDragGraphicLabelsBox = new QskLinearBox(Qt::Horizontal);
         if(row == 0)
         {
-            auto* acDragGraphicLabel = new DragGraphicLabel("assets/qvg/air-conditioner.qvg", dropArea);
-            auto* wifiDragGraphicLabel = new DragGraphicLabel("assets/qvg/wifi.qvg", dropArea);
-            auto* lightDragGraphicLabel =  new DragGraphicLabel("assets/qvg/lamp.qvg", dropArea);
+            auto itemsRow1 = {"assets/qvg/air-conditioner.qvg", "assets/qvg/wifi.qvg", "assets/qvg/lamp.qvg"};
 
-            horizontalDragGraphicLabelsBox->addItem(acDragGraphicLabel);
-            horizontalDragGraphicLabelsBox->addItem(wifiDragGraphicLabel);
-            horizontalDragGraphicLabelsBox->addItem(lightDragGraphicLabel);
+            for (auto item : itemsRow1)
+            {
+                auto* dragLabel = new DragGraphicLabel(item, m_listOfDropBox);
+                horizontalDragGraphicLabelsBox->addItem(dragLabel);
+            }
+
         }
         else
         {
-            auto* blindDragGraphicLabel = new DragGraphicLabel("assets/qvg/window.qvg", dropArea);
-            auto* temperatureDragGraphicLabel = new DragGraphicLabel("assets/qvg/thermometer-svgrepo-com.qvg", dropArea);
-            auto* plugPointDragGraphicLabel =  new DragGraphicLabel("assets/qvg/socket.qvg", dropArea);
+            auto itemsRow2 = {"assets/qvg/window.qvg", "assets/qvg/thermometer-svgrepo-com.qvg", "assets/qvg/socket.qvg"};
 
-            horizontalDragGraphicLabelsBox->addItem(blindDragGraphicLabel);
-            horizontalDragGraphicLabelsBox->addItem(temperatureDragGraphicLabel);
-            horizontalDragGraphicLabelsBox->addItem(plugPointDragGraphicLabel);
-        }
+            for (auto item : itemsRow2)
+            {
+                auto* dragLabel = new DragGraphicLabel(item, m_listOfDropBox);
+                horizontalDragGraphicLabelsBox->addItem(dragLabel);
+            }
+            
+        } 
 
         DragGraphicLabelsBox->addItem(horizontalDragGraphicLabelsBox);
     }
-    // this->addItem(new DragGraphicLabel("Test drag label", dropBox));
+
     this->addItem(DragGraphicLabelsBox);
+
 
 }

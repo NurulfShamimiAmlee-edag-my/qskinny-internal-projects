@@ -1,4 +1,5 @@
 #include "MainPage.h"
+#include "SingletonBannerDb.h"
 #include <QskAspect.h>
 #include <QskBoxBorderColors.h>
 #include <QskBoxShapeMetrics.h>
@@ -29,26 +30,33 @@
 QSK_SUBCONTROL(MainPageBannerBox, Panel)
 
 
-MainPageBannerBox::MainPageBannerBox(QString labelText, QString path) : QskLinearBox()
+MainPageBannerBox::MainPageBannerBox(QString labelText, SingletonBannerDb::BannerSlot slot) : QskLinearBox(), m_slot(slot)
 {
     this->setOrientation(Qt::Vertical);
     this->setPanel(true);
     setAcceptHoverEvents(true);
     setSubcontrolProxy(QskLinearBox::Panel, Panel);
     
-    QskGraphic graphic = QskGraphicIO::read(path);
-    auto* graphicLabel = new MainPageGraphicLabel(graphic, this);
+    m_graphicLabel = new MainPageGraphicLabel(SingletonBannerDb::instance().readBannerGraphic(m_slot), this);
 
-    auto* textLabel = new MainPageTextLabel(labelText, this);
+    // connect to singleton changes 
+    QObject::connect(&SingletonBannerDb::instance(), &SingletonBannerDb::bannerChanged,
+                     this, [this](SingletonBannerDb::BannerSlot changedSlot, QskGraphic graphic) {
+                         if (changedSlot == m_slot) {
+                             m_graphicLabel->setGraphic(graphic);
+                         }
+                     });    
 
-    auto* switchVerticalButton = new MainPageSwitchButton(this);
-    connect(switchVerticalButton, &MainPageSwitchButton::toggled, [textLabel, this](bool checked)
+    m_bannerText = new MainPageTextLabel(labelText, this);
+
+    m_switchButton = new MainPageSwitchButton(this);
+    connect(m_switchButton, &MainPageSwitchButton::toggled, [this](bool checked)
     {
         
         //textLabel->setText(checked ? "0" : "Nothing") --> just another method to set text to 0 whenever button is toggled
         if (checked)
         {
-            textLabel->setText("0");
+            m_bannerText->setText("0");
         }
         // this->setDisabled(true); --> if we want to disable the switch is also possible 
     });
@@ -59,6 +67,7 @@ MainPageBannerBox::MainPageBannerBox() : QskLinearBox()
     this->setOrientation(Qt::Vertical);
     this->setPanel(true);
     setSubcontrolProxy(QskLinearBox::Panel, Panel);
+
 }
 
 void MainPageBannerBox::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
@@ -72,7 +81,7 @@ void MainPageBannerBox::geometryChange(const QRectF &newGeometry, const QRectF &
         setSize(QSizeF(smallestSide, smallestSide));
     }
 
-    qDebug() << "Contents Rect in geometry change: " << contentsRect();
+    // qDebug() << "Contents Rect in geometry change: " << contentsRect();
 }
 
 
@@ -82,13 +91,12 @@ MainPage::MainPage() : QskLinearBox()
     auto* welcomeText = new QskTextLabel("Welcome!", this);//A place holder
     auto* hztlBx = new QskLinearBox(this);
     welcomeText->setFontRole({QskFontRole::Display, QskFontRole::High});
+    welcomeText->setText("Hello!");
     welcomeText->setAlignment(Qt::AlignCenter);
     hztlBx->addItem(hztlBx);
-    hztlBx->addItem(new MainPageBannerBox("10", "assets/qvg/lamp.qvg"));
-    hztlBx->addItem(new MainPageBannerBox("5", "assets/qvg/air-conditioner.qvg"));
-    hztlBx->addItem(new MainPageBannerBox("5", "assets/qvg/wifi.qvg"));
-
+    SingletonBannerDb::instance().dumpContents();
+    hztlBx->addItem(new MainPageBannerBox("10", SingletonBannerDb::Slot1));
+    SingletonBannerDb::instance().dumpContents();
+    hztlBx->addItem(new MainPageBannerBox("5", SingletonBannerDb::Slot2));
+    hztlBx->addItem(new MainPageBannerBox("5", SingletonBannerDb::Slot3));
 }
-
-
-

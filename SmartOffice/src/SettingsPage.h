@@ -2,6 +2,7 @@
 #define SETTINGSPAGE_H
 
 #include "MainPage.h"
+#include "DropBox.h"
 
 #include <QskGraphicLabel.h>
 #include <QskLinearBox.h>
@@ -13,8 +14,14 @@
 
 class SettingsPage : public QskLinearBox
 {
+    private:
+        QskPushButton* m_confirmButton = nullptr;
+        QVector<DropBox*>m_listOfDropBox;
+        QVector<MainPageBannerBox*> m_mainPageBannerBox;
+    
     public:
         SettingsPage();
+        void notify();
 };
 
 #endif //SETTINGSPAGE_Hl

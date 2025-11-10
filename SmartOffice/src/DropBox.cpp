@@ -1,21 +1,21 @@
 #include "DropBox.h"
+#include "MainPageSwitchButton.h"
+#include "SingletonBannerDb.h"
+
 #include <QskBoxShapeMetrics.h>
 #include <QskGraphic.h>
+#include <QskGraphicIO.h>
 #include <QskLinearBox.h>
+#include <qnamespace.h>
 #include <qtimer.h>
 
-DropBox::DropBox() : QskLinearBox()
+DropBox::DropBox(const SingletonBannerDb::BannerSlot& slot) : MainPageBannerBox(), m_slot(slot)
 {
-    setFlags(QFlag(Qt::ItemIsDropEnabled));
+    // setFlags(QFlag(Qt::ItemIsDropEnabled));
     setAutoLayoutChildren(true);
-    setPanel(true);
-    setColor(QskLinearBox::Panel, QColor("#f5bd82"));
-    setBoxShapeHint(QskLinearBox::Panel, QskBoxShapeMetrics(8));
-    setMargins(10,5,10,5);
-    // m_label = new QskTextLabel("Drop Area", this);
-    // m_graphicLabel = new MainPageGraphicLabel(this);
-    m_label = new MainPageTextLabel("Drop Area",this);
-
+    m_graphicLabel = new MainPageGraphicLabel(SingletonBannerDb::instance().readBannerGraphic(m_slot),this);
+    m_bannerText = new MainPageTextLabel("0",this);
+    m_switchButton = new MainPageSwitchButton(this);
 
 }
 
@@ -26,12 +26,9 @@ bool DropBox::containsPoint(const QPointF &point) const
 
 void DropBox::handleDrop(QskGraphic labelGraphic)
 {
-    m_label->setText("0");
-    // flashBackground(QColor("#b9fbc0"));
-    //TODO: Modify this so that a banner is created instead.
-    // m_graphicLabel->setGraphic(labelGraphic);
-    // addItem(new MainPageBannerBox("0", "assets/qvg/air-conditioner.qvg"));
-
+    m_graphicLabel->setGraphic(labelGraphic);
+    SingletonBannerDb::instance().changeBannerGraphic(m_slot, labelGraphic);
+    SingletonBannerDb::instance().dumpContents();
 
 }
 

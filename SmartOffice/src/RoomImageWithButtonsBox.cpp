@@ -1,8 +1,9 @@
 #include "RoomImageWithButtonsBox.h"
 #include <QskGraphic.h>
 #include <QskGraphicIO.h>
+#include <QskPushButton.h>
 
-void ImageAndButtonBoxFactory::setButtonPosition(QRectF contentRectangle,QskPushButton* buttons, qreal buttonWidth, qreal buttonHeight, qreal buttonX, qreal buttonY, qreal buttonZ)
+void ImageAndButtonBoxFactory::setButtonPosition(QRectF contentRectangle,ImageButtons* buttons, qreal buttonWidth, qreal buttonHeight, qreal buttonX, qreal buttonY, qreal buttonZ)
 {
     QRectF buttonRect(contentRectangle.left() + buttonX, contentRectangle.top() + buttonY, buttonWidth, buttonHeight); //How do I place a button in relation to the image size?
 
@@ -24,6 +25,17 @@ void ImageAndButtonBoxFactory::setRoomName(const QString& roomName)
     m_roomName = roomName;
 }
 
+ImageButtons* ImageAndButtonBoxFactory::getAcButton()
+{
+    return m_acButton;
+}
+
+ImageButtons* ImageAndButtonBoxFactory::getLightButton()
+{
+    return m_lightButton;
+}
+        
+
 MeetingRoomA::MeetingRoomA(QString imagePath) : ImageAndButtonBoxFactory()
 {
     QImage image(imagePath);
@@ -41,16 +53,9 @@ MeetingRoomA::MeetingRoomA() : ImageAndButtonBoxFactory()
     // The following sets the image in the box manually... it is better to use geometryChange()
     // roomGraphicLabel->setGeometry(0,100, sizeConstraint().width() , sizeConstraint().height());
 
-    m_lightButton = new QskPushButton(this);
-    m_lightButton->setIcon(QskGraphicIO::read(QString("assets/qvg/lamp.qvg")));
-
-
-    m_acButton = new QskPushButton(this);
-    m_acButton->setIcon(QskGraphicIO::read(QString("assets/qvg/air-conditioner.qvg")));
-
-
-    m_wifiButton = new QskPushButton(this);
-    m_wifiButton->setIcon(QskGraphicIO::read(QString("assets/qvg/wifi.qvg")));
+    m_lightButton = new LightImageButton(this);
+    m_acButton = new AcImageButton(this);
+    m_wifiButton = new WifiImageButton(this);
 
 }
 
@@ -82,16 +87,10 @@ ConferenceRoom::ConferenceRoom() : ImageAndButtonBoxFactory()
     QskGraphic imageGraphic = QskGraphic::fromImage(image);
     m_roomImage = new QskGraphicLabel(imageGraphic, this);
 
-     m_lightButton = new QskPushButton(this);
-    m_lightButton->setIcon(QskGraphicIO::read(QString("assets/qvg/lamp.qvg")));
-
-
-    m_acButton = new QskPushButton(this);
-    m_acButton->setIcon(QskGraphicIO::read(QString("assets/qvg/air-conditioner.qvg")));
-
-
-    m_wifiButton = new QskPushButton(this);
-    m_wifiButton->setIcon(QskGraphicIO::read(QString("assets/qvg/wifi.qvg")));
+    m_lightButton = new LightImageButton(this);
+    m_blindGraphicLabel = new QskGraphicLabel(this);
+    m_blindGraphicLabel->setGraphic(QskGraphicIO::read(QString("assets/qvg/window.qvg")));
+    m_wifiButton = new WifiImageButton(this);
 
 }
 
@@ -109,7 +108,6 @@ void ConferenceRoom::geometryChange(const QRectF& newGeometry, const QRectF& old
     m_roomImage->setHeight(imageRect.height());
 
     setButtonPosition(m_contentRect, m_lightButton, 50, 50, 100, 100, 1);
-    setButtonPosition(m_contentRect, m_acButton, 50, 50, 200, 200, 1);
     setButtonPosition(m_contentRect, m_wifiButton, 50, 50, 170, 100, 1);
 
 } 

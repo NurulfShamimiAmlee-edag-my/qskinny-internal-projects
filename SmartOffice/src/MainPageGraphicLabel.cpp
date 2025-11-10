@@ -1,4 +1,6 @@
 #include "MainPageGraphicLabel.h"
+#include <QskGraphicLabel.h>
+#include <qquickitem.h>
 
 QSK_SUBCONTROL(MainPageGraphicLabel, Panel)
 
@@ -9,4 +11,9 @@ MainPageGraphicLabel::MainPageGraphicLabel(const QskGraphic& graphic, QQuickItem
     // this->setFixedSize(200,200);
     this->setFixedSize(QSizeF(100,100));
     this->setLayoutAlignmentHint(Qt::AlignCenter);
+}
+
+MainPageGraphicLabel::MainPageGraphicLabel(QQuickItem* parent) : QskGraphicLabel(parent)
+{
+    
 }

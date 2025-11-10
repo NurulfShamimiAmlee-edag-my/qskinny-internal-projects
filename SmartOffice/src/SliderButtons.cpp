@@ -10,4 +10,5 @@ SliderButtons::SliderButtons() : QskPushButton()
     setSubcontrolProxy(QskPushButton::Panel, Panel);
     setSubcontrolProxy(QskPushButton::Icon, Icon);
     setFixedSize(50,50);
+    setCheckable(true);
 }

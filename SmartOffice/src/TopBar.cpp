@@ -12,6 +12,7 @@
 #include <QskGraphicIO.h>
 #include <qcolor.h>
 #include <qimage.h>
+#include <qmargins.h>
 #include <qnamespace.h>
 #include <QskColorFilter.h>
 #include <QPainter>
@@ -28,7 +29,9 @@ QSK_SUBCONTROL(TopBar, Panel)
 TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
 {
     setSubcontrolProxy(QskLinearBox::Panel, Panel);
-    setFixedHeight(35);
+    setFixedHeight(50);
+    setPadding(QMarginsF(24,10,24,10));
+
     
     this->setOrientation(Qt::Horizontal);
     this->setPanel(true);
@@ -46,7 +49,7 @@ void TopBar::geometryChange(const QRectF& newGeometry, const QRectF& oldGeometry
 {
     QskLinearBox::geometryChange(newGeometry, newGeometry);
 
-    qDebug()<< "Contenst Rect of TopBar" << contentsRect() ;
+    // qDebug()<< "Contenst Rect of TopBar" << contentsRect() ;
 }
 
 TopBarGraphicLabel* TopBar::setGraphicLabel (const QString& path)
@@ -73,7 +76,7 @@ TopBarMenuButton* TopBar::setMenuButton(const QString& path)
     QskGraphic buttonGraphic = QskGraphicIO::read(path);
     m_menuButton = new TopBarMenuButton();
     m_menuButton->setIcon(buttonGraphic);
-    m_menuButton->setIconStrutSize(QSizeF(20,20)); //Strutsize of the icon actually influence the size of all property in TopBar box... interesting
+    m_menuButton->setIconStrutSize(QSizeF(24,24)); //Strutsize of the icon actually influence the size of all property in TopBar box... interesting
     //TODO: Figure out a better size policy so that the size of the box is not dependent on the icon strut size?
 
     return m_menuButton;

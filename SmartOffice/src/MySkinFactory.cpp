@@ -21,6 +21,7 @@
 #include <QskTabBar.h>
 #include <QskTabView.h>
 #include <QskTabButton.h>
+#include <QskShadowMetrics.h>
 #include <QFontDatabase>
 #include <qcontainerfwd.h>
 #include <qfont.h>
@@ -29,14 +30,17 @@
 #include <qnamespace.h>
 #include <qsize.h>
 
+#include "MainPageSwitchButton.h"
 #include "TopBar.h"
 #include "MainPage.h"
+#include "MainPagePushButton.h"
 #include "MyGraphicRole.h"
 #include "DragGraphicLabel.h"
 #include "NavigationButton.h"
-#include "TemperatureSlider.h"
-#include "TemperatureButton.h"
-
+#include "Sliders.h"
+#include "SliderButtons.h"
+#include "MasterSwitchButton.h"
+#include "ImageButtons.h"
 
 MySkinFactory::MySkinFactory(QObject* parent) : QskSkinFactory(parent)
 {
@@ -71,7 +75,8 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             QString family = families.first();
                             
                             setupFontTable(family, false);
-                            
+
+    
                             // QFont appFont(family)
                             // setFont({QskFontRole::Display, QskFontRole::VeryHigh}, QFont(family, -1, QFont::DemiBold));
 
@@ -104,7 +109,7 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             //TopBar
                             e.setBoxShape(TopBar::Panel, QskBoxShapeMetrics(8));
                             e.setGradient(TopBar::Panel, QColor("#f5d682"), QColor("#f5bd82"));
-                            e.setPadding(TopBar::Panel, 5);
+
                             //TopBarMenuButton
                             e.setBoxShape(TopBarMenuButton::Panel, QskBoxShapeMetrics(8));
                             e.setGradient(TopBarMenuButton::Panel, QColor("#82f5d4"), QColor("#82d6f5"));
@@ -138,102 +143,110 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                             e.setGradient(MainPagePushButton::Panel | MainPagePushButton::Hovered, QColor("#82f5d4"));
                             e.setAnimation(MainPagePushButton::Panel | QskAspect::Color, 100);
                   
-
+/*  */
                             //For MainPageBannerBox -- banner
                             e.setGradient(MainPageBannerBox::Panel, QColor("#f5d682"));
                             e.setMargin(MainPageBannerBox::Panel, QskMargins(25,10,25,10));
                             e.setPadding(MainPageBannerBox::Panel, QskMargins(25));
                             e.setBoxBorderMetrics(MainPageBannerBox::Panel, QskBoxBorderMetrics(5));
                             e.setBoxBorderMetrics(MainPageBannerBox::Panel | MainPageBannerBox::Hovered, QskBoxBorderMetrics(1));
-                            e.setBoxShape(MainPageBannerBox::Panel, QskBoxShapeMetrics(8));
+                            e.setBoxShape(MainPageBannerBox::Panel, QskBoxShapeMetrics(15));
+                            QskShadowMetrics myShadowMetrics(-2, 8, { 0, 5 } );
+                            myShadowMetrics.setShapeMode(QskShadowMetrics::Rectangle);
+                            e.setShadowMetrics(MainPageBannerBox::Panel, myShadowMetrics);
+                            e.setShadowColor(MainPageBannerBox::Panel, QColor("#8a9ba1"));
                             // e.setGradient(MainPageBannerBox::Panel | QskAspect::Border, QColor("#f5bd82"));
                             
 
                             //For MainPageSwitchButton - Groove
-                            const QSizeF  strutSize(150,50);
+                            const QSizeF  strutSize(125,50);
                             e.setStrutSize(MainPageSwitchButton::Groove | QskAspect::Horizontal, strutSize);
                             e.setStrutSize(MainPageSwitchButton::Groove | QskAspect::Vertical, strutSize.transposed());
                             e.setBoxShape(MainPageSwitchButton::Groove, 100, Qt::RelativeSize);
-                            e.setBoxBorderMetrics(MainPageSwitchButton::Groove, 8);
-                            e.setGradient(MainPageSwitchButton::Groove, QColor("#f5bd82"));
+                            e.setBoxBorderMetrics(MainPageSwitchButton::Groove, 5);
+                            e.setGradient(MainPageSwitchButton::Groove, Qt::lightGray);
+                            e.setGradient(MainPageSwitchButton::Groove | MainPageSwitchButton::Checked, QColor("#f5bd82"));
 
 
                             //For MainPageSwitchButton - Handle
                             e.setBoxShape(MainPageSwitchButton::Handle, 100, Qt::RelativeSize);
+                            e.setBoxBorderMetrics(MainPageSwitchButton::Handle, 2);
+                            e.setBoxBorderMetrics(MainPageSwitchButton::Handle | MainPageSwitchButton::Checked , 1);
+                            e.setAnimation(MainPageSwitchButton::Handle | QskAspect::Metric, 100);
                             e.setPosition(MainPageSwitchButton::Handle, 0.1, {QskStateCombination::CombinationNoState, MainPageSwitchButton::Disabled});
                             e.setPosition(MainPageSwitchButton::Handle | MainPageSwitchButton::Checked, 0.9, {QskStateCombination::CombinationNoState, MainPageSwitchButton::Disabled});
                             e.setStrutSize(MainPageSwitchButton::Handle, 25, 25);
-                            e.setGradient(MainPageSwitchButton::Handle, QColor("#82f5d4"));
+                            e.setGradient(MainPageSwitchButton::Handle, Qt::gray);
+                            e.setGradient(MainPageSwitchButton::Handle | MainPageSwitchButton::Checked, QColor("#82f5d4"));
 
                         }
 
                         {
                             //For RoomPage
-                            //TemperatureSlider - see example on how to skin this from QskSkinFluent2Skin.cpp
-                            e.setGradient(TemperatureSlider::Handle, QColor("#82f5d4"));
-                            e.setGradient(TemperatureSlider::Groove, QColor("#82d6f5"));
-                            e.setGradient(TemperatureSlider::Tick, Qt::white);
+                            //Sliders - see example on how to skin this from QskSkinFluent2Skin.cpp
+                            e.setGradient(Sliders::Handle, QColor("#82f5d4"));
+                            e.setGradient(Sliders::Handle | Sliders::Disabled, Qt::lightGray);
+                            e.setGradient(Sliders::Groove, QColor("#82d6f5"));
+                            e.setGradient(Sliders::Groove | Sliders::Disabled, Qt::lightGray);                            
+                            e.setGradient(Sliders::Tick, Qt::white);
                         
-                            e.setBoxShape(TemperatureSlider::Handle, QskBoxShapeMetrics(20));
-                            e.setStrutSize(TemperatureSlider::Handle, QSizeF(20,20));
+                            e.setBoxShape(Sliders::Handle, QskBoxShapeMetrics(20));
+                            e.setStrutSize(Sliders::Handle, QSizeF(20,20));
 
                             const qreal size = 10.0;
-                            e.setMetric( TemperatureSlider::Panel | QskAspect::Size, size );
-                            e.setBoxShape( TemperatureSlider::Panel, 0 );
-                            e.setBoxBorderMetrics( TemperatureSlider::Panel, 0 );
-                            e.setPadding( TemperatureSlider::Panel | QskAspect::Horizontal, QskMargins( 0.5 * size, 0 ) );
-                            e.setPadding( TemperatureSlider::Panel | QskAspect::Vertical, QskMargins( 0, 0.5 * size) );
+                            e.setMetric( Sliders::Panel | QskAspect::Size, size );
+                            e.setBoxShape( Sliders::Panel, 0 );
+                            e.setBoxBorderMetrics( Sliders::Panel, 0 );
+                            e.setPadding( Sliders::Panel | QskAspect::Horizontal, QskMargins( 0.5 * size, 0 ) );
+                            e.setPadding( Sliders::Panel | QskAspect::Vertical, QskMargins( 0, 0.5 * size) );
 
-                            for ( auto subControl : { TemperatureSlider::Groove, TemperatureSlider::Fill } )
+                            for ( auto subControl : { Sliders::Groove, Sliders::Fill } )
                             {
                                 e.setMetric( subControl | QskAspect::Size, 4.0 );
                                 e.setBoxShape( subControl, 100, Qt::RelativeSize );
                             }
 
-                            e.setFlag( TemperatureSlider::Tick | QskAspect::Option, Qsk::Maybe);
-                            e.setStrutSize( TemperatureSlider::Tick | QskAspect::Horizontal, 2, -2);
-                            e.setStrutSize( TemperatureSlider::Tick | QskAspect::Vertical, -2, 2 );
-
-                            //LightIntensitySlider - see example on how to skin this from QskSkinFluent2Skin.cpp
-                            e.setGradient(LightIntensitySlider::Handle, QColor("#82f5d4"));
-                            e.setGradient(LightIntensitySlider::Groove, QColor("#82d6f5"));
-                            e.setGradient(LightIntensitySlider::Tick, Qt::white);
-                        
-                            e.setBoxShape(LightIntensitySlider::Handle, QskBoxShapeMetrics(20));
-                            e.setStrutSize(LightIntensitySlider::Handle, QSizeF(20,20));
-
-                            // const qreal size = 10.0;
-                            e.setMetric( LightIntensitySlider::Panel | QskAspect::Size, size );
-                            e.setBoxShape( LightIntensitySlider::Panel, 0 );
-                            e.setBoxBorderMetrics( LightIntensitySlider::Panel, 0 );
-                            e.setPadding( LightIntensitySlider::Panel | QskAspect::Horizontal, QskMargins( 0.5 * size, 0 ) );
-                            e.setPadding( LightIntensitySlider::Panel | QskAspect::Vertical, QskMargins( 0, 0.5 * size) );
-
-                            for ( auto subControl : { LightIntensitySlider::Groove, LightIntensitySlider::Fill } )
-                            {
-                                e.setMetric( subControl | QskAspect::Size, 4.0 );
-                                e.setBoxShape( subControl, 100, Qt::RelativeSize );
-                            }
-
-                            e.setFlag( LightIntensitySlider::Tick | QskAspect::Option, Qsk::Maybe);
-                            e.setStrutSize( LightIntensitySlider::Tick | QskAspect::Horizontal, 2, -2);
-                            e.setStrutSize( LightIntensitySlider::Tick | QskAspect::Vertical, -2, 2 );
+                            e.setFlag( Sliders::Tick | QskAspect::Option, Qsk::Maybe);
+                            e.setStrutSize( Sliders::Tick | QskAspect::Horizontal, 2, -2);
+                            e.setStrutSize( Sliders::Tick | QskAspect::Vertical, -2, 2 );
 
 
-
-                            //TemperatureButton
+                            //SliderButtons
                             e.setBoxShape(SliderButtons::Panel, QskBoxShapeMetrics(50));
                             e.setGradient(SliderButtons::Panel, QColor("#f5d682"), QColor("#82f5d4"));
-                            e.setGradient(SliderButtons::Panel | SliderButtons::Pressed, QColor("#82f5d4"));
+                            e.setGradient(SliderButtons::Panel | SliderButtons::Checked, QColor("#82f5d4"));
+                            e.setGradient(SliderButtons::Panel | SliderButtons::Disabled, Qt::lightGray);
                             e.setGradient(SliderButtons::Panel | SliderButtons::Hovered, QColor("#f5d682"));
                             e.setAnimation(SliderButtons::Panel | QskAspect::Color, 100); 
                             
-                            //QskPushButton - on image
-                            e.setBoxShape(QskPushButton::Panel, QskBoxShapeMetrics(50));
-                            e.setGradient(QskPushButton::Panel, QColor("#f5bd82"), QColor("#f5d682"));
-                            e.setGradient(QskPushButton::Panel | QskPushButton::Pressed, QColor("#f5bd82"));
-                            e.setGradient(QskPushButton::Panel | QskPushButton::Hovered, QColor("#f5d682"));
-                            e.setAnimation(QskPushButton::Panel | QskAspect::Color, 100); 
+                            //ImageButtons - on image - has to be updated to ImageButtons
+                            e.setBoxShape(ImageButtons::Panel, QskBoxShapeMetrics(50));
+                            e.setGradient(ImageButtons::Panel, QColor("#f5bd82"), QColor("#f5d682"));
+                            e.setGradient(ImageButtons::Panel | ImageButtons::Checked, QColor("#f5bd82"));
+                            e.setGradient(ImageButtons::Panel | ImageButtons::Disabled, Qt::lightGray);
+                            e.setGradient(ImageButtons::Panel | ImageButtons::Hovered, QColor("#f5d682"));
+                            e.setAnimation(ImageButtons::Panel | QskAspect::Color, 100); 
+
+                            //For MasterSwitchButton - Groove
+                            const QSizeF  strutSize(59,30);
+                            e.setStrutSize(MasterSwitchButton::Groove | QskAspect::Horizontal, strutSize);
+                            e.setStrutSize(MasterSwitchButton::Groove | QskAspect::Vertical, strutSize.transposed());
+                            e.setBoxShape(MasterSwitchButton::Groove, 100, Qt::RelativeSize);
+                            e.setBoxBorderMetrics(MasterSwitchButton::Groove, 3);
+                            e.setGradient(MasterSwitchButton::Groove, Qt::lightGray);
+                            e.setGradient(MasterSwitchButton::Groove | MasterSwitchButton::Checked, QColor("#f5d682"));
+
+
+                            //For MasterSwitchButton - Handle
+                            e.setBoxShape(MasterSwitchButton::Handle, 100, Qt::RelativeSize);
+                            e.setBoxBorderMetrics(MasterSwitchButton::Handle, 2);
+                            e.setBoxBorderMetrics(MasterSwitchButton::Handle | MasterSwitchButton::Checked , 1);
+                            e.setAnimation(MasterSwitchButton::Handle | QskAspect::Metric, 100);
+                            e.setPosition(MasterSwitchButton::Handle, 0.1, {QskStateCombination::CombinationNoState, MasterSwitchButton::Disabled});
+                            e.setPosition(MasterSwitchButton::Handle | MasterSwitchButton::Checked, 0.9, {QskStateCombination::CombinationNoState, MasterSwitchButton::Disabled});
+                            e.setStrutSize(MasterSwitchButton::Handle, 15, 15);
+                            e.setGradient(MasterSwitchButton::Handle, Qt::gray);
+                            e.setGradient(MasterSwitchButton::Handle | MasterSwitchButton::Checked, QColor("#82f5d4"));
 
                                                       
                         }

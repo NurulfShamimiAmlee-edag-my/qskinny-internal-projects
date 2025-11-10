@@ -21,6 +21,8 @@
 /* My Classes */
 #include "PageViewer.h"
 #include "MySkinFactory.h"
+#include "SingletonBannerDb.h"
+
 
 
 int main( int argc, char* argv[] )

@@ -4,8 +4,9 @@
 
 RoomPageTab::RoomPageTab() : QskTabView()
 {
-    auto* roomPageA = new RoomPage(new MeetingRoomA());
-    auto* conferenceRoom = new RoomPage(new ConferenceRoom());
+
+    auto* roomPageA = new RoomPage(new MeetingRoomA(), new SliderBox());
+    auto* conferenceRoom = new RoomPage(new ConferenceRoom(), new SliderBox());
 
     for(auto roomPage : {roomPageA, conferenceRoom})
     {
