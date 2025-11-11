@@ -26,11 +26,11 @@ class SingletonBannerDb : public QObject
     public:
         SingletonBannerDb(const SingletonBannerDb& other) = delete;
         void operator = (const SingletonBannerDb &) = delete;
-        static SingletonBannerDb& instance();
-        void changeBannerGraphic(const BannerSlot& slot, const QskGraphic& bannerIcon);
-        const QskGraphic& readBannerGraphic(const BannerSlot& slot) const;
-        void dumpContents() const;
+        static SingletonBannerDb& instance(); //object can only be created once
+        void changeBannerGraphic(const BannerSlot& slot, const QskGraphic& bannerIcon);//for drop area to change?
+        const QskGraphic& readBannerGraphic(const BannerSlot& slot) const; //for MainPage to read from
+        void dumpContents() const; //debugging only
     signals:
-        void bannerChanged(SingletonBannerDb::BannerSlot slot, const QskGraphic& bannerIcon);
+        void bannerChanged(SingletonBannerDb::BannerSlot slot, const QskGraphic& bannerIcon); //signal so that MainPage has to read everytime signal is emitted?
 
 };
