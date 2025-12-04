@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+1bd7b333b4209d993b054e0404368d47 CMakeFiles/smartoffice_autogen
+a6a3c5ce7dc9cfffb713ed4703dfa021 smartoffice_autogen/timestamp

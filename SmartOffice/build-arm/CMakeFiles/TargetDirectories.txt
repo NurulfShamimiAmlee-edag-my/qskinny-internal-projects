@@ -1,0 +1,5 @@
+/home/edag/Documents/qskinny-internal-projects/SmartOffice/build-arm/CMakeFiles/smartoffice.dir
+/home/edag/Documents/qskinny-internal-projects/SmartOffice/build-arm/CMakeFiles/edit_cache.dir
+/home/edag/Documents/qskinny-internal-projects/SmartOffice/build-arm/CMakeFiles/rebuild_cache.dir
+/home/edag/Documents/qskinny-internal-projects/SmartOffice/build-arm/CMakeFiles/smartoffice_autogen_timestamp_deps.dir
+/home/edag/Documents/qskinny-internal-projects/SmartOffice/build-arm/CMakeFiles/smartoffice_autogen.dir
