@@ -1,24 +1,30 @@
-Following should be run at qskinny folder and application folder respectively
-
-For building qskinny-arm
+# ===================================================================================================
+# For building qskinny-arm
+# 1. Make sure toolchain-qskinny-arm.cmake is present at the same level of your CMakeLists.txt
+# 2. Execute these commands from the folder containing your CMakeLists.txt
+# ===================================================================================================
+# A. Compile and build command
 cmake -DCMAKE_TOOLCHAIN_FILE=toolchain-qskinny-arm.cmake \
-      -DQT_NO_PACKAGE_VERSION_CHECK=ON \
-      -DQT_NO_PACKAGE_VERSION_INCOMPATIBLE_WARNING=TRUE \
       -DCMAKE_INSTALL_PREFIX=/opt/qskinny-arm \
       -S . -B build-arm
 
 cmake --build build-arm -j$(nproc)
 
-# Install
+# B. Install command 
 sudo mkdir -p /opt/qskinny-arm
 sudo cmake --install build-arm --prefix "/opt/qskinny-arm"
+# ===================================================================================================
 
 
-For building application 
-# Configure with your toolchain
+# ===================================================================================================
+# For building application 
+# 1. Make sure toolchain-arm.cmake is present at the same level of your CMakeLists.txt
+# 2. Execute these commands from the folder containing your CMakeLists.txt
+# ===================================================================================================
+# A. Compile and build command
 cmake -DCMAKE_TOOLCHAIN_FILE=toolchain-arm.cmake \
       -DQSkinny_DIR=/opt/qskinny-arm/lib/cmake/QSkinny \
       -S . -B build-arm
 
-# Build
+# B. Install command 
 cmake --build build-arm -j$(nproc)
