@@ -26,5 +26,4 @@ cmake -DCMAKE_TOOLCHAIN_FILE=toolchain-arm.cmake \
       -DQSkinny_DIR=/opt/qskinny-arm/lib/cmake/QSkinny \
       -S . -B build-arm
 
-# B. Install command 
 cmake --build build-arm -j$(nproc)
