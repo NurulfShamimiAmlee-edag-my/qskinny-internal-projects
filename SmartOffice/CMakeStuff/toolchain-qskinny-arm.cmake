@@ -16,7 +16,7 @@ if(NOT DEFINED ENV{OECORE_TARGET_SYSROOT})
     message(FATAL_ERROR 
         "OECORE_TARGET_SYSROOT not set!\n"
         "Please source your SDK environment script first:\n"
-        "  source /opt/fsl-imx-wayland/6.12-walnascar/environment-setup-armv8a-poky-linux"
+        "  source /opt/fsl-imx-wayland/6.12-walnascar/environment-setup-aarch64-poky-linux"
     )
 endif()
 
@@ -33,15 +33,19 @@ endif()
 set(CMAKE_SYSROOT $ENV{OECORE_TARGET_SYSROOT})
 set(CMAKE_STAGING_PREFIX $ENV{OECORE_TARGET_SYSROOT}/usr)
 
+# Define Native Sysroot (Host tools location)
+set(OECORE_NATIVE_SYSROOT $ENV{OECORE_NATIVE_SYSROOT})
+
 message(STATUS "Target Sysroot: ${CMAKE_SYSROOT}")
-message(STATUS "Native Sysroot: $ENV{OECORE_NATIVE_SYSROOT}")
+message(STATUS "Native Sysroot: ${OECORE_NATIVE_SYSROOT}")
 
 # =============================================================================
 # 4. Cross-Compilation Search Rules
 # =============================================================================
 set(CMAKE_FIND_ROOT_PATH 
-    $ENV{OECORE_TARGET_SYSROOT}
-    $ENV{OECORE_NATIVE_SYSROOT}
+    ${CMAKE_SYSROOT}
+    ${OECORE_NATIVE_SYSROOT}
+    "/opt/qskinny-arm"
 )
 
 # Programs (compilers, tools): Only on host, never in sysroot
@@ -50,17 +54,18 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 # Libraries and headers: Only in sysroot
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-
-# Packages: Search both sysroot AND host (needed for Qt *Tools packages)
-set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 
 # =============================================================================
 # 5. Compiler Configuration
 # =============================================================================
+# Use environment variables set by the SDK script. 
+# This ensures strict architecture flags (march, mcpu) are included.
 set(CMAKE_C_COMPILER aarch64-poky-linux-gcc)
 set(CMAKE_CXX_COMPILER aarch64-poky-linux-g++)
 
-# Skip compiler tests (already validated by SDK)
+# Skip compiler tests (already validated by SDK) to speed up configure
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 set(CMAKE_C_COMPILER_WORKS 1)
 set(CMAKE_CXX_COMPILER_WORKS 1)
 
@@ -83,10 +88,8 @@ set(OPENGL_INCLUDE_DIR "${CMAKE_SYSROOT}/usr/include" CACHE PATH "OpenGL include
 set(OPENGL_opengl_LIBRARY "${CMAKE_SYSROOT}/usr/lib/libOpenGL.so" CACHE FILEPATH "OpenGL library" FORCE)
 set(OPENGL_egl_LIBRARY "${CMAKE_SYSROOT}/usr/lib/libEGL.so" CACHE FILEPATH "EGL library" FORCE)
 set(OPENGL_gles2_LIBRARY "${CMAKE_SYSROOT}/usr/lib/libGLESv2.so" CACHE FILEPATH "GLES2 library" FORCE)
-set(OPENGL_gles3_LIBRARY "${CMAKE_SYSROOT}/usr/lib/libGLESv2.so" CACHE FILEPATH "GLES3 library" FORCE)
 
 # Some CMake modules look for GLX (X11 OpenGL), but iMX8M uses EGL (Wayland)
-# We set this to avoid the "missing glx" error
 set(OPENGL_glx_LIBRARY "" CACHE FILEPATH "GLX library (not used on Wayland)" FORCE)
 
 # Tell CMake we have OpenGL (via GLES)
@@ -94,57 +97,25 @@ set(OpenGL_FOUND TRUE CACHE BOOL "OpenGL found" FORCE)
 set(OPENGL_FOUND TRUE CACHE BOOL "OpenGL found" FORCE)
 
 # =============================================================================
-# 8. Qt6 Configuration for Cross-Compilation
+# 8. Qt6 Configuration for Cross-Compilation (UPDATED)
 # =============================================================================
 
-# Tell CMake where to find Qt6 packages in the target sysroot
-set(CMAKE_PREFIX_PATH 
-    ${CMAKE_SYSROOT}/usr/lib/cmake
-    ${CMAKE_SYSROOT}/usr/lib
+# 1. Host Tools Location (moc, rcc, uic)
+# Based on your finding: /opt/.../sysroots/x86_64-pokysdk-linux/usr/libexec
+set(OE_QMAKE_PATH_HOST_BINS "${OECORE_NATIVE_SYSROOT}/usr/libexec" CACHE PATH "Path to Qt Host Tools" FORCE)
+
+# 2. Host Qt Root
+set(QT_HOST_PATH "${OECORE_NATIVE_SYSROOT}/usr" CACHE PATH "Path to Host Qt Root" FORCE)
+
+# 3. Target Qt Packages
+# Tell CMake to look inside the Target Sysroot for QtConfig files
+list(APPEND CMAKE_PREFIX_PATH 
+    "${CMAKE_SYSROOT}/usr/lib/cmake"
+    "${CMAKE_SYSROOT}/usr/lib"
 )
 
-# Qt Host Tools Configuration
-set(QT_HOST_PATH "/usr" CACHE PATH "Path to host Qt installation" FORCE)
-set(QT_HOST_PATH_CMAKE_DIR "/usr/lib/x86_64-linux-gnu/cmake" CACHE PATH "Path to host Qt CMake directory" FORCE)
-
-# Allow CMake to find Qt host tools from Debian system
-list(APPEND CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake")
-
-# Explicitly point to host Qt tool packages
-if(EXISTS "/usr/lib/x86_64-linux-gnu/cmake/Qt6CoreTools")
-    set(Qt6CoreTools_DIR "/usr/lib/x86_64-linux-gnu/cmake/Qt6CoreTools" 
-        CACHE PATH "Host Qt6CoreTools" FORCE)
-endif()
-
-if(EXISTS "/usr/lib/x86_64-linux-gnu/cmake/Qt6GuiTools")
-    set(Qt6GuiTools_DIR "/usr/lib/x86_64-linux-gnu/cmake/Qt6GuiTools" 
-        CACHE PATH "Host Qt6GuiTools" FORCE)
-endif()
-
-if(EXISTS "/usr/lib/x86_64-linux-gnu/cmake/Qt6QmlTools")
-    set(Qt6QmlTools_DIR "/usr/lib/x86_64-linux-gnu/cmake/Qt6QmlTools" 
-        CACHE PATH "Host Qt6QmlTools" FORCE)
-endif()
-
-if(EXISTS "/usr/lib/x86_64-linux-gnu/cmake/Qt6QuickTools")
-    set(Qt6QuickTools_DIR "/usr/lib/x86_64-linux-gnu/cmake/Qt6QuickTools" 
-        CACHE PATH "Host Qt6QuickTools" FORCE)
-endif()
-
-if(EXISTS "/usr/lib/x86_64-linux-gnu/cmake/Qt6DBusTools")
-    set(Qt6DBusTools_DIR "/usr/lib/x86_64-linux-gnu/cmake/Qt6DBusTools" 
-        CACHE PATH "Host Qt6DBusTools" FORCE)
-endif()
-
-if(EXISTS "/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools")
-    set(Qt6WidgetsTools_DIR "/usr/lib/x86_64-linux-gnu/cmake/Qt6WidgetsTools" 
-        CACHE PATH "Host Qt6WidgetsTools" FORCE)
-endif()
-
-if(EXISTS "/usr/lib/x86_64-linux-gnu/cmake/Qt6ShaderToolsTools")
-    set(Qt6ShaderToolsTools_DIR "/usr/lib/x86_64-linux-gnu/cmake/Qt6ShaderToolsTools" 
-        CACHE PATH "Host Qt6ShaderToolsTools" FORCE)
-endif()
+# Note: We purposely REMOVED the search paths for /usr/lib/x86_64-linux-gnu.
+# We must strictly use the SDK tools, not the Laptop's OS tools.
 
 # =============================================================================
 # 9. QSkinny-Specific Configuration
@@ -181,6 +152,15 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
         "Installation prefix" FORCE)
 endif()
 
+# Prevent accidental sysroot installation
+if(CMAKE_INSTALL_PREFIX MATCHES "${CMAKE_SYSROOT}")
+    message(FATAL_ERROR 
+        "ERROR: CMAKE_INSTALL_PREFIX points to sysroot!\n"
+        "This would pollute the SDK. Use /opt/qskinny-arm instead.\n"
+        "Current: ${CMAKE_INSTALL_PREFIX}\n"
+        "Sysroot: ${CMAKE_SYSROOT}")
+endif()
+
 message(STATUS "Install Prefix: ${CMAKE_INSTALL_PREFIX}")
 
 # =============================================================================
@@ -204,8 +184,7 @@ link_directories(
 message(STATUS "=== Cross-Compilation Toolchain for iMX8M Nano ===")
 message(STATUS "Target: ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_PROCESSOR}")
 message(STATUS "C Compiler: ${CMAKE_C_COMPILER}")
-message(STATUS "CXX Compiler: ${CMAKE_CXX_COMPILER}")
 message(STATUS "Sysroot: ${CMAKE_SYSROOT}")
 message(STATUS "Qt Host Path: ${QT_HOST_PATH}")
-message(STATUS "OpenGL ES Support: YES (via Vivante)")
+message(STATUS "Qt Host Bins: ${OE_QMAKE_PATH_HOST_BINS}")
 message(STATUS "===================================================")

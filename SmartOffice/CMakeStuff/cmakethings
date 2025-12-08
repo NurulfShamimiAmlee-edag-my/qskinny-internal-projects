@@ -9,13 +9,14 @@ cmake -DCMAKE_TOOLCHAIN_FILE=toolchain-qskinny-arm.cmake \
 
 cmake --build build-arm -j$(nproc)
 
+# Install
+sudo mkdir -p /opt/qskinny-arm
+sudo cmake --install build-arm --prefix "/opt/qskinny-arm"
+
 
 For building application 
 # Configure with your toolchain
 cmake -DCMAKE_TOOLCHAIN_FILE=toolchain-arm.cmake \
-      -DQT_NO_PACKAGE_VERSION_CHECK=ON \
-      -DQT_NO_PACKAGE_VERSION_INCOMPATIBLE_WARNING=TRUE \
-      -DQT_HOST_PATH_CMAKE_DIR=/usr/lib/x86_64-linux-gnu/cmake \
       -DQSkinny_DIR=/opt/qskinny-arm/lib/cmake/QSkinny \
       -S . -B build-arm
 

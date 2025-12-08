@@ -12,6 +12,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
  
 find_package(Qt6 REQUIRED COMPONENTS Quick)
+# Explicitly tell CMake where to find QSkinny-ARM
+set(QSkinny_DIR "/opt/qskinny-arm/lib/cmake/QSkinny" CACHE PATH "QSkinny CMake config" FORCE)
 find_package(QSkinny REQUIRED)
  
 # add_executable(smartoffice
@@ -58,13 +60,13 @@ find_package(QSkinny REQUIRED)
 #     Qsk::QSkinny)
 
 # Point to the ARM-built QSkinny
-set(QSkinny_ROOT "/opt/fsl-imx-wayland/6.12-walnascar/sysroots/armv8a-poky-linux/usr/lib/qskinny")
+set(QSkinny_ROOT "/opt/qskinny-arm")
 
-# Add QSkinny include directories
-include_directories(/opt/fsl-imx-wayland/6.12-walnascar/sysroots/armv8a-poky-linux/usr/include/qskinny)
+# Add QSkinny-ARM include directories
+include_directories(${QSkinny_ROOT}/include)
 
-# Add QSkinny library directory
-link_directories(/opt/fsl-imx-wayland/6.12-walnascar/sysroots/armv8a-poky-linux/usr/lib/qskinny)
+# Add QSkinny-ARM library directory
+link_directories(${QSkinny_ROOT}/lib)
 
 # Find Qt6 (if not already done)
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick)
@@ -108,11 +110,11 @@ add_executable(smartoffice
     src/DiagramDataNode.cpp
     src/UsageDiagram.cpp)
 
-# Link against QSkinny and Qt
+# Link against QSkinny-ARM and Qt
 target_link_libraries(smartoffice
     PRIVATE
-        qskinny
+        Qsk::QSkinny
         Qt6::Core
         Qt6::Gui
         Qt6::Quick
-)    
+)   
