@@ -57,7 +57,7 @@ SettingsPage::SettingsPage() : QskLinearBox()
         auto* horizontalDragGraphicLabelsBox = new QskLinearBox(Qt::Horizontal);
         if(row == 0)
         {
-            auto itemsRow1 = {"assets/qvg/air-conditioner.qvg", "assets/qvg/wifi.qvg", "assets/qvg/lamp.qvg"};
+            auto itemsRow1 = {":/assets/qvg/air-conditioner.qvg", ":/assets/qvg/wifi.qvg", ":/assets/qvg/lamp.qvg"};
 
             for (auto item : itemsRow1)
             {
@@ -68,7 +68,7 @@ SettingsPage::SettingsPage() : QskLinearBox()
         }
         else
         {
-            auto itemsRow2 = {"assets/qvg/window.qvg", "assets/qvg/thermometer-svgrepo-com.qvg", "assets/qvg/socket.qvg"};
+            auto itemsRow2 = {":/assets/qvg/window.qvg", ":/assets/qvg/thermometer-svgrepo-com.qvg", ":/assets/qvg/socket.qvg"};
 
             for (auto item : itemsRow2)
             {

@@ -14,6 +14,9 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt6 REQUIRED COMPONENTS Quick)
 # Explicitly tell CMake where to find QSkinny-ARM
 set(QSkinny_DIR "/opt/qskinny-arm/lib/cmake/QSkinny" CACHE PATH "QSkinny CMake config" FORCE)
+
+# Explicitly tell CMake where to find QSkinny-Host
+# set(QSkinny_DIR "/opt/qskinny/lib/cmake/QSkinny" CACHE PATH "QSkinny CMake config" FORCE)
 find_package(QSkinny REQUIRED)
  
 # add_executable(smartoffice
@@ -52,7 +55,8 @@ find_package(QSkinny REQUIRED)
 #     src/DiagramSkinlet.cpp
 #     src/DiagramSegmentsNode.cpp
 #     src/DiagramDataNode.cpp
-#     src/UsageDiagram.cpp)
+#     src/UsageDiagram.cpp
+#     resources.qrc)
 
  
 # target_link_libraries(smartoffice PRIVATE
@@ -108,7 +112,8 @@ add_executable(smartoffice
     src/DiagramSkinlet.cpp
     src/DiagramSegmentsNode.cpp
     src/DiagramDataNode.cpp
-    src/UsageDiagram.cpp)
+    src/UsageDiagram.cpp
+    resources.qrc)
 
 # Link against QSkinny-ARM and Qt
 target_link_libraries(smartoffice

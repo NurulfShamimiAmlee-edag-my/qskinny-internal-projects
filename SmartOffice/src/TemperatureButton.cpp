@@ -7,5 +7,5 @@
 
 TemperatureButton::TemperatureButton() : SliderButtons()
 {
-    setIcon(QskGraphicIO::read(QString("assets/qvg/air-conditioner.qvg")));;
+    setIcon(QskGraphicIO::read(QString(":/assets/qvg/air-conditioner.qvg")));;
 }

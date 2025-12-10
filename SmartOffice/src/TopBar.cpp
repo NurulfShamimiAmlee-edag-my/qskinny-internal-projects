@@ -35,13 +35,13 @@ TopBar::TopBar(QQuickItem* parent) : QskLinearBox(parent)
     
     this->setOrientation(Qt::Horizontal);
     this->setPanel(true);
-    this->addItem(setGraphicLabel("assets/qvg/edag-logo.qvg"));  
+    this->addItem(setGraphicLabel(":/assets/qvg/edag-logo.qvg"));  
     //TODO: Create a class that can use both logo and label -> label is used to display latest information
-    this->addItem(setGraphicLabel("assets/qvg/thermometer-svgrepo-com.qvg"));
-    this->addItem(setGraphicLabel("assets/qvg/water.qvg"));
-    this->addItem(setGraphicLabel("assets/qvg/electricity.qvg"));
+    this->addItem(setGraphicLabel(":/assets/qvg/thermometer-svgrepo-com.qvg"));
+    this->addItem(setGraphicLabel(":/assets/qvg/water.qvg"));
+    this->addItem(setGraphicLabel(":/assets/qvg/electricity.qvg"));
     this->addItem(setClockAndDate());
-    this->addItem(setMenuButton("assets/qvg/list.qvg"));
+    this->addItem(setMenuButton(":/assets/qvg/list.qvg"));
 
 };
 

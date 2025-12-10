@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <!-- QVG files -->
+        <file>assets/qvg/edag-logo.qvg</file>
+        <file>assets/qvg/thermometer-svgrepo-com.qvg</file>
+        <file>assets/qvg/water.qvg</file>
+        <file>assets/qvg/electricity.qvg</file>
+        <file>assets/qvg/list.qvg</file>
+        <file>assets/qvg/air-conditioner.qvg</file>
+        <file>assets/qvg/wifi.qvg</file>
+        <file>assets/qvg/lamp.qvg</file>
+        <file>assets/qvg/window.qvg</file>
+        <file>assets/qvg/socket.qvg</file>
+
+        <!-- JPG images -->
+        <file>assets/jpg/conferenceroom.jpg</file>
+        <file>assets/jpg/conferenceroomb.jpg</file>
+        <file>assets/jpg/meeting-room.jpg</file>
+        <file>assets/jpg/meetingroomA.jpg</file>
+
+        <!-- Fonts -->
+        <file>fonts/Roboto-Regular.ttf</file>
+        <file>fonts/Segoe UI.ttf</file>
+    </qresource>
+</RCC>

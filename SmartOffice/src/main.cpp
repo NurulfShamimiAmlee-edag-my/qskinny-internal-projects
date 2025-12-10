@@ -29,8 +29,9 @@ int main( int argc, char* argv[] )
 {
     QGuiApplication app( argc, argv );
 
-    qskSkinManager->registerFactory("MySkinFactory", new MySkinFactory());
-    qskSkinManager->setSkin("DefaultSkin");
+    auto* skinManager = QskSkinManager::instance();
+    skinManager->registerFactory("MySkinFactory", new MySkinFactory());
+    skinManager->setSkin("DefaultSkin");
     
     QskWindow window;
     window.addItem(new PageViewer());

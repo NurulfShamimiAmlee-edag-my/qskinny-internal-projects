@@ -9,9 +9,9 @@ SingletonBannerDb& SingletonBannerDb::instance()
 {
     static SingletonBannerDb dbInstance(nullptr);
 
-    dbInstance.m_bannerBoxGraphic[SingletonBannerDb::Slot1] = QskGraphicIO::read(QString("assets/qvg/air-conditioner.qvg"));
-    dbInstance.m_bannerBoxGraphic[SingletonBannerDb::Slot2] = QskGraphicIO::read(QString("assets/qvg/lamp.qvg"));
-    dbInstance.m_bannerBoxGraphic[SingletonBannerDb::Slot3] = QskGraphicIO::read(QString("assets/qvg/window.qvg"));
+    dbInstance.m_bannerBoxGraphic[SingletonBannerDb::Slot1] = QskGraphicIO::read(QString(":/assets/qvg/air-conditioner.qvg"));
+    dbInstance.m_bannerBoxGraphic[SingletonBannerDb::Slot2] = QskGraphicIO::read(QString(":/assets/qvg/lamp.qvg"));
+    dbInstance.m_bannerBoxGraphic[SingletonBannerDb::Slot3] = QskGraphicIO::read(QString(":/assets/qvg/window.qvg"));
 
     return dbInstance;
 }

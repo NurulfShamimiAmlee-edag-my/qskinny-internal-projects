@@ -47,7 +47,7 @@ MeetingRoomA::MeetingRoomA(QString imagePath) : ImageAndButtonBoxFactory()
 MeetingRoomA::MeetingRoomA() : ImageAndButtonBoxFactory()
 {
     setRoomName("Meeting Room A");
-    QImage image("assets/jpg/meeting-room.jpg");
+    QImage image(":/assets/jpg/meeting-room.jpg");
     QskGraphic imageGraphic = QskGraphic::fromImage(image);
     m_roomImage = new QskGraphicLabel(imageGraphic, this);
     // The following sets the image in the box manually... it is better to use geometryChange()
@@ -83,13 +83,13 @@ void MeetingRoomA::geometryChange(const QRectF& newGeometry, const QRectF& oldGe
 ConferenceRoom::ConferenceRoom() : ImageAndButtonBoxFactory()
 {
     setRoomName("Conference Room B");
-    QImage image("assets/jpg/conferenceroomb.jpg");
+    QImage image(":/assets/jpg/conferenceroomb.jpg");
     QskGraphic imageGraphic = QskGraphic::fromImage(image);
     m_roomImage = new QskGraphicLabel(imageGraphic, this);
 
     m_lightButton = new LightImageButton(this);
     m_blindGraphicLabel = new QskGraphicLabel(this);
-    m_blindGraphicLabel->setGraphic(QskGraphicIO::read(QString("assets/qvg/window.qvg")));
+    m_blindGraphicLabel->setGraphic(QskGraphicIO::read(QString(":/assets/qvg/window.qvg")));
     m_wifiButton = new WifiImageButton(this);
 
 }

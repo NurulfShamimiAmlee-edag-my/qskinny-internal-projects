@@ -6,5 +6,5 @@
 
 LightButton::LightButton() : SliderButtons()
 {
-    setIcon(QskGraphicIO::read(QString("assets/qvg/lamp.qvg")));;
+    setIcon(QskGraphicIO::read(QString(":/assets/qvg/lamp.qvg")));;
 }

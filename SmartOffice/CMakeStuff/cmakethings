@@ -23,6 +23,7 @@ sudo cmake --install build-arm --prefix "/opt/qskinny-arm"
 # ===================================================================================================
 # A. Compile and build command
 cmake -DCMAKE_TOOLCHAIN_FILE=toolchain-arm.cmake \
+      -DCMAKE_BUILD_TYPE=Release \
       -DQSkinny_DIR=/opt/qskinny-arm/lib/cmake/QSkinny \
       -S . -B build-arm
 

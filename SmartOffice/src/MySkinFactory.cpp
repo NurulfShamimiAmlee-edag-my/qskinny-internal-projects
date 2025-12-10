@@ -57,7 +57,7 @@ QStringList MySkinFactory::skinNames() const
 
 QskSkin* MySkinFactory::createSkin(const QString& skinName)
 {
-    if(skinName == "DefaultSkin")
+    if(skinName.isEmpty() || skinName == "DefaultSkin")
     {
         class DefaultSkin : public QskSkin
         {
@@ -77,14 +77,24 @@ QskSkin* MySkinFactory::createSkin(const QString& skinName)
                         
                         {
                             //SetupFont
-                            const QString fontPath = QStringLiteral("fonts/Segoe UI.ttf");
+                            const QString fontPath = QStringLiteral(":/fonts/Segoe UI.ttf");
                             int fontId = QFontDatabase::addApplicationFont(fontPath);
 
-                            QStringList families = QFontDatabase::applicationFontFamilies(fontId);
-                            
-                            QString family = families.first();
-                            
-                            setupFontTable(family, false);
+                            if (fontId == -1) {
+                                qWarning() << "Failed to load font from:" << fontPath;
+                                // Use a fallback font or system default
+                                setupFontTable("Sans Serif", false);
+                            } else {
+                                QStringList families = QFontDatabase::applicationFontFamilies(fontId);
+                                
+                                if (families.isEmpty()) {
+                                    qWarning() << "No font families found in:" << fontPath;
+                                    setupFontTable("Sans Serif", false);
+                                } else {
+                                    QString family = families.first();
+                                    setupFontTable(family, false);
+                                }
+                            }
 
     
                             // QFont appFont(family)

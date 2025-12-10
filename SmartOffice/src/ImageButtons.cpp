@@ -16,22 +16,22 @@ ImageButtons::ImageButtons(QskBox* parent) : QskPushButton(parent)
 
 LightImageButton::LightImageButton(QskBox* parent) : ImageButtons(parent)
 {
-    setIcon(QskGraphicIO::read(QString("assets/qvg/lamp.qvg")));
+    setIcon(QskGraphicIO::read(QString(":/assets/qvg/lamp.qvg")));
 
 }
 
 WifiImageButton::WifiImageButton(QskBox* parent) : ImageButtons(parent)
 {
-    setIcon(QskGraphicIO::read(QString("assets/qvg/wifi.qvg")));
+    setIcon(QskGraphicIO::read(QString(":/assets/qvg/wifi.qvg")));
 }
 
 AcImageButton::AcImageButton(QskBox* parent) : ImageButtons(parent)
 {
-    setIcon(QskGraphicIO::read(QString("assets/qvg/air-conditioner.qvg")));
+    setIcon(QskGraphicIO::read(QString(":/assets/qvg/air-conditioner.qvg")));
 }
 
 SocketImageButton::SocketImageButton(QskBox* parent) : ImageButtons(parent)
 {
-    setIcon(QskGraphicIO::read(QString("assets/qvg/socket.qvg")));
+    setIcon(QskGraphicIO::read(QString(":/assets/qvg/socket.qvg")));
 }
 
